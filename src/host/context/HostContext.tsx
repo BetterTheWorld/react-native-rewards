@@ -10,6 +10,7 @@ import {
 } from '../constants';
 import { UIStateType, type TokenInput, TokenStage } from '../types/context';
 import { saveItemSecurely, deleteItemSecurely } from '../utils/secureStore';
+import type { RewardsTypes } from '../types/modules';
 
 interface HostContextType {
   authToken: string | null;
@@ -29,17 +30,24 @@ interface HostContextType {
   setUIState: (newState: UIStateType) => void;
   saveRewardsToken: ({ token, stage }: TokenInput) => Promise<void>;
   saveAuthToken: ({ token, stage }: TokenInput) => Promise<void>;
+  envKeys: RewardsTypes['keys'];
+  setEnvKeys: (keys: RewardsTypes['keys']) => void;
 }
 
 const HostContext = createContext<HostContextType | undefined>(undefined);
 
 interface HostProviderProps {
   children: ReactNode;
+  envKeys: RewardsTypes['keys'];
 }
 
-export const HostProvider = ({ children }: HostProviderProps) => {
+export const HostProvider = ({
+  children,
+  envKeys: initialEnvKeys,
+}: HostProviderProps) => {
   const [rewardsToken, setRewardsToken] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
+  const [envKeys, setEnvKeys] = useState<RewardsTypes['keys']>(initialEnvKeys);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -123,6 +131,8 @@ export const HostProvider = ({ children }: HostProviderProps) => {
         refreshWebView,
         setUIState,
         uiState,
+        envKeys,
+        setEnvKeys,
       }}
     >
       {children}
