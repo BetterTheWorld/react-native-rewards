@@ -10,15 +10,15 @@ import { LogoutScreen } from '../../screens/logout';
 import { CreateTeamScreen } from '../../screens/teamForm';
 import { WebViewShop } from '../../screens/webStore/WebStore';
 import { UIStateType } from '../../types/context';
-// import { deleteItemSecurely } from '@/host/utils/secureStore';
+// import { deleteItemSecurely } from '../../utils/secureStore';
 // import {
 //   STORAGE_AUTH_TOKEN_KEY,
 //   STORAGE_REWARDS_TOKEN_KEY,
 //   UI_STATE_KEY,
-// } from '@/host/constants';
+// } from '../../constants';
 
 export function HostCommander() {
-  const { rewardsToken, uiState } = useHost();
+  const { rewardsToken, uiState, envKeys } = useHost();
   useInitializers();
 
   // useEffect(() => {
@@ -43,7 +43,7 @@ export function HostCommander() {
       default:
         return (
           <WebViewShop
-            baseURL={`${process.env.EXPO_PUBLIC_BASE_URL}/?token=${rewardsToken}`}
+            baseURL={`${envKeys.REWARDS_PROPS_BASE_URL}/?token=${rewardsToken}`}
           />
         );
     }

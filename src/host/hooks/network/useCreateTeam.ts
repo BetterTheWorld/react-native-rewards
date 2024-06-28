@@ -3,7 +3,7 @@ import { useHost } from '../../context/HostContext';
 import type { TeamCreatePayload, TeamCreateInput } from '../../types/forms';
 
 export const useCreateTeam = () => {
-  const { authToken } = useHost();
+  const { authToken, envKeys } = useHost();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<TeamCreatePayload | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export const useCreateTeam = () => {
       },
     };
 
-    const url = process.env.EXPO_PUBLIC_API_URL + '/campaigns';
+    const url = envKeys.REWARDS_PROPS_API_URL + '/campaigns';
 
     const options = {
       method: 'POST',
@@ -30,7 +30,7 @@ export const useCreateTeam = () => {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'X-REWARDS-PARTNER-ID':
-          process.env.EXPO_PUBLIC_X_REWARDS_PARTNER_ID || '',
+          envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
         'Authorization': `Bearer ${authToken}`,
       },
       body: JSON.stringify(body),

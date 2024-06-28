@@ -15,6 +15,7 @@ import {
 import type { CityPrediction, CountryField } from '../../types/fields';
 import { useCityAutocomplete } from '../../hooks/network/useCityAutocomplete';
 import { hostColors } from '../../styles/colors';
+import { useHost } from '../../context/HostContext';
 
 interface CitySelectorProps {
   country?: CountryField;
@@ -33,9 +34,10 @@ export const CitySelectorModal: React.FC<CitySelectorProps> = ({
   setModalVisible,
   title,
 }) => {
+  const { envKeys } = useHost();
   const { query, setQuery, predictions, selectCity, isLoading } =
     useCityAutocomplete({
-      apiKey: process.env.EXPO_PUBLIC_GOOGLE_API_KEY || '',
+      apiKey: envKeys.REWARDS_PROPS_GOOGLE_API_KEY || '',
       country: country?.value || '',
       triggerLength: 2,
     });

@@ -10,6 +10,7 @@ import {
 } from '../constants';
 import { UIStateType, type TokenInput, TokenStage } from '../types/context';
 import { saveItemSecurely, deleteItemSecurely } from '../utils/secureStore';
+import type { RewardsTypes } from '../types/modules';
 
 interface HostContextType {
   authToken: string | null;
@@ -29,23 +30,25 @@ interface HostContextType {
   setUIState: (newState: UIStateType) => void;
   saveRewardsToken: ({ token, stage }: TokenInput) => Promise<void>;
   saveAuthToken: ({ token, stage }: TokenInput) => Promise<void>;
+  envKeys: RewardsTypes['keys'];
 }
 
 const HostContext = createContext<HostContextType | undefined>(undefined);
 
 interface HostProviderProps {
   children: ReactNode;
+  envKeys: RewardsTypes['keys'];
 }
 
-export const HostProvider = ({ children }: HostProviderProps) => {
+export const HostProvider = ({ children, envKeys }: HostProviderProps) => {
   const [rewardsToken, setRewardsToken] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const isDefaultToken =
-    rewardsToken === process.env.EXPO_PUBLIC_US_DEFAULT_REWARDS_TOKEN ||
-    rewardsToken === process.env.EXPO_PUBLIC_CA_DEFAULT_REWARDS_TOKEN;
+    rewardsToken === envKeys.REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN ||
+    rewardsToken === envKeys.REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN;
   const webViewRef = useRef<WebView>(null);
   const [uiState, updateUIstate] = useState<UIStateType>(
     UIStateType.ShowCountryPicker
@@ -123,6 +126,7 @@ export const HostProvider = ({ children }: HostProviderProps) => {
         refreshWebView,
         setUIState,
         uiState,
+        envKeys,
       }}
     >
       {children}

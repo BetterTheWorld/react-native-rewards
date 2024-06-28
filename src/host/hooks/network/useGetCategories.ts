@@ -7,14 +7,14 @@ import type {
 } from '../../types/fields';
 
 export const useGetCategories = () => {
-  const { authToken } = useHost();
+  const { authToken, envKeys } = useHost();
   const [categories, setCategories] = useState<Category[]>();
   const [sections, setSections] = useState<CategorySection[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const url = process.env.EXPO_PUBLIC_API_URL + '/campaigns/categories';
+      const url = envKeys.REWARDS_PROPS_API_URL + '/campaigns/categories';
       const options = {
         method: 'GET',
         headers: {
@@ -48,7 +48,7 @@ export const useGetCategories = () => {
     };
 
     fetchCategories();
-  }, [authToken]);
+  }, [authToken, envKeys.REWARDS_PROPS_API_URL]);
 
   return { sections, isLoading, categories };
 };

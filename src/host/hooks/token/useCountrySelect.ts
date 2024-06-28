@@ -4,13 +4,13 @@ import { UIStateType } from '../../types/context';
 import { saveItemSecurely } from '../../utils/secureStore';
 
 export const useCountrySelect = () => {
-  const { selectCountryToken, setUIState } = useHost();
+  const { selectCountryToken, setUIState, envKeys } = useHost();
 
   const onSelectCountry = (country: Country) => () => {
     const token =
       country === Country.USA
-        ? process.env.EXPO_PUBLIC_US_DEFAULT_REWARDS_TOKEN
-        : process.env.EXPO_PUBLIC_CA_DEFAULT_REWARDS_TOKEN;
+        ? envKeys.REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN
+        : envKeys.REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN;
     if (token) {
       selectCountryToken(token);
       setUIState(UIStateType.ShowStore);

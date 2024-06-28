@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { User } from '../../types/forms';
+import { useHost } from '../../context/HostContext';
 
 interface UserInput {
   email: string;
@@ -24,6 +25,7 @@ interface SignInError {
 }
 
 export const useSignIn = () => {
+  const { envKeys } = useHost();
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState<SignInResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -34,12 +36,11 @@ export const useSignIn = () => {
   ): Promise<SignInResponse | void> => {
     setIsLoading(true);
 
-    const url = process.env.EXPO_PUBLIC_API_URL + '/users/sign_in';
+    const url = envKeys.REWARDS_PROPS_API_URL + '/users/sign_in';
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-REWARDS-PARTNER-ID':
-        process.env.EXPO_PUBLIC_X_REWARDS_PARTNER_ID || '',
+      'X-REWARDS-PARTNER-ID': envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
     };
 
     const body = JSON.stringify({ user: userData });

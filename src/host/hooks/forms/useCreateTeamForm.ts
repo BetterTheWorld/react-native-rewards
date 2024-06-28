@@ -40,7 +40,7 @@ export const useCreateTeamForm = () => {
       role: [],
     },
   });
-  const { setUIState } = useHost();
+  const { setUIState, envKeys } = useHost();
   const { createTeam, error: teamCreateError } = useCreateTeam();
 
   const handleSelectCountry = (selectedCountry: CountryField) => {
@@ -82,6 +82,7 @@ export const useCreateTeamForm = () => {
     try {
       const { state, postalCode } = await fetchInfoByPlaceId({
         placeId: data.city?.id || '',
+        googleApiKey: envKeys.REWARDS_PROPS_GOOGLE_API_KEY || '',
       });
 
       const teamCreateInput: TeamCreateInput = {

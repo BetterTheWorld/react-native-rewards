@@ -3,13 +3,13 @@ import { useHost } from '../../context/HostContext';
 import type { User, UserResponse } from '../../types/forms';
 
 export const useGetMe = () => {
-  const { authToken } = useHost();
+  const { authToken, envKeys } = useHost();
   const [userData, setUserData] = useState<User>();
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchUser = useCallback(
     async ({ localToken }: { localToken: string }) => {
-      const url = process.env.EXPO_PUBLIC_API_URL + '/users/me';
+      const url = envKeys.REWARDS_PROPS_API_URL + '/users/me';
       const options = {
         method: 'GET',
         headers: {
@@ -39,7 +39,7 @@ export const useGetMe = () => {
         setIsLoading(false);
       }
     },
-    [authToken]
+    [authToken, envKeys.REWARDS_PROPS_API_URL]
   );
 
   useEffect(() => {

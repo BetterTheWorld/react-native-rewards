@@ -4,8 +4,10 @@ import type {
   UserCreateStatus,
   UserInput,
 } from '../../types/forms';
+import { useHost } from '../../context/HostContext';
 
 export const useCreateUser = () => {
+  const { envKeys } = useHost();
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState<CreateUserResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -16,12 +18,11 @@ export const useCreateUser = () => {
   ): Promise<CreateUserResponse | void> => {
     setIsLoading(true);
 
-    const url = process.env.EXPO_PUBLIC_API_URL + '/users';
+    const url = envKeys.REWARDS_PROPS_API_URL + '/users';
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-REWARDS-PARTNER-ID':
-        process.env.EXPO_PUBLIC_X_REWARDS_PARTNER_ID || '',
+      'X-REWARDS-PARTNER-ID': envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
     };
 
     const body = JSON.stringify({ user: userData });
@@ -33,21 +34,18 @@ export const useCreateUser = () => {
         body: body,
       });
 
-      console.info('Create user response:', fetchResponse);
-      console.info('Create user response headers:', fetchResponse.headers);
-
       const authHeader = (
         fetchResponse.headers.get('Authorization') || ''
       ).replace('Bearer ', '');
 
-      console.info('Create user response auth header:', authHeader);
-
       const data: CreateUserResponse = await fetchResponse.json();
 
       if (fetchResponse.status !== 200) {
-        setError(`HTTP error! status: ${fetchResponse.status}`);
+        setError(
+          `HTTP error! status: ${fetchResponse.status || fetchResponse.statusText}`
+        );
         setStatus({
-          message: `HTTP error! status: ${fetchResponse.statusText}`,
+          message: `HTTP error! status: ${fetchResponse.status || fetchResponse.statusText}`,
           code: fetchResponse.status,
         });
       } else {
