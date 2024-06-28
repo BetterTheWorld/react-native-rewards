@@ -34,9 +34,6 @@ export function useLoadKeysToEnv(keys: RewardsTypes['keys'] | undefined) {
         return;
       }
       setIsloading(true);
-      // Object.entries(keys).forEach(([key, value]) => {
-      //   process.env[key] = value;
-      // });
       await saveKeysToStorage(keys as RewardsKeys);
       setLoadedKeys(keys);
     };
