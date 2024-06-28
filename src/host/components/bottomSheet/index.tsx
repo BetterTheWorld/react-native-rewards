@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { hostColors } from '../../styles/colors';
-
+import { useTheme } from '../../hooks/theme/useTheme';
 const windowHeight = Dimensions.get('window').height;
 
 interface BottomSheetProps {
@@ -22,6 +21,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
   setModalVisible,
   children,
 }) => {
+  const { colors } = useTheme();
   const [showModal, setShowModal] = useState(isVisible);
   const slideAnim = useRef(new Animated.Value(windowHeight)).current;
 
@@ -67,6 +67,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
           style={[
             styles.contentContainer,
             { transform: [{ translateY: slideAnim }] },
+            { backgroundColor: colors.white },
           ]}
         >
           {children}
@@ -86,7 +87,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    backgroundColor: hostColors.white,
     paddingTop: 5,
     maxHeight: windowHeight * 0.75,
     minHeight: windowHeight * 0.25,

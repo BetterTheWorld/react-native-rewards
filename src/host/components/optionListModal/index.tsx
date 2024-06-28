@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { BottomSheet } from '../bottomSheet';
-import { hostColors } from '../../styles/colors';
+import { useTheme } from '../../hooks/theme/useTheme';
 
 interface OptionListProps<T> {
   isVisible: boolean;
@@ -34,16 +34,22 @@ export const OptionList = <T extends ItemType>({
   renderComponent,
   data = defaultData as T[],
   keyExtractor = (item: T) => (typeof item === 'string' ? item : item.id),
-  renderItem = ({ item }: { item: T }) => (
-    <TouchableOpacity style={styles.optionItem} onPress={() => onSelect(item)}>
-      <Text>{typeof item === 'string' ? item : item.label}</Text>
-    </TouchableOpacity>
-  ),
+  renderItem,
   isLoading,
 }: OptionListProps<T>) => {
+  const { colors } = useTheme();
   if (isLoading) {
-    return <ActivityIndicator size="large" color={hostColors.primaryColor} />;
+    return <ActivityIndicator size="large" color={colors.primaryColor} />;
   }
+
+  const defaultRenderIntem = ({ item }: { item: T }) => (
+    <TouchableOpacity
+      style={[styles.optionItem, { borderBottomColor: colors.tertiaryColor }]}
+      onPress={() => onSelect(item)}
+    >
+      <Text>{typeof item === 'string' ? item : item.label}</Text>
+    </TouchableOpacity>
+  );
 
   return (
     <BottomSheet isVisible={isVisible} setModalVisible={setModalVisible}>
@@ -51,10 +57,16 @@ export const OptionList = <T extends ItemType>({
         <Text style={styles.title}>{title}</Text>
 
         <TouchableOpacity
-          style={styles.closeButton}
+          style={[
+            styles.closeButton,
+            { backgroundColor: colors.tertiaryColor },
+          ]}
           onPress={() => setModalVisible(false)}
         >
-          <Text style={styles.closeButtonText}> X </Text>
+          <Text style={[styles.closeButtonText, { color: colors.white }]}>
+            {' '}
+            X{' '}
+          </Text>
         </TouchableOpacity>
       </View>
       {renderComponent || (
@@ -62,7 +74,7 @@ export const OptionList = <T extends ItemType>({
           style={styles.flatlist}
           data={data}
           keyExtractor={keyExtractor}
-          renderItem={renderItem}
+          renderItem={renderItem || defaultRenderIntem}
         />
       )}
     </BottomSheet>
@@ -76,18 +88,15 @@ const styles = StyleSheet.create({
   optionItem: {
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: hostColors.tertiaryColor,
   },
   closeButton: {
     alignSelf: 'flex-end',
     padding: 10,
-    backgroundColor: hostColors.tertiaryColor,
     borderRadius: 5,
     margin: 10,
   },
   closeButtonText: {
     fontSize: 16,
-    color: hostColors.white,
   },
   title: {
     fontSize: 18,

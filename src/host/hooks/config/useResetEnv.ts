@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import type { RewardsTypes } from '../../types/modules';
 import { useHost } from '../../context/HostContext';
 import { UIStateType } from '../../types/context';
+import { getChangedKeys } from '../../utils/validations';
 
 type ChangedKeys = {
   [K in keyof RewardsTypes['keys']]?: boolean;
@@ -27,27 +28,18 @@ export function useResetEnv() {
     setIsLoading(true);
     const previousKeys = previousKeysRef.current;
     let keysChanged = false;
-    const keysThatChanged: ChangedKeys = {};
+    let keysThatChanged: ChangedKeys = {};
 
     if (previousKeys) {
-      for (const key in keys) {
-        if (
-          keys[key as keyof RewardsTypes['keys']] !==
-          previousKeys[key as keyof RewardsTypes['keys']]
-        ) {
-          keysChanged = true;
-          keysThatChanged[key as keyof RewardsTypes['keys']] = true;
-        }
-      }
+      keysThatChanged = getChangedKeys(keys, previousKeys);
+      keysChanged = Object.keys(keysThatChanged).length > 0;
     }
 
     if (keysChanged && previousKeys) {
-      // Call your reset method here
       reset(keysThatChanged);
       setChangedKeys(keysThatChanged);
     }
 
-    // Update the ref for the next comparison
     previousKeysRef.current = keys;
     setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps

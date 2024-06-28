@@ -1,3 +1,4 @@
+// HostContext.tsx
 import React, { createContext, useContext, useState, useRef } from 'react';
 import WebView from 'react-native-webview';
 import { type ReactNode } from 'react';
@@ -11,6 +12,7 @@ import {
 import { UIStateType, type TokenInput, TokenStage } from '../types/context';
 import { saveItemSecurely, deleteItemSecurely } from '../utils/secureStore';
 import type { RewardsTypes } from '../types/modules';
+import { useThemeChange } from '../hooks/config/useThemeChanged';
 
 interface HostContextType {
   authToken: string | null;
@@ -31,6 +33,7 @@ interface HostContextType {
   saveRewardsToken: ({ token, stage }: TokenInput) => Promise<void>;
   saveAuthToken: ({ token, stage }: TokenInput) => Promise<void>;
   envKeys: RewardsTypes['keys'];
+  theme: RewardsTypes['theme'];
 }
 
 const HostContext = createContext<HostContextType | undefined>(undefined);
@@ -38,12 +41,16 @@ const HostContext = createContext<HostContextType | undefined>(undefined);
 interface HostProviderProps {
   children: ReactNode;
   envKeys: RewardsTypes['keys'];
+  customTheme: RewardsTypes['theme'];
 }
 
-export const HostProvider = ({ children, envKeys }: HostProviderProps) => {
+export const HostProvider = ({
+  children,
+  envKeys,
+  customTheme,
+}: HostProviderProps) => {
   const [rewardsToken, setRewardsToken] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
-
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const isDefaultToken =
@@ -53,6 +60,7 @@ export const HostProvider = ({ children, envKeys }: HostProviderProps) => {
   const [uiState, updateUIstate] = useState<UIStateType>(
     UIStateType.ShowCountryPicker
   );
+  const { theme } = useThemeChange(customTheme);
 
   const setUIState = (newState: UIStateType) => {
     updateUIstate(newState);
@@ -60,16 +68,12 @@ export const HostProvider = ({ children, envKeys }: HostProviderProps) => {
   };
 
   const selectCountryToken = async (countryToken: string) => {
-    saveRewardsToken({
-      token: countryToken,
-      stage: TokenStage.defaultPartner,
-    });
+    saveRewardsToken({ token: countryToken, stage: TokenStage.defaultPartner });
   };
 
   const saveAuthToken = async ({ token, stage }: TokenInput) => {
     setIsLoading(true);
     const tokenInfo = JSON.stringify({ token, stage });
-    console.info('[saveAuthToken]', tokenInfo);
     setAuthToken(token);
     saveItemSecurely(STORAGE_AUTH_TOKEN_KEY, tokenInfo);
     setIsLoading(false);
@@ -127,6 +131,7 @@ export const HostProvider = ({ children, envKeys }: HostProviderProps) => {
         setUIState,
         uiState,
         envKeys,
+        theme,
       }}
     >
       {children}

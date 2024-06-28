@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { hostColors } from '../../styles/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -20,7 +19,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 8,
-    shadowColor: hostColors.black,
+
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -37,7 +36,6 @@ export const styles = StyleSheet.create({
     height: 50,
     padding: 10,
     borderWidth: 1,
-    borderColor: hostColors.lightGray,
     borderRadius: 7,
     marginBottom: 10,
     justifyContent: 'center',
@@ -48,16 +46,12 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   submitButton: {
-    backgroundColor: hostColors.primaryColor,
     width: '100%',
     padding: 15,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
     marginVertical: 20,
-  },
-  submitButtonDisabled: {
-    backgroundColor: hostColors.lightGray,
   },
   submitButtonText: {
     color: 'white',
@@ -74,14 +68,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-  },
-  roleItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 5,
-    margin: 5,
-    backgroundColor: hostColors.lightGray,
-    borderRadius: 5,
   },
   removeRoleText: {
     marginLeft: 10,

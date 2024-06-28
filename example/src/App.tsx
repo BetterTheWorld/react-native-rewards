@@ -19,6 +19,11 @@ export default function App() {
           REWARDS_PROPS_X_REWARDS_PARTNER_ID:
             process.env.EXPO_PUBLIC_X_REWARDS_PARTNER_ID || '',
         }}
+        theme={{
+          colors: {
+            primaryColor: 'cyan',
+          },
+        }}
       />
     </SafeAreaView>
   );

@@ -14,8 +14,8 @@ import {
 } from 'react-native';
 import type { CityPrediction, CountryField } from '../../types/fields';
 import { useCityAutocomplete } from '../../hooks/network/useCityAutocomplete';
-import { hostColors } from '../../styles/colors';
 import { useHost } from '../../context/HostContext';
+import { useTheme } from '../../hooks/theme/useTheme';
 
 interface CitySelectorProps {
   country?: CountryField;
@@ -35,6 +35,7 @@ export const CitySelectorModal: React.FC<CitySelectorProps> = ({
   title,
 }) => {
   const { envKeys } = useHost();
+  const { colors } = useTheme();
   const { query, setQuery, predictions, selectCity, isLoading } =
     useCityAutocomplete({
       apiKey: envKeys.REWARDS_PROPS_GOOGLE_API_KEY || '',
@@ -53,10 +54,12 @@ export const CitySelectorModal: React.FC<CitySelectorProps> = ({
     value: prediction.description,
   }));
 
+  const inputStyles = [styles.input, { borderColor: colors.primaryColor }];
+
   return (
     <View style={styles.fullWidth}>
       <TouchableOpacity
-        style={styles.input}
+        style={inputStyles}
         onPress={() => {
           setModalVisible(true);
           setQuery('');
@@ -81,15 +84,20 @@ export const CitySelectorModal: React.FC<CitySelectorProps> = ({
             <View style={styles.row}>
               <Text style={styles.title}>{title}</Text>
               <TouchableOpacity
-                style={styles.closeButton}
+                style={[
+                  styles.closeButton,
+                  { backgroundColor: colors.tertiaryColor },
+                ]}
                 onPress={() => setModalVisible(false)}
               >
-                <Text style={styles.closeButtonText}>X</Text>
+                <Text style={[styles.closeButtonText, { color: colors.white }]}>
+                  X
+                </Text>
               </TouchableOpacity>
             </View>
             <TextInput
               autoFocus
-              style={styles.input}
+              style={inputStyles}
               placeholder="Enter city name"
               value={query}
               onChangeText={setQuery}
@@ -100,12 +108,16 @@ export const CitySelectorModal: React.FC<CitySelectorProps> = ({
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() => handleSelectCity(item)}>
-                  <Text style={styles.item}>{item.value}</Text>
+                  <Text
+                    style={[styles.item, { borderBottomColor: colors.gray }]}
+                  >
+                    {item.value}
+                  </Text>
                 </TouchableOpacity>
               )}
             />
             {isLoading ? (
-              <ActivityIndicator size="large" color={hostColors.primaryColor} />
+              <ActivityIndicator size="large" color={colors.primaryColor} />
             ) : null}
           </SafeAreaView>
         </KeyboardAvoidingView>
@@ -131,7 +143,6 @@ const styles = StyleSheet.create({
     height: 50,
     padding: 10,
     borderWidth: 1,
-    borderColor: hostColors.lightGray,
     borderRadius: 7,
     marginBottom: 10,
     justifyContent: 'center',
@@ -139,10 +150,8 @@ const styles = StyleSheet.create({
   item: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: hostColors.gray,
   },
   closeButton: {
-    backgroundColor: hostColors.tertiaryColor,
     borderRadius: 5,
     paddingHorizontal: 15,
     paddingVertical: 10,
@@ -150,7 +159,6 @@ const styles = StyleSheet.create({
   },
   closeButtonText: {
     fontSize: 16,
-    color: hostColors.white,
   },
   title: {
     fontSize: 18,
