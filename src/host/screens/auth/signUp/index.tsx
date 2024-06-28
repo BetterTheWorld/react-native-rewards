@@ -13,7 +13,7 @@ import { Controller } from 'react-hook-form';
 import { FadeWrapper } from '../../../components/animation/FadeWrapper';
 import { CloseButton } from '../../../components/closeButton';
 import { useSignUpForm } from '../../../hooks/forms/useSignUpForm';
-import { hostColors } from '../../../styles/colors';
+import { useTheme } from '../../../hooks/theme/useTheme';
 
 export const SignUpScreen: React.FC = () => {
   const {
@@ -32,6 +32,8 @@ export const SignUpScreen: React.FC = () => {
     onSignInPress,
     onClosePress,
   } = useSignUpForm();
+  const { colors } = useTheme();
+  const inputStyles = [styles.input, { borderColor: colors.lightGray }];
 
   return (
     <FadeWrapper style={styles.container}>
@@ -49,7 +51,7 @@ export const SignUpScreen: React.FC = () => {
           horizontal={false}
           showsHorizontalScrollIndicator={false}
         >
-          <View style={styles.card}>
+          <View style={[styles.card, { shadowColor: colors.darkGray }]}>
             <Text style={styles.title}>Sign up & start earning</Text>
 
             <Controller
@@ -59,7 +61,7 @@ export const SignUpScreen: React.FC = () => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <>
                   <TextInput
-                    style={styles.input}
+                    style={inputStyles}
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
@@ -82,7 +84,7 @@ export const SignUpScreen: React.FC = () => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <>
                   <TextInput
-                    style={styles.input}
+                    style={inputStyles}
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
@@ -108,7 +110,7 @@ export const SignUpScreen: React.FC = () => {
                 <>
                   <View style={styles.passwordContainer}>
                     <TextInput
-                      style={styles.input}
+                      style={inputStyles}
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
@@ -132,7 +134,7 @@ export const SignUpScreen: React.FC = () => {
               )}
             />
 
-            <Text style={styles.termsText}>
+            <Text style={[styles.termsText, { color: colors.textColor }]}>
               By signing up, you agree to our Terms & Conditions. Lorem ipsum
               dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut labore et dolore magna aliqua.
@@ -143,7 +145,10 @@ export const SignUpScreen: React.FC = () => {
             )}
 
             <TouchableOpacity
-              style={styles.signupButton}
+              style={[
+                styles.signupButton,
+                { backgroundColor: colors.primaryColor },
+              ]}
               onPress={handleSubmit(onSubmit)}
               disabled={isLoadingForm || newtworkIsLoading}
             >
@@ -152,12 +157,14 @@ export const SignUpScreen: React.FC = () => {
               </Text>
             </TouchableOpacity>
 
-            <View style={styles.divider} />
+            <View
+              style={[styles.divider, { backgroundColor: colors.lightGray }]}
+            />
 
             <View style={styles.signInContainer}>
               <Text>Already have an account?{'  '}</Text>
               <TouchableOpacity onPress={onSignInPress}>
-                <Text style={{ color: hostColors.primaryColor }}>Log in</Text>
+                <Text style={{ color: colors.primaryColor }}>Log in</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -185,7 +192,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 8,
-    shadowColor: hostColors.darkGray,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -205,7 +211,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 1,
     borderRadius: 7,
-    borderColor: hostColors.lightGray,
     marginBottom: 10,
   },
   passwordContainer: {
@@ -221,12 +226,10 @@ const styles = StyleSheet.create({
   },
   termsText: {
     fontSize: 12,
-    color: hostColors.textColor,
     marginBottom: 20,
     textAlign: 'center',
   },
   signupButton: {
-    backgroundColor: hostColors.primaryColor,
     width: '100%',
     padding: 15,
     justifyContent: 'center',
@@ -246,7 +249,6 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: hostColors.lightGray,
     width: '100%',
     marginVertical: 20,
   },

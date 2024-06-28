@@ -13,7 +13,7 @@ import { Controller } from 'react-hook-form';
 import { useSignInForm } from '../../../hooks/forms/useSignInForm';
 import { FadeWrapper } from '../../../components/animation/FadeWrapper';
 import { CloseButton } from '../../../components/closeButton';
-import { hostColors } from '../../../styles/colors';
+import { useTheme } from '../../../hooks/theme/useTheme';
 
 export const SignInScreen: React.FC = () => {
   const {
@@ -27,6 +27,8 @@ export const SignInScreen: React.FC = () => {
     onClosePress,
   } = useSignInForm();
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const { colors } = useTheme();
+  const inputStyles = [styles.input, { borderColor: colors.lightGray }];
 
   return (
     <FadeWrapper style={styles.container}>
@@ -42,7 +44,7 @@ export const SignInScreen: React.FC = () => {
           contentContainerStyle={styles.scrollContainer}
           showsHorizontalScrollIndicator={false}
         >
-          <View style={styles.card}>
+          <View style={[styles.card, { shadowColor: colors.black }]}>
             <Text style={styles.title}>Log in & start earning</Text>
 
             <Controller
@@ -58,7 +60,7 @@ export const SignInScreen: React.FC = () => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <>
                   <TextInput
-                    style={styles.input}
+                    style={inputStyles}
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
@@ -81,7 +83,7 @@ export const SignInScreen: React.FC = () => {
                 <>
                   <View style={styles.passwordContainer}>
                     <TextInput
-                      style={styles.input}
+                      style={inputStyles}
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
@@ -108,7 +110,10 @@ export const SignInScreen: React.FC = () => {
             {error && <Text style={styles.errorText}>{error}</Text>}
 
             <TouchableOpacity
-              style={styles.loginButton}
+              style={[
+                styles.loginButton,
+                { backgroundColor: colors.primaryColor },
+              ]}
               onPress={handleSubmit(onSubmit)}
               disabled={isLoading}
             >
@@ -117,12 +122,14 @@ export const SignInScreen: React.FC = () => {
               </Text>
             </TouchableOpacity>
 
-            <View style={styles.divider} />
+            <View
+              style={[styles.divider, { backgroundColor: colors.lightGray }]}
+            />
 
             <View style={styles.signUpContainer}>
               <Text>Don't have an account?{'  '}</Text>
               <TouchableOpacity onPress={onSignUpPress}>
-                <Text style={{ color: hostColors.primaryColor }}>Sign up</Text>
+                <Text style={{ color: colors.primaryColor }}>Sign up</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -145,7 +152,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 8,
-    shadowColor: hostColors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -164,7 +170,6 @@ const styles = StyleSheet.create({
     height: 50,
     padding: 10,
     borderWidth: 1,
-    borderColor: hostColors.lightGray,
     borderRadius: 7,
     marginBottom: 10,
   },
@@ -180,7 +185,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   loginButton: {
-    backgroundColor: hostColors.primaryColor, // Customize the color to fit your app's theme
     width: '100%',
     padding: 15,
     justifyContent: 'center',
@@ -211,7 +215,6 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: hostColors.lightGray,
     width: '100%',
     marginVertical: 20,
   },

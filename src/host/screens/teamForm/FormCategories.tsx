@@ -8,10 +8,11 @@ import {
   ActivityIndicator,
   SafeAreaView,
   TouchableOpacity,
+  type ColorValue,
 } from 'react-native';
 import { useGetCategories } from '../../hooks/network/useGetCategories';
-import { hostColors } from '../../styles/colors';
 import type { Category } from '../../types/fields';
+import { useTheme } from '../../hooks/theme/useTheme';
 
 interface FormCategoriesProps {
   handleSelectSport: (selectedSport: Category) => void;
@@ -19,14 +20,15 @@ interface FormCategoriesProps {
 
 export function FormCategories({ handleSelectSport }: FormCategoriesProps) {
   const { sections, isLoading } = useGetCategories();
+  const { colors } = useTheme();
 
   const renderItem = useCallback(
     ({ item }: { item: Category }) => (
       <TouchableOpacity onPress={() => handleSelectSport(item)}>
-        <CategoryItem category={item} />
+        <CategoryItem category={item} borderBottomColor={colors.lightGray} />
       </TouchableOpacity>
     ),
-    [handleSelectSport]
+    [handleSelectSport, colors]
   );
 
   const keyExtractor = useCallback(
@@ -35,7 +37,7 @@ export function FormCategories({ handleSelectSport }: FormCategoriesProps) {
   );
 
   if (isLoading) {
-    return <ActivityIndicator size="large" color={hostColors.primaryColor} />;
+    return <ActivityIndicator size="large" color={colors.primaryColor} />;
   }
 
   return (
@@ -45,16 +47,29 @@ export function FormCategories({ handleSelectSport }: FormCategoriesProps) {
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.header}>{title}</Text>
+          <Text
+            style={[
+              styles.header,
+              {
+                backgroundColor: colors.tertiaryColor,
+                color: colors.white,
+              },
+            ]}
+          >
+            {title}
+          </Text>
         )}
       />
     </SafeAreaView>
   );
 }
 
-const CategoryItem: React.FC<{ category: Category }> = ({ category }) => {
+const CategoryItem: React.FC<{
+  category: Category;
+  borderBottomColor: ColorValue | undefined;
+}> = ({ category, borderBottomColor }) => {
   return (
-    <View style={styles.item}>
+    <View style={[styles.item, { borderBottomColor }]}>
       <Text>{category.name}</Text>
     </View>
   );
@@ -64,13 +79,10 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontSize: 18,
     fontWeight: 'bold',
-    backgroundColor: hostColors.tertiaryColor,
-    color: hostColors.white,
     padding: 10,
   },
   item: {
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: hostColors.lightGray,
   },
 });

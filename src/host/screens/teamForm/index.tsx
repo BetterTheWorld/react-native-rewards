@@ -16,6 +16,7 @@ import { useCreateTeamForm } from '../../hooks/forms/useCreateTeamForm';
 import type { CountryField } from '../../types/fields';
 import { FormCategories } from './FormCategories';
 import { styles } from './styles';
+import { useTheme } from '../../hooks/theme/useTheme';
 
 export const CreateTeamScreen: React.FC = () => {
   const {
@@ -36,6 +37,8 @@ export const CreateTeamScreen: React.FC = () => {
     isLoadingForm,
     teamCreateError,
   } = useCreateTeamForm();
+  const { colors } = useTheme();
+  const inputStyles = [styles.input, { borderColor: colors.lightGray }];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -45,7 +48,7 @@ export const CreateTeamScreen: React.FC = () => {
         keyboardVerticalOffset={100}
       >
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <View style={styles.card}>
+          <View style={[styles.card, { shadowColor: colors.black }]}>
             <Text style={styles.title}>Create Team</Text>
 
             <Text style={styles.label}>Team Name</Text>
@@ -54,7 +57,7 @@ export const CreateTeamScreen: React.FC = () => {
               rules={{ required: true }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  style={styles.input}
+                  style={inputStyles}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -68,7 +71,7 @@ export const CreateTeamScreen: React.FC = () => {
 
             <Text style={styles.label}>Country</Text>
             <TouchableOpacity
-              style={styles.input}
+              style={inputStyles}
               onPress={() => setCountryModalVisible(true)}
             >
               <Controller
@@ -106,7 +109,7 @@ export const CreateTeamScreen: React.FC = () => {
 
             <Text style={styles.label}>Sport</Text>
             <TouchableOpacity
-              style={styles.input}
+              style={inputStyles}
               onPress={() => setSportModalVisible(true)}
             >
               <Controller
@@ -125,7 +128,9 @@ export const CreateTeamScreen: React.FC = () => {
             <TouchableOpacity
               style={[
                 styles.submitButton,
-                isLoadingForm && styles.submitButtonDisabled,
+                isLoadingForm
+                  ? { backgroundColor: colors.lightGray }
+                  : { backgroundColor: colors.primaryColor },
               ]}
               onPress={handleSubmit(onSubmit)}
               disabled={isLoadingForm}

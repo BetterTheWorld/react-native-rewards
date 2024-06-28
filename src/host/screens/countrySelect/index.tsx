@@ -4,17 +4,22 @@ import { useCountrySelect } from '../../hooks/token/useCountrySelect';
 import { FadeWrapper } from '../../components/animation/FadeWrapper';
 import { Country } from '../../constants';
 import { USA_FLAG_IMAGE, CANADA_FLAG_IMAGE } from '../../constants/images';
-import { hostColors } from '../../styles/colors';
+import { useTheme } from '../../hooks/theme/useTheme';
 
 export const CountrySelector: React.FC = () => {
   const { onSelectCountry } = useCountrySelect();
-
+  const { colors } = useTheme();
+  const flagTextStyles = [styles.flagText, { color: colors.darkGray }];
   return (
     <FadeWrapper style={styles.container}>
       <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.title}>Select a country</Text>
-          <Text style={styles.subtitle}>Where are you located?</Text>
+        <View style={[styles.modalView, { shadowColor: colors.black }]}>
+          <Text style={[styles.title, { color: colors.black }]}>
+            Select a country
+          </Text>
+          <Text style={[styles.subtitle, { color: colors.gray }]}>
+            Where are you located?
+          </Text>
           <View style={styles.flagContainer}>
             <TouchableOpacity
               style={styles.flagButton}
@@ -24,7 +29,7 @@ export const CountrySelector: React.FC = () => {
                 source={{ uri: USA_FLAG_IMAGE }}
                 style={styles.flagImage}
               />
-              <Text style={styles.flagText}>USA</Text>
+              <Text style={flagTextStyles}>USA</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.flagButton}
@@ -34,7 +39,7 @@ export const CountrySelector: React.FC = () => {
                 source={{ uri: CANADA_FLAG_IMAGE }}
                 style={styles.flagImage}
               />
-              <Text style={styles.flagText}>Canada</Text>
+              <Text style={flagTextStyles}>Canada</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -59,7 +64,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 22,
     alignItems: 'center',
-    shadowColor: hostColors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -71,11 +75,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: hostColors.black,
   },
   subtitle: {
     fontSize: 16,
-    color: hostColors.gray,
     marginBottom: 20,
   },
   flagContainer: {
@@ -95,6 +97,5 @@ const styles = StyleSheet.create({
   },
   flagText: {
     fontSize: 18,
-    color: hostColors.darkGray,
   },
 });

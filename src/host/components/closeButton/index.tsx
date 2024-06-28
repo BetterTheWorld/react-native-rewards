@@ -1,15 +1,19 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { type ViewStyle } from 'react-native';
-import { hostColors } from '../../styles/colors';
+import { useTheme } from '../../hooks/theme/useTheme';
 
 export const CloseButton: React.FC<{
   onPress: () => void;
   viewContainerStyle?: ViewStyle;
 }> = ({ onPress, viewContainerStyle }) => {
+  const { colors } = useTheme();
   return (
     <View style={[styles.container, viewContainerStyle]}>
-      <TouchableOpacity style={styles.button} onPress={onPress}>
+      <TouchableOpacity
+        style={[styles.button, { shadowColor: colors.black }]}
+        onPress={onPress}
+      >
         <View style={styles.inner}>
           <Text style={styles.text}>×</Text>
         </View>
@@ -29,7 +33,6 @@ export const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: hostColors.black,
     shadowOffset: {
       width: 0,
       height: 2,
