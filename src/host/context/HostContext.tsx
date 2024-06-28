@@ -31,7 +31,6 @@ interface HostContextType {
   saveRewardsToken: ({ token, stage }: TokenInput) => Promise<void>;
   saveAuthToken: ({ token, stage }: TokenInput) => Promise<void>;
   envKeys: RewardsTypes['keys'];
-  setEnvKeys: (keys: RewardsTypes['keys']) => void;
 }
 
 const HostContext = createContext<HostContextType | undefined>(undefined);
@@ -41,19 +40,15 @@ interface HostProviderProps {
   envKeys: RewardsTypes['keys'];
 }
 
-export const HostProvider = ({
-  children,
-  envKeys: initialEnvKeys,
-}: HostProviderProps) => {
+export const HostProvider = ({ children, envKeys }: HostProviderProps) => {
   const [rewardsToken, setRewardsToken] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
-  const [envKeys, setEnvKeys] = useState<RewardsTypes['keys']>(initialEnvKeys);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const isDefaultToken =
-    rewardsToken === process.env.EXPO_PUBLIC_US_DEFAULT_REWARDS_TOKEN ||
-    rewardsToken === process.env.EXPO_PUBLIC_CA_DEFAULT_REWARDS_TOKEN;
+    rewardsToken === envKeys.REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN ||
+    rewardsToken === envKeys.REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN;
   const webViewRef = useRef<WebView>(null);
   const [uiState, updateUIstate] = useState<UIStateType>(
     UIStateType.ShowCountryPicker
@@ -132,7 +127,6 @@ export const HostProvider = ({
         setUIState,
         uiState,
         envKeys,
-        setEnvKeys,
       }}
     >
       {children}

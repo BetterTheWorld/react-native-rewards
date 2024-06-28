@@ -16,6 +16,7 @@ export function ShopRewards({ keys }: RewardsTypes) {
   if (!loadedKeys) {
     return <ModalLoader visible />;
   }
+
   return (
     <HostProvider envKeys={loadedKeys}>
       <HostCommander />

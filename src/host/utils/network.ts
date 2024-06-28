@@ -1,7 +1,13 @@
 import { GOOGLE_API_PLACE_DETAILS_URL } from '../constants/network';
 
-export const fetchInfoByPlaceId = async ({ placeId }: { placeId: string }) => {
-  const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY || '';
+export const fetchInfoByPlaceId = async ({
+  placeId,
+  googleApiKey,
+}: {
+  placeId: string;
+  googleApiKey: string;
+}) => {
+  const apiKey = googleApiKey || '';
   try {
     const response = await fetch(
       `${GOOGLE_API_PLACE_DETAILS_URL}/json?place_id=${placeId}&key=${apiKey}`

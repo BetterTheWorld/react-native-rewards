@@ -1,18 +1,27 @@
 import { useMemo } from 'react';
 import { Country, STORAGE_SELECTED_COUNTRY_KEY } from '../../constants';
 import { saveItemSecurely } from '../../utils/secureStore';
+import { useHost } from '../../context/HostContext';
 
 export const useGetCurrentCountry = () => {
+  const { envKeys } = useHost();
+
+  const { REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN } = envKeys;
+  const { REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN } = envKeys;
+
   const numberOfCountries = useMemo(() => {
     if (
-      process.env.EXPO_PUBLIC_US_DEFAULT_REWARDS_TOKEN &&
-      process.env.EXPO_PUBLIC_CA_DEFAULT_REWARDS_TOKEN
+      REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN &&
+      REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN
     ) {
       return 2;
     }
 
     return 1;
-  }, []);
+  }, [
+    REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN,
+    REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN,
+  ]);
 
   const countryList = useMemo(() => {
     if (numberOfCountries === 2) {
@@ -22,39 +31,39 @@ export const useGetCurrentCountry = () => {
           label: 'Canada',
           value: 'CA',
           formInput: Country.CAN,
-          token: process.env.EXPO_PUBLIC_CA_DEFAULT_REWARDS_TOKEN,
+          token: REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN,
         },
         {
           id: '2',
           label: 'USA',
-          value: Country.USA,
-          formInput: 'CANADA',
-          token: process.env.EXPO_PUBLIC_US_DEFAULT_REWARDS_TOKEN,
+          value: 'US',
+          formInput: Country.USA,
+          token: REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN,
         },
       ];
     }
 
     saveItemSecurely(
       STORAGE_SELECTED_COUNTRY_KEY,
-      process.env.EXPO_PUBLIC_US_DEFAULT_REWARDS_TOKEN ? 'us' : 'ca'
+      REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN ? 'us' : 'ca'
     );
 
     return [
       {
         id: '1',
-        label: process.env.EXPO_PUBLIC_US_DEFAULT_REWARDS_TOKEN
-          ? 'USA'
-          : 'Canada',
-        value: process.env.EXPO_PUBLIC_US_DEFAULT_REWARDS_TOKEN ? 'US' : 'CA',
-        formInput: process.env.EXPO_PUBLIC_US_DEFAULT_REWARDS_TOKEN
-          ? 'USA'
-          : 'CANADA',
+        label: REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN ? 'USA' : 'Canada',
+        value: REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN ? 'US' : 'CA',
+        formInput: REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN ? 'USA' : 'CANADA',
         token:
-          process.env.EXPO_PUBLIC_US_DEFAULT_REWARDS_TOKEN ||
-          process.env.EXPO_PUBLIC_CA_DEFAULT_REWARDS_TOKEN,
+          REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN ||
+          REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN,
       },
     ];
-  }, [numberOfCountries]);
+  }, [
+    REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN,
+    REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN,
+    numberOfCountries,
+  ]);
 
   return { numberOfCountries, countryList };
 };

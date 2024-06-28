@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useGetMe } from '../network/useGetMe';
 import {
   STORAGE_REWARDS_TOKEN_KEY,
@@ -17,6 +17,7 @@ export const useTokenInit = () => {
     resetToken,
     setRewardsToken,
     setAuthToken,
+    envKeys,
   } = useHost();
   const { fetchUser } = useGetMe();
 
@@ -26,9 +27,8 @@ export const useTokenInit = () => {
     )) as TokenInput | null;
 
     if (!storedRewardsToken?.token) {
-      const usToken = process.env.EXPO_PUBLIC_US_DEFAULT_REWARDS_TOKEN;
-      const cadToken = process.env.EXPO_PUBLIC_CA_DEFAULT_REWARDS_TOKEN;
-
+      const usToken = envKeys.REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN;
+      const cadToken = envKeys.REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN;
       if (usToken && cadToken) {
         setUIState(UIStateType.ShowCountryPicker);
       } else if (usToken || cadToken) {
@@ -71,14 +71,12 @@ export const useTokenInit = () => {
     return storedToken.token;
   };
 
-  const initCall = async () => {
+  const initCall = useCallback(async () => {
     setIsLoading(true);
 
     try {
       initializeRewardsToken();
       const storedAuthToken = await initializeAuthToken();
-
-      console.info('Stored auth token:', storedAuthToken);
 
       if (storedAuthToken) {
         const result = await fetchUser({ localToken: storedAuthToken });
@@ -93,12 +91,13 @@ export const useTokenInit = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [envKeys]);
 
   useEffect(() => {
     initCall();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [envKeys]);
 
   return null;
 };

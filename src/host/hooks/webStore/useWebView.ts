@@ -14,11 +14,11 @@ import { UIStateType } from '../../types/context';
 import { MessageTypes } from '../../types/messages';
 
 export function useWebView() {
-  const { rewardsToken, webViewRef, setUIState } = useHost();
+  const { rewardsToken, webViewRef, setUIState, envKeys } = useHost();
   const customToken = '';
   const utmParams = '';
   const siteConfig = {
-    base: process.env.EXPO_PUBLIC_BASE_URL,
+    base: envKeys.REWARDS_PROPS_BASE_URL,
     defaultToken: rewardsToken,
   };
   const eventRef = useRef<WebViewNativeProgressEvent>();

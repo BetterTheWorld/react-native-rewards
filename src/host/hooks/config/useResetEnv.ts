@@ -1,41 +1,57 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import type { RewardsTypes } from '../../types/modules';
+import { useHost } from '../../context/HostContext';
+import { UIStateType } from '../../types/context';
 
-interface UseResetEnv {
-  keys: RewardsTypes['keys'];
-}
+type ChangedKeys = {
+  [K in keyof RewardsTypes['keys']]?: boolean;
+};
 
-export function useResetEnv({ keys }: UseResetEnv) {
+export function useResetEnv() {
+  const { setUIState, envKeys: keys, setIsLoading } = useHost();
   const previousKeysRef = useRef<RewardsTypes['keys'] | null>(null);
+  const [changedKeys, setChangedKeys] = useState<ChangedKeys>({});
 
-  const reset = () => {
-    // Reset your app here
+  const reset = (keysThatChanged: ChangedKeys) => {
+    console.info('[useResetEnv] Reset!');
+    if (
+      keysThatChanged.REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN ||
+      keysThatChanged.REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN ||
+      keysThatChanged.REWARDS_PROPS_X_REWARDS_PARTNER_ID
+    ) {
+      setUIState(UIStateType.ShowLogout);
+    }
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const previousKeys = previousKeysRef.current;
     let keysChanged = false;
+    const keysThatChanged: ChangedKeys = {};
 
     if (previousKeys) {
       for (const key in keys) {
-        if (keys[key as keyof RewardsTypes['keys']] !== process.env[key]) {
+        if (
+          keys[key as keyof RewardsTypes['keys']] !==
+          previousKeys[key as keyof RewardsTypes['keys']]
+        ) {
           keysChanged = true;
-          break;
+          keysThatChanged[key as keyof RewardsTypes['keys']] = true;
         }
       }
     }
 
-    if (keysChanged || !previousKeys) {
-      // Llama a tu método reset aquí
-      reset();
+    if (keysChanged && previousKeys) {
+      // Call your reset method here
+      reset(keysThatChanged);
+      setChangedKeys(keysThatChanged);
     }
 
-    // Actualiza el ref para la próxima comparación
+    // Update the ref for the next comparison
     previousKeysRef.current = keys;
-
-    // Opcional: Actualiza process.env con las nuevas claves
-    Object.entries(keys).forEach(([key, value]) => {
-      process.env[key] = value;
-    });
+    setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keys]);
+
+  return { changedKeys };
 }
