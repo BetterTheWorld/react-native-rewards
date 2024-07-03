@@ -111,7 +111,8 @@
       "publish": true
     },
     "github": {
-      "release": true
+      "release": true,
+      "access": "public"
     },
     "plugins": {
       "@release-it/conventional-changelog": {
