@@ -34,6 +34,7 @@ interface HostContextType {
   saveAuthToken: ({ token, stage }: TokenInput) => Promise<void>;
   envKeys: RewardsTypes['keys'];
   theme: RewardsTypes['theme'];
+  customComponents: RewardsTypes['customComponents'];
 }
 
 const HostContext = createContext<HostContextType | undefined>(undefined);
@@ -42,12 +43,14 @@ interface HostProviderProps {
   children: ReactNode;
   envKeys: RewardsTypes['keys'];
   customTheme: RewardsTypes['theme'];
+  customComponents: RewardsTypes['customComponents'];
 }
 
 export const HostProvider = ({
   children,
   envKeys,
   customTheme,
+  customComponents,
 }: HostProviderProps) => {
   const [rewardsToken, setRewardsToken] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
@@ -132,10 +135,16 @@ export const HostProvider = ({
         uiState,
         envKeys,
         theme,
+        customComponents,
       }}
     >
       {children}
-      {isLoading && <ModalLoader visible={isLoading} />}
+      {/* is loading needed for multiple modals issue */}
+      {isLoading && customComponents?.CustomModalLoader ? (
+        <customComponents.CustomModalLoader />
+      ) : (
+        <ModalLoader visible={isLoading} />
+      )}
       {/* {error && <ModalLoader visible={true} />} */}
     </HostContext.Provider>
   );

@@ -1,6 +1,4 @@
 import React from 'react';
-// import { useEffect } from 'react';
-
 import { CountrySelector } from '../../screens/countrySelect';
 import { useHost } from '../../context/HostContext';
 import { useInitializers } from '../../hooks/context/useInitializers';
@@ -10,39 +8,49 @@ import { LogoutScreen } from '../../screens/logout';
 import { CreateTeamScreen } from '../../screens/teamForm';
 import { WebViewShop } from '../../screens/webStore/WebStore';
 import { UIStateType } from '../../types/context';
-// import { deleteItemSecurely } from '../../utils/secureStore';
-// import {
-//   STORAGE_AUTH_TOKEN_KEY,
-//   STORAGE_REWARDS_TOKEN_KEY,
-//   UI_STATE_KEY,
-// } from '../../constants';
 
 export function HostCommander() {
-  const { rewardsToken, uiState, envKeys } = useHost();
+  const { rewardsToken, uiState, envKeys, customComponents } = useHost();
   useInitializers();
-
-  // useEffect(() => {
-  //   deleteItemSecurely(STORAGE_REWARDS_TOKEN_KEY);
-  //   deleteItemSecurely(STORAGE_AUTH_TOKEN_KEY);
-  //   deleteItemSecurely(UI_STATE_KEY);
-  // }, []);
 
   const currentStep = () => {
     switch (uiState) {
       case UIStateType.ShowCountryPicker:
-        return <CountrySelector />;
+        return customComponents?.CustomCountryPicker ? (
+          <customComponents.CustomCountryPicker />
+        ) : (
+          <CountrySelector />
+        );
       case UIStateType.ShowSignUpForm:
-        return <SignUpScreen />;
+        return customComponents?.CustomSignUpScreen ? (
+          <customComponents.CustomSignUpScreen />
+        ) : (
+          <SignUpScreen />
+        );
       case UIStateType.ShowLoginForm:
-        return <SignInScreen />;
+        return customComponents?.CustomSignInScreen ? (
+          <customComponents.CustomSignInScreen />
+        ) : (
+          <SignInScreen />
+        );
       case UIStateType.ShowTeamForm:
-        return <CreateTeamScreen />;
+        return customComponents?.CustomCreateTeamScreen ? (
+          <customComponents.CustomCreateTeamScreen />
+        ) : (
+          <CreateTeamScreen />
+        );
       case UIStateType.ShowLogout:
-        return <LogoutScreen />;
+        return customComponents?.CustomLogoutScreen ? (
+          <customComponents.CustomLogoutScreen />
+        ) : (
+          <LogoutScreen />
+        );
       case UIStateType.ShowStore:
       default:
+        const WebViewComponent =
+          customComponents?.CustomWebViewShop || WebViewShop;
         return (
-          <WebViewShop
+          <WebViewComponent
             baseURL={`${envKeys.REWARDS_PROPS_BASE_URL}/?token=${rewardsToken}`}
           />
         );

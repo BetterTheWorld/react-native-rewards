@@ -3,7 +3,7 @@ import { useSignIn } from '../network/useLoginUser';
 import { useHost } from '../../context/HostContext';
 import { TokenStage, UIStateType } from '../../types/context';
 
-interface SignInFormValues {
+export interface SignInFormValues {
   email: string;
   password: string;
 }

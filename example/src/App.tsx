@@ -1,7 +1,10 @@
-import * as React from 'react';
-
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { ShopRewards } from '@flipgive/react-native-rewards';
+import { CustomCountryPicker } from './custom/CustomCountryPicker';
+import { CustomSignInScreen } from './custom/CustomSignInScreen';
+import { CustomSignUpScreen } from './custom/CustomSignUpScreen';
+import { CustomCreateTeamScreen } from './custom/CustomCreateTeamScreen';
+import { CustomModalLoader } from './custom/CustomModalLoader';
 
 export default function App() {
   return (
@@ -21,8 +24,15 @@ export default function App() {
         }}
         theme={{
           colors: {
-            primaryColor: 'cyan',
+            primaryColor: 'peru',
           },
+        }}
+        customComponents={{
+          CustomCountryPicker,
+          CustomSignInScreen,
+          CustomSignUpScreen,
+          CustomCreateTeamScreen,
+          CustomModalLoader,
         }}
       />
     </SafeAreaView>
