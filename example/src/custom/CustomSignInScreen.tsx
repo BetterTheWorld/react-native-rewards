@@ -7,7 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
-import { useSignInForm } from '@flipgive/react-native-rewards';
+import { useSignInForm } from '@flipgive/react-native-rewards/hooks';
 
 export function CustomSignInScreen() {
   const { onSubmit, onSignUpPress, isLoading, onClosePress, error } =

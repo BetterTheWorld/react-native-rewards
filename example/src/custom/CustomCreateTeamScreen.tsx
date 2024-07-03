@@ -12,8 +12,8 @@ import {
   useCreateTeamForm,
   useGetCategories,
   useCityAutocomplete,
-  type Category,
-} from '@flipgive/react-native-rewards';
+} from '@flipgive/react-native-rewards/hooks';
+import type { Category } from '@flipgive/react-native-rewards/types';
 
 export function CustomCreateTeamScreen() {
   const {

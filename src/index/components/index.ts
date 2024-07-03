@@ -1,0 +1,1 @@
+export { ShopRewards } from './ShopRewards';

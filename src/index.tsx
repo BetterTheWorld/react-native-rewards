@@ -1,3 +1,3 @@
-export { ShopRewards } from './modules/shopRewards';
-export * from './types';
-export * from './modules/hooks';
+export * from './index/components';
+export * from './index/types';
+export * from './index/hooks';
