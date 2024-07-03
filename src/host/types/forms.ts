@@ -41,7 +41,7 @@ export interface SignUpFormValues {
   password: string;
 }
 
-export interface UserInput {
+export interface UserCreateInput {
   email: string;
   password: string;
   full_name: string;
@@ -117,4 +117,31 @@ interface Data {
 
 export interface UserResponse {
   data: Data;
+}
+
+export interface UserLoginInput {
+  email: string;
+  password: string;
+}
+
+export interface SignInStatus {
+  code: number;
+  message: string;
+  data?: {
+    user: User;
+  };
+}
+
+export interface SignInResponse {
+  status: SignInStatus;
+  authHeader: string;
+}
+
+export interface SignInError {
+  error: string;
+}
+
+export interface SignInFormValues {
+  email: string;
+  password: string;
 }

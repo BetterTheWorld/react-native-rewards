@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type {
   CreateUserResponse,
   UserCreateStatus,
-  UserInput,
+  UserCreateInput,
 } from '../../types/forms';
 import { useHost } from '../../context/HostContext';
 
@@ -14,7 +14,7 @@ export const useCreateUser = () => {
   const [status, setStatus] = useState<UserCreateStatus | null>(null);
 
   const createUser = async (
-    userData: UserInput
+    userData: UserCreateInput
   ): Promise<CreateUserResponse | void> => {
     setIsLoading(true);
 
