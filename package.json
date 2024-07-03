@@ -44,7 +44,7 @@
     "url": "git+https://github.com/BetterTheWorld/react-native-rewards.git"
   },
   "author": "FlipGive <ddiaz@flipgive.com> (https://github.com/BetterTheWorld)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/BetterTheWorld/react-native-rewards/issues"
   },
