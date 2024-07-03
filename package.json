@@ -108,11 +108,11 @@
       "tagName": "v${version}"
     },
     "npm": {
-      "publish": true
+      "publish": true,
+      "access": "public"
     },
     "github": {
-      "release": true,
-      "access": "public"
+      "release": true
     },
     "plugins": {
       "@release-it/conventional-changelog": {
