@@ -51,7 +51,7 @@ export interface UserCreateInput {
   state: string | null;
 }
 
-interface ActiveCampaign {
+export interface ActiveCampaign {
   id: number;
   name: string;
   sport_category: string;
@@ -64,7 +64,7 @@ interface ActiveCampaign {
   rewards_partner_id: string;
 }
 
-interface UserCreateData {
+export interface UserCreateData {
   id: number;
   email: string;
   full_name: string;
@@ -111,7 +111,7 @@ export interface User {
   rewards_partner: RewardsPartner;
 }
 
-interface Data {
+export interface Data {
   user: User;
 }
 
