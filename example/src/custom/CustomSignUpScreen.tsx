@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { useSignUpForm } from '@flipgive/react-native-rewards';
+import { useSignUpForm } from '@flipgive/react-native-rewards/hooks';
 
 export function CustomSignUpScreen() {
   const {

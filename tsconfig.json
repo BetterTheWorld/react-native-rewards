@@ -2,7 +2,11 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "@flipgive/react-native-rewards": ["./src/index"]
+      "@flipgive/react-native-rewards": ["./src/index"],
+      "@flipgive/react-native-rewards/components": ["./src/index/components"],
+      "@flipgive/react-native-rewards/hooks": ["./src/index/hooks"],
+      "@flipgive/react-native-rewards/types": ["./src/index/types"],
+      "@flipgive/react-native-rewards/utils": ["./src/index/utils"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

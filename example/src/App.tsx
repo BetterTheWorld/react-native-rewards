@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { ShopRewards } from '@flipgive/react-native-rewards';
+import { ShopRewards } from '@flipgive/react-native-rewards/components';
 import { CustomCountryPicker } from './custom/CustomCountryPicker';
 import { CustomSignInScreen } from './custom/CustomSignInScreen';
 import { CustomSignUpScreen } from './custom/CustomSignUpScreen';
