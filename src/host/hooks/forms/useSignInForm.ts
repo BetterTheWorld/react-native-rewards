@@ -2,11 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useSignIn } from '../network/useLoginUser';
 import { useHost } from '../../context/HostContext';
 import { TokenStage, UIStateType } from '../../types/context';
-
-export interface SignInFormValues {
-  email: string;
-  password: string;
-}
+import type { SignInFormValues } from '../../types/forms';
 
 export const useSignInForm = () => {
   const {

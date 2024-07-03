@@ -41,7 +41,7 @@ export interface SignUpFormValues {
   password: string;
 }
 
-export interface UserInput {
+export interface UserCreateInput {
   email: string;
   password: string;
   full_name: string;
@@ -51,7 +51,7 @@ export interface UserInput {
   state: string | null;
 }
 
-interface ActiveCampaign {
+export interface ActiveCampaign {
   id: number;
   name: string;
   sport_category: string;
@@ -64,7 +64,7 @@ interface ActiveCampaign {
   rewards_partner_id: string;
 }
 
-interface UserCreateData {
+export interface UserCreateData {
   id: number;
   email: string;
   full_name: string;
@@ -111,10 +111,37 @@ export interface User {
   rewards_partner: RewardsPartner;
 }
 
-interface Data {
+export interface Data {
   user: User;
 }
 
 export interface UserResponse {
   data: Data;
+}
+
+export interface UserLoginInput {
+  email: string;
+  password: string;
+}
+
+export interface SignInStatus {
+  code: number;
+  message: string;
+  data?: {
+    user: User;
+  };
+}
+
+export interface SignInResponse {
+  status: SignInStatus;
+  authHeader: string;
+}
+
+export interface SignInError {
+  error: string;
+}
+
+export interface SignInFormValues {
+  email: string;
+  password: string;
 }

@@ -1,28 +1,11 @@
 import { useState } from 'react';
-import type { User } from '../../types/forms';
 import { useHost } from '../../context/HostContext';
-
-interface UserInput {
-  email: string;
-  password: string;
-}
-
-interface SignInStatus {
-  code: number;
-  message: string;
-  data?: {
-    user: User;
-  };
-}
-
-interface SignInResponse {
-  status: SignInStatus;
-  authHeader: string;
-}
-
-interface SignInError {
-  error: string;
-}
+import type {
+  SignInError,
+  SignInResponse,
+  SignInStatus,
+  UserLoginInput,
+} from '../../types/forms';
 
 export const useSignIn = () => {
   const { envKeys } = useHost();
@@ -32,7 +15,7 @@ export const useSignIn = () => {
   const [status, setStatus] = useState<SignInStatus | null>(null);
 
   const signIn = async (
-    userData: UserInput
+    userData: UserLoginInput
   ): Promise<SignInResponse | void> => {
     setIsLoading(true);
 

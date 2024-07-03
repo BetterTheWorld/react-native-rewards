@@ -1,6 +1,6 @@
 import { Button, Text, View } from 'react-native';
 import { useCountrySelect } from '@flipgive/react-native-rewards/hooks';
-import { Country } from '@flipgive/react-native-rewards/types';
+import { Country } from '@flipgive/react-native-rewards/constants';
 
 export function CustomCountryPicker() {
   const { onSelectCountry } = useCountrySelect();

@@ -6,7 +6,8 @@
       "@flipgive/react-native-rewards/components": ["./src/index/components"],
       "@flipgive/react-native-rewards/hooks": ["./src/index/hooks"],
       "@flipgive/react-native-rewards/types": ["./src/index/types"],
-      "@flipgive/react-native-rewards/utils": ["./src/index/utils"]
+      "@flipgive/react-native-rewards/utils": ["./src/index/utils"],
+      "@flipgive/react-native-rewards/constants": ["./src/index/constants"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
