@@ -23,7 +23,7 @@ export const CountrySelector: React.FC = () => {
           <View style={styles.flagContainer}>
             <TouchableOpacity
               style={styles.flagButton}
-              onPress={onSelectCountry(Country.USA)}
+              onPress={() => onSelectCountry(Country.USA)}
             >
               <Image
                 source={{ uri: USA_FLAG_IMAGE }}
@@ -33,7 +33,7 @@ export const CountrySelector: React.FC = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.flagButton}
-              onPress={onSelectCountry(Country.CAN)}
+              onPress={() => onSelectCountry(Country.CAN)}
             >
               <Image
                 source={{ uri: CANADA_FLAG_IMAGE }}

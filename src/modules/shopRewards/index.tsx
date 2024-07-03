@@ -6,7 +6,7 @@ import { HostProvider } from '../../host/context/HostContext';
 import { useLoadKeysToEnv } from '../../host/hooks/config/useLoadEnvKeys';
 import type { RewardsTypes } from '../../host/types/modules';
 
-export function ShopRewards({ keys, theme }: RewardsTypes) {
+export function ShopRewards({ keys, theme, customComponents }: RewardsTypes) {
   const { loadedKeys } = useLoadKeysToEnv(keys);
 
   if (!keys) {
@@ -18,7 +18,11 @@ export function ShopRewards({ keys, theme }: RewardsTypes) {
   }
 
   return (
-    <HostProvider envKeys={loadedKeys} customTheme={theme}>
+    <HostProvider
+      envKeys={loadedKeys}
+      customTheme={theme}
+      customComponents={customComponents}
+    >
       <HostCommander />
     </HostProvider>
   );

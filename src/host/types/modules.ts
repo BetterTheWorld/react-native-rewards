@@ -1,4 +1,5 @@
 import type { hostColors } from '../styles/colors';
+import type { ComponentType } from 'react';
 
 export interface RewardsTypes {
   keys: {
@@ -11,5 +12,14 @@ export interface RewardsTypes {
   };
   theme?: {
     colors?: Partial<typeof hostColors>;
+  };
+  customComponents?: {
+    CustomCountryPicker?: ComponentType;
+    CustomSignUpScreen?: ComponentType;
+    CustomSignInScreen?: ComponentType;
+    CustomCreateTeamScreen?: ComponentType;
+    CustomLogoutScreen?: ComponentType;
+    CustomWebViewShop?: ComponentType<{ baseURL: string }>;
+    CustomModalLoader?: ComponentType;
   };
 }

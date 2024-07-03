@@ -130,5 +130,6 @@ export const useCreateTeamForm = () => {
     countryList,
     getValues,
     teamCreateError,
+    setValue,
   };
 };
