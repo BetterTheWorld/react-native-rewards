@@ -40,11 +40,7 @@ export function HostCommander() {
           <CreateTeamScreen />
         );
       case UIStateType.ShowLogout:
-        return customComponents?.CustomLogoutScreen ? (
-          <customComponents.CustomLogoutScreen />
-        ) : (
-          <LogoutScreen />
-        );
+        return <LogoutScreen />;
       case UIStateType.ShowStore:
       default:
         const WebViewComponent =

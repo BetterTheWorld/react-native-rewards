@@ -6,7 +6,7 @@ import { useHost } from '../../context/HostContext';
 import { UIStateType } from '../../types/context';
 
 export function LogoutScreen() {
-  const { resetToken, setUIState } = useHost();
+  const { resetToken, setUIState, customComponents } = useHost();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -24,5 +24,9 @@ export function LogoutScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <ModalLoader visible={loading} text="Logging out" />;
+  return customComponents?.CustomLogoutScreen ? (
+    <customComponents.CustomLogoutScreen />
+  ) : (
+    <ModalLoader visible={loading} text="Logging out" />
+  );
 }
