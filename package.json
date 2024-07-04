@@ -2,6 +2,7 @@
   "name": "@flipgive/react-native-rewards",
   "version": "0.1.0",
   "description": "React native module for rewards partners",
+  "private": false,
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
