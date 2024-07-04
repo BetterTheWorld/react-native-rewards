@@ -113,6 +113,15 @@ export const HostProvider = ({
     }
   };
 
+  const renderModalLoader = () => {
+    if (!isLoading) return null;
+
+    if (customComponents?.CustomModalLoader)
+      return <customComponents.CustomModalLoader />;
+
+    return <ModalLoader visible={isLoading} />;
+  };
+
   return (
     <HostContext.Provider
       value={{
@@ -140,11 +149,7 @@ export const HostProvider = ({
     >
       {children}
       {/* is loading needed for multiple modals issue */}
-      {isLoading && customComponents?.CustomModalLoader ? (
-        <customComponents.CustomModalLoader />
-      ) : (
-        <ModalLoader visible={isLoading} />
-      )}
+      {renderModalLoader()}
       {/* {error && <ModalLoader visible={true} />} */}
     </HostContext.Provider>
   );
