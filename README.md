@@ -24,6 +24,17 @@ or
 pnpm add @flipgive/react-native-rewards
 ```
 
+### Requirements
+
+To use this package, ensure you have the following components installed in your project:
+
+#### Peer Dependencies
+
+These dependencies need to be manually installed in your project:
+
+- expo-secure-store
+- react-native-webview
+
 ### Usage
 
 Here's a quick example to get you started:
