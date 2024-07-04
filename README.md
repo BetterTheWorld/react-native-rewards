@@ -41,7 +41,7 @@ Here's a quick example to get you started:
 
 ```ts
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { ShopRewards } from '@flipgive/react-native-rewards/components';
+import { ShopRewards } from '@flipgive/react-native-rewards';
 
 export default function App() {
   return (
@@ -68,7 +68,15 @@ const styles = StyleSheet.create({
 
 ```
 
-for more information go to the examples folder
+for more information go to the examples folder.
+
+For now it is necessary to use this entry point for all imports until the split imports task is completed.
+
+```ts
+import { ShopRewards..... } from '@flipgive/react-native-rewards'
+```
+
+This package is compatible with expo go - expo snacks
 
 ### 📚 API Reference
 
@@ -118,7 +126,11 @@ without warranties or conditions of any kind, either express or implied.
 see the license for the specific language governing permissions and
 limitations under the license.
 
----
+```
+
+### TODO
+
+- Test
+- Split modules (working on example app, but not in npm package import)
 
 Made with ❤️ by [create-react-native-library](https://github.com/callstack/react-native-builder-bob).
-```
