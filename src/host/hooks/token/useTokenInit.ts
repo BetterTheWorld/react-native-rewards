@@ -9,7 +9,7 @@ import { useHost } from '../../context/HostContext';
 import { type TokenInput, UIStateType, TokenStage } from '../../types/context';
 import { getItemSecurely } from '../../utils/secureStore';
 
-export const useTokenInit = () => {
+export const useTokenInit = ({ automatic = true }: { automatic: boolean }) => {
   const {
     setIsLoading,
     setUIState,
@@ -37,6 +37,7 @@ export const useTokenInit = () => {
           token,
           stage: TokenStage.defaultPartner,
         });
+        setUIState(UIStateType.ShowStore);
       } else {
         resetToken(TokenTypes.REWARDS);
         console.error(
@@ -95,9 +96,10 @@ export const useTokenInit = () => {
   }, [envKeys]);
 
   useEffect(() => {
+    if (!automatic) return;
     initCall();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [envKeys]);
 
-  return null;
+  return { initializeRewardsToken };
 };

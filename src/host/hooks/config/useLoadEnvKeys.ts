@@ -1,18 +1,14 @@
 import { useEffect, useState, useCallback } from 'react';
 import type { RewardsTypes } from '../../types/modules';
 import { saveItemSecurely } from '../../utils/secureStore';
+import ConfigManager from '../../utils/config/ConfigManager';
 
-type RewardsKeys = {
-  [key: string]: string;
-};
+type RewardsKeys = RewardsTypes['keys'];
+type RewardsK = keyof RewardsKeys;
 
-type RewardsK = keyof RewardsTypes['keys'];
-
-export function useLoadKeysToEnv(keys: RewardsTypes['keys'] | undefined) {
-  const [loadedKeys, setLoadedKeys] = useState<RewardsTypes['keys'] | null>(
-    null
-  );
-  const [isLoading, setIsloading] = useState<boolean>(true);
+export function useLoadKeysToEnv(keys: RewardsKeys | undefined) {
+  const [loadedKeys, setLoadedKeys] = useState<RewardsKeys | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const saveKeysToStorage = useCallback(async (newKeys: RewardsKeys) => {
     const keysToBeSaved: RewardsK[] = [
@@ -25,7 +21,7 @@ export function useLoadKeysToEnv(keys: RewardsTypes['keys'] | undefined) {
         await saveItemSecurely(key, newKeys[key] || '');
       }
     }
-    setIsloading(false);
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -33,8 +29,10 @@ export function useLoadKeysToEnv(keys: RewardsTypes['keys'] | undefined) {
       if (!keys) {
         return;
       }
-      setIsloading(true);
-      await saveKeysToStorage(keys as RewardsKeys);
+      setIsLoading(true);
+      // Initialize ConfigManager with the keys
+      ConfigManager.getInstance(keys);
+      await saveKeysToStorage(keys);
       setLoadedKeys(keys);
     };
     loadKeys();

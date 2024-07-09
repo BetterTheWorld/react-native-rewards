@@ -1,4 +1,10 @@
 import * as SecureStore from 'expo-secure-store';
+import ConfigManager from './config/ConfigManager';
+
+const getPartnerId = () => {
+  const config = ConfigManager.getInstance();
+  return config.getPartnerId();
+};
 
 /**
  * Saves a value securely on the device.
@@ -10,8 +16,10 @@ export const saveItemSecurely = async (
   value: string
 ): Promise<void> => {
   try {
-    await SecureStore.setItemAsync(key, value);
-    console.log(`Successfully stored ${key}`);
+    const partnerId = getPartnerId();
+    const prefixedKey = `${partnerId}_${key}`;
+    await SecureStore.setItemAsync(prefixedKey, value);
+    console.log(`Successfully stored ${prefixedKey}`);
   } catch (error) {
     console.error('Failed to save the item:', error);
   }
@@ -26,8 +34,10 @@ export const getItemSecurely = async <T>(
   key: string
 ): Promise<T | string | null> => {
   try {
-    const value = await SecureStore.getItemAsync(key);
-    console.log(`Successfully retrieved ${key}: ${value}`);
+    const partnerId = getPartnerId();
+    const prefixedKey = `${partnerId}_${key}`;
+    const value = await SecureStore.getItemAsync(prefixedKey);
+    console.log(`Successfully retrieved ${prefixedKey}: ${value}`);
     try {
       return value !== null ? (JSON.parse(value) as T) : null;
     } catch {
@@ -45,8 +55,10 @@ export const getItemSecurely = async <T>(
  */
 export const deleteItemSecurely = async (key: string): Promise<void> => {
   try {
-    await SecureStore.deleteItemAsync(key);
-    console.log(`Successfully deleted ${key}`);
+    const partnerId = getPartnerId();
+    const prefixedKey = `${partnerId}_${key}`;
+    await SecureStore.deleteItemAsync(prefixedKey);
+    console.log(`Successfully deleted ${prefixedKey}`);
   } catch (error) {
     console.error('Failed to delete the item:', error);
   }
