@@ -3,20 +3,21 @@ import { useEffect, useState } from 'react';
 import { ModalLoader } from '../../components/ModalLoader';
 import { TokenTypes } from '../../constants';
 import { useHost } from '../../context/HostContext';
-import { UIStateType } from '../../types/context';
+import { useTokenInit } from '../../hooks/token/useTokenInit';
 
 export function LogoutScreen() {
-  const { resetToken, setUIState, customComponents } = useHost();
+  const { resetToken, customComponents } = useHost();
   const [loading, setLoading] = useState(false);
+  const { initializeRewardsToken } = useTokenInit({ automatic: false });
 
   useEffect(() => {
-    const resetAuth = () => {
+    const resetAuth = async () => {
       setLoading(true);
-      resetToken(TokenTypes.AUTH);
-      resetToken(TokenTypes.REWARDS);
-      setTimeout(() => {
+      await resetToken(TokenTypes.AUTH);
+      await resetToken(TokenTypes.REWARDS);
+      setTimeout(async () => {
+        await initializeRewardsToken();
         setLoading(false);
-        setUIState(UIStateType.ShowCountryPicker);
       }, 1500);
     };
 
