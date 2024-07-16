@@ -4,3 +4,6 @@ export { useCountrySelect } from '../../host/hooks/token/useCountrySelect';
 export { useCreateTeamForm } from '../../host/hooks/forms/useCreateTeamForm';
 export { useGetCategories } from '../../host/hooks/network/useGetCategories';
 export { useCityAutocomplete } from '../../host/hooks/network/useCityAutocomplete';
+export { useHost } from '../../host/context/HostContext';
+// TODO: move to provider folder
+export { HostProvider } from '../../host/context/HostContext';
