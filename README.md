@@ -101,6 +101,7 @@ This package is compatible with expo go - expo snacks
 | `useCreateTeamForm`   | Hook for managing team creation form.            |
 | `useGetCategories`    | Hook for fetching categories.                    |
 | `useCityAutocomplete` | Hook for city autocomplete feature - google api. |
+| `useHost`             | Hook for context usage                           |
 
 ## Contributing
 
