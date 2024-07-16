@@ -14,7 +14,7 @@ import { saveItemSecurely, deleteItemSecurely } from '../utils/secureStore';
 import type { RewardsTypes } from '../types/modules';
 import { useThemeChange } from '../hooks/config/useThemeChanged';
 
-interface HostContextType {
+export interface HostContextType {
   authToken: string | null;
   rewardsToken: string | null;
   isLoading: boolean;
