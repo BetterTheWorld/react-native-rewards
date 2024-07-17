@@ -36,7 +36,6 @@ export const useCityAutocomplete = ({
         }
 
         const data = await response.json();
-        console.log(data);
         setPredictions(
           data.predictions.map((prediction: any) => ({
             description: prediction.description,

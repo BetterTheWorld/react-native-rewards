@@ -48,6 +48,10 @@ export const useSignInForm = () => {
     setUIState(UIStateType.ShowSignUpForm);
   };
 
+  const onResetPasswordPress = () => {
+    setUIState(UIStateType.ShowForgotPassword);
+  };
+
   const onClosePress = () => {
     setUIState(UIStateType.ShowStore);
   };
@@ -63,5 +67,6 @@ export const useSignInForm = () => {
     onSubmit,
     onSignUpPress,
     onClosePress,
+    onResetPasswordPress,
   };
 };

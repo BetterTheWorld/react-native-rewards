@@ -8,6 +8,7 @@ import { LogoutScreen } from '../../screens/logout';
 import { CreateTeamScreen } from '../../screens/teamForm';
 import { WebViewShop } from '../../screens/webStore/WebStore';
 import { UIStateType } from '../../types/context';
+import { ForgotPasswordScreen } from '../../screens/forgotPassword';
 
 export function HostCommander() {
   const { rewardsToken, uiState, envKeys, customComponents } = useHost();
@@ -42,6 +43,12 @@ export function HostCommander() {
           <customComponents.CustomCreateTeamScreen />
         ) : (
           <CreateTeamScreen />
+        );
+      case UIStateType.ShowForgotPassword:
+        return customComponents?.CustomForgotPasswordScreen ? (
+          <customComponents.CustomForgotPasswordScreen />
+        ) : (
+          <ForgotPasswordScreen />
         );
       case UIStateType.ShowLogout:
         return <LogoutScreen />;
