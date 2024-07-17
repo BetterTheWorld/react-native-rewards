@@ -5,6 +5,7 @@ export enum UIStateType {
   ShowTeamForm = 'showTeamForm',
   ShowStore = 'showStore',
   ShowLogout = 'showLogout',
+  ShowInitialScreen = 'showInitialScreen',
 }
 
 export enum TokenStage {

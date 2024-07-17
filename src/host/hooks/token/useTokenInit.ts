@@ -18,6 +18,7 @@ export const useTokenInit = ({ automatic = true }: { automatic: boolean }) => {
     setRewardsToken,
     setAuthToken,
     envKeys,
+    customComponents,
   } = useHost();
   const { fetchUser } = useGetMe();
 
@@ -37,6 +38,13 @@ export const useTokenInit = ({ automatic = true }: { automatic: boolean }) => {
           token,
           stage: TokenStage.defaultPartner,
         });
+
+        // killswitch for custom initial screen
+        if (customComponents?.CustomInitialScreen) {
+          setUIState(UIStateType.ShowInitialScreen);
+          return;
+        }
+
         setUIState(UIStateType.ShowStore);
       } else {
         resetToken(TokenTypes.REWARDS);
@@ -53,6 +61,14 @@ export const useTokenInit = ({ automatic = true }: { automatic: boolean }) => {
 
     // loads the token from storage
     setRewardsToken(storedRewardsToken.token);
+
+    // killswitch for custom initial screen
+    if (customComponents?.CustomInitialScreen) {
+      setUIState(UIStateType.ShowInitialScreen);
+      return;
+    }
+
+    // if not custom initial screen, show store
     setUIState(UIStateType.ShowStore);
   };
 
