@@ -25,6 +25,7 @@ export const SignInScreen: React.FC = () => {
     onSubmit,
     onSignUpPress,
     onClosePress,
+    onResetPasswordPress,
   } = useSignInForm();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { colors } = useTheme();
@@ -130,6 +131,13 @@ export const SignInScreen: React.FC = () => {
               <Text>Don't have an account?{'  '}</Text>
               <TouchableOpacity onPress={onSignUpPress}>
                 <Text style={{ color: colors.primaryColor }}>Sign up</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.signUpContainer}>
+              <Text>Forgot password?{'  '}</Text>
+              <TouchableOpacity onPress={onResetPasswordPress}>
+                <Text style={{ color: colors.primaryColor }}>Reset it</Text>
               </TouchableOpacity>
             </View>
           </View>

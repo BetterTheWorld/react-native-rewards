@@ -6,3 +6,4 @@ export { useGetCategories } from '../../host/hooks/network/useGetCategories';
 export { useCityAutocomplete } from '../../host/hooks/network/useCityAutocomplete';
 export { useHost } from '../../host/context/HostContext';
 export { useLoadKeysToEnv } from '../../host/hooks/config/useLoadEnvKeys';
+export { useResetPassword } from '../../host/hooks/network/useResetPassword';

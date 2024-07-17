@@ -82,17 +82,18 @@ This package is compatible with expo go - expo snacks
 
 ## Components
 
-| Component                | Description                                     |
-| ------------------------ | ----------------------------------------------- |
-| `ShopRewards`            | Main component to display rewards.              |
-| `CustomCountryPicker`    | Custom picker for selecting country.            |
-| `CustomSignInScreen`     | Custom screen for sign-in.                      |
-| `CustomSignUpScreen`     | Custom screen for sign-up.                      |
-| `CustomCreateTeamScreen` | Custom screen for creating teams.               |
-| `CustomModalLoader`      | Custom modal loader component.                  |
-| `CustomInitialScreen`    | Custom initial component. (before shop render)  |
-| `ShopRewardsProvider`    | Highly Customizable Store Provider              |
-| `ShopRewardsProvider`    | Highly Customizable Store Provider with helpers |
+| Component                    | Description                                    |
+| ---------------------------- | ---------------------------------------------- |
+| `ShopRewards`                | Main component to display rewards.             |
+| `CustomCountryPicker`        | Custom picker for selecting country.           |
+| `CustomSignInScreen`         | Custom screen for sign-in.                     |
+| `CustomSignUpScreen`         | Custom screen for sign-up.                     |
+| `CustomCreateTeamScreen`     | Custom screen for creating teams.              |
+| `CustomModalLoader`          | Custom modal loader component.                 |
+| `CustomInitialScreen`        | Custom initial component. (before shop render) |
+| `CustomForgotPasswordScreen` | Custom forgot password component               |
+| `ShopRewardsProvider`        | Highly Customizable Store Provider             |
+| `FadeWrapper`                | fade animation wrapper for views               |
 
 ## Hooks
 
@@ -106,6 +107,7 @@ This package is compatible with expo go - expo snacks
 | `useCityAutocomplete` | Hook for city autocomplete feature - google api.              |
 | `useHost`             | Hook for context usage                                        |
 | `useLoadKeysToEnv`    | Hook for Resetting Environment and Local Storage on New Props |
+| `useResetPassword`    | Hook for resetting password                                   |
 
 ## Context
 

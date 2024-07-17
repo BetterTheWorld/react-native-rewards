@@ -6,6 +6,7 @@ export enum UIStateType {
   ShowStore = 'showStore',
   ShowLogout = 'showLogout',
   ShowInitialScreen = 'showInitialScreen',
+  ShowForgotPassword = 'showForgotPassword',
 }
 
 export enum TokenStage {

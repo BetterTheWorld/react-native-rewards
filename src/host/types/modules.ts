@@ -22,5 +22,6 @@ export interface RewardsTypes {
     CustomWebViewShop?: ComponentType<{ baseURL: string }>;
     CustomModalLoader?: ComponentType;
     CustomInitialScreen?: ComponentType;
+    CustomForgotPasswordScreen?: ComponentType;
   };
 }
