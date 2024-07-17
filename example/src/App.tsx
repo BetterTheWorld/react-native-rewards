@@ -1,5 +1,6 @@
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { ShopRewards } from '@flipgive/react-native-rewards/components';
+// import { CustomInitialScreen } from './custom/CustomInitialScreen';
 // import { CustomCountryPicker } from './custom/CustomCountryPicker';
 // import { CustomSignInScreen } from './custom/CustomSignInScreen';
 // import { CustomSignUpScreen } from './custom/CustomSignUpScreen';
@@ -28,11 +29,12 @@ export default function App() {
         //   },
         // }}
         // customComponents={{
-        //   CustomCountryPicker,
-        //   CustomSignInScreen,
-        //   CustomSignUpScreen,
-        //   CustomCreateTeamScreen,
-        //   CustomModalLoader,
+        //   // CustomCountryPicker,
+        //   // CustomSignInScreen,
+        //   // CustomSignUpScreen,
+        //   // CustomCreateTeamScreen,
+        //   // CustomModalLoader,
+        //   // CustomInitialScreen,
         // }}
       />
     </SafeAreaView>

@@ -15,6 +15,10 @@ export function HostCommander() {
 
   const currentStep = () => {
     switch (uiState) {
+      case UIStateType.ShowInitialScreen:
+        return customComponents?.CustomInitialScreen ? (
+          <customComponents.CustomInitialScreen />
+        ) : null;
       case UIStateType.ShowCountryPicker:
         return customComponents?.CustomCountryPicker ? (
           <customComponents.CustomCountryPicker />

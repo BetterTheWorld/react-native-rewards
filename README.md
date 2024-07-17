@@ -82,26 +82,36 @@ This package is compatible with expo go - expo snacks
 
 ## Components
 
-| Component                | Description                          |
-| ------------------------ | ------------------------------------ |
-| `ShopRewards`            | Main component to display rewards.   |
-| `CustomCountryPicker`    | Custom picker for selecting country. |
-| `CustomSignInScreen`     | Custom screen for sign-in.           |
-| `CustomSignUpScreen`     | Custom screen for sign-up.           |
-| `CustomCreateTeamScreen` | Custom screen for creating teams.    |
-| `CustomModalLoader`      | Custom modal loader component.       |
+| Component                | Description                                     |
+| ------------------------ | ----------------------------------------------- |
+| `ShopRewards`            | Main component to display rewards.              |
+| `CustomCountryPicker`    | Custom picker for selecting country.            |
+| `CustomSignInScreen`     | Custom screen for sign-in.                      |
+| `CustomSignUpScreen`     | Custom screen for sign-up.                      |
+| `CustomCreateTeamScreen` | Custom screen for creating teams.               |
+| `CustomModalLoader`      | Custom modal loader component.                  |
+| `CustomInitialScreen`    | Custom initial component. (before shop render)  |
+| `ShopRewardsProvider`    | Highly Customizable Store Provider              |
+| `ShopRewardsProvider`    | Highly Customizable Store Provider with helpers |
 
 ## Hooks
 
-| Hook                  | Description                                      |
-| --------------------- | ------------------------------------------------ |
-| `useSignUpForm`       | Hook for managing sign-up form.                  |
-| `useSignInForm`       | Hook for managing sign-in form.                  |
-| `useCountrySelect`    | Hook for selecting countries.                    |
-| `useCreateTeamForm`   | Hook for managing team creation form.            |
-| `useGetCategories`    | Hook for fetching categories.                    |
-| `useCityAutocomplete` | Hook for city autocomplete feature - google api. |
-| `useHost`             | Hook for context usage                           |
+| Hook                  | Description                                                   |
+| --------------------- | ------------------------------------------------------------- |
+| `useSignUpForm`       | Hook for managing sign-up form.                               |
+| `useSignInForm`       | Hook for managing sign-in form.                               |
+| `useCountrySelect`    | Hook for selecting countries.                                 |
+| `useCreateTeamForm`   | Hook for managing team creation form.                         |
+| `useGetCategories`    | Hook for fetching categories.                                 |
+| `useCityAutocomplete` | Hook for city autocomplete feature - google api.              |
+| `useHost`             | Hook for context usage                                        |
+| `useLoadKeysToEnv`    | Hook for Resetting Environment and Local Storage on New Props |
+
+## Context
+
+| Componet       | Description   |
+| -------------- | ------------- |
+| `HostProvider` | Bare provider |
 
 ## Contributing
 

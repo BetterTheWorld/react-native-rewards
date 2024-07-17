@@ -5,5 +5,4 @@ export { useCreateTeamForm } from '../../host/hooks/forms/useCreateTeamForm';
 export { useGetCategories } from '../../host/hooks/network/useGetCategories';
 export { useCityAutocomplete } from '../../host/hooks/network/useCityAutocomplete';
 export { useHost } from '../../host/context/HostContext';
-// TODO: move to provider folder
-export { HostProvider } from '../../host/context/HostContext';
+export { useLoadKeysToEnv } from '../../host/hooks/config/useLoadEnvKeys';

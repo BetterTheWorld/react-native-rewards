@@ -4,7 +4,8 @@ import { UIStateType } from '../../types/context';
 import { saveItemSecurely } from '../../utils/secureStore';
 
 export const useCountrySelect = () => {
-  const { selectCountryToken, setUIState, envKeys } = useHost();
+  const { selectCountryToken, setUIState, envKeys, customComponents } =
+    useHost();
 
   const onSelectCountry = (country: Country) => {
     const token =
@@ -14,7 +15,12 @@ export const useCountrySelect = () => {
 
     if (token) {
       selectCountryToken(token);
-      setUIState(UIStateType.ShowStore);
+      // killswitch for custom initial screen
+      if (customComponents?.CustomInitialScreen) {
+        setUIState(UIStateType.ShowInitialScreen);
+      } else {
+        setUIState(UIStateType.ShowStore);
+      }
     }
 
     saveItemSecurely(STORAGE_SELECTED_COUNTRY_KEY, country);
