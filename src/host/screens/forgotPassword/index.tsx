@@ -14,8 +14,8 @@ import { useTheme } from '../../hooks/theme/useTheme';
 import { useResetPassword } from '../../hooks/network/useResetPassword';
 import { FadeWrapper } from '../../components/animation/FadeWrapper';
 import { CloseButton } from '../../components/closeButton';
-import { useHost } from '@flipgive/react-native-rewards/hooks';
-import { UIStateType } from '@flipgive/react-native-rewards/types';
+import { useHost } from '../../context/HostContext';
+import { UIStateType } from '../../types/context';
 
 type ForgotPasswordFormData = {
   email: string;

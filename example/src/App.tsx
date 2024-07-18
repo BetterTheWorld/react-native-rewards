@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { ShopRewards } from '@flipgive/react-native-rewards/components';
-import { CustomForgotPasswordScreen } from './custom/CustomForgotPasswordScreen';
+// import { CustomForgotPasswordScreen } from './custom/CustomForgotPasswordScreen';
 // import { CustomInitialScreen } from './custom/CustomInitialScreen';
 // import { CustomCountryPicker } from './custom/CustomCountryPicker';
 // import { CustomSignInScreen } from './custom/CustomSignInScreen';
@@ -29,15 +29,15 @@ export default function App() {
         //     primaryColor: 'peru',
         //   },
         // }}
-        customComponents={{
-          // CustomCountryPicker,
-          // CustomSignInScreen,
-          // CustomSignUpScreen,
-          // CustomCreateTeamScreen,
-          // CustomModalLoader,
-          // CustomInitialScreen,
-          CustomForgotPasswordScreen,
-        }}
+        // customComponents={{
+        //   // CustomCountryPicker,
+        //   // CustomSignInScreen,
+        //   // CustomSignUpScreen,
+        //   // CustomCreateTeamScreen,
+        //   // CustomModalLoader,
+        //   // CustomInitialScreen,
+        //   // CustomForgotPasswordScreen,
+        // }}
       />
     </SafeAreaView>
   );
