@@ -29,8 +29,6 @@ export const ForgotPasswordScreen: React.FC = () => {
   const { isLoading, error, status, sendResetPasswordInstructions, response } =
     useResetPassword();
 
-  console.info('ForgotPasswordScreen: isLoading', response);
-
   const onSubmit = async (data: ForgotPasswordFormData) => {
     await sendResetPasswordInstructions(data);
   };
