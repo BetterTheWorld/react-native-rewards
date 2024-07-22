@@ -24,4 +24,5 @@ export interface RewardsTypes {
     CustomInitialScreen?: ComponentType;
     CustomForgotPasswordScreen?: ComponentType;
   };
+  utmParameters?: string;
 }

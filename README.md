@@ -78,22 +78,54 @@ import { ShopRewards..... } from '@flipgive/react-native-rewards'
 
 This package is compatible with expo go - expo snacks
 
-### 📚 API Reference
+# Shop rewards - RewardsTypes
+
+## Keys
+
+| Property                               | Type   | Required |
+| -------------------------------------- | ------ | -------- |
+| REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN | string | No       |
+| REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN | string | No       |
+| REWARDS_PROPS_BASE_URL                 | string | Yes      |
+| REWARDS_PROPS_GOOGLE_API_KEY           | string | No       |
+| REWARDS_PROPS_API_URL                  | string | Yes      |
+| REWARDS_PROPS_X_REWARDS_PARTNER_ID     | string | Yes      |
+
+## Theme
+
+| Property | Type                       | Required |
+| -------- | -------------------------- | -------- |
+| colors   | Partial<typeof hostColors> | No       |
+
+## Custom Components
+
+| Component                  | Type                               | Required |
+| -------------------------- | ---------------------------------- | -------- |
+| CustomCountryPicker        | ComponentType                      | No       |
+| CustomSignUpScreen         | ComponentType                      | No       |
+| CustomSignInScreen         | ComponentType                      | No       |
+| CustomCreateTeamScreen     | ComponentType                      | No       |
+| CustomLogoutScreen         | ComponentType                      | No       |
+| CustomWebViewShop          | ComponentType<{ baseURL: string }> | No       |
+| CustomModalLoader          | ComponentType                      | No       |
+| CustomInitialScreen        | ComponentType                      | No       |
+| CustomForgotPasswordScreen | ComponentType                      | No       |
+
+## Additional Properties
+
+| Property      | Type   | Required |
+| ------------- | ------ | -------- |
+| utmParameters | string | No       |
+
+# 📚 API Reference
 
 ## Components
 
-| Component                    | Description                                    |
-| ---------------------------- | ---------------------------------------------- |
-| `ShopRewards`                | Main component to display rewards.             |
-| `CustomCountryPicker`        | Custom picker for selecting country.           |
-| `CustomSignInScreen`         | Custom screen for sign-in.                     |
-| `CustomSignUpScreen`         | Custom screen for sign-up.                     |
-| `CustomCreateTeamScreen`     | Custom screen for creating teams.              |
-| `CustomModalLoader`          | Custom modal loader component.                 |
-| `CustomInitialScreen`        | Custom initial component. (before shop render) |
-| `CustomForgotPasswordScreen` | Custom forgot password component               |
-| `ShopRewardsProvider`        | Highly Customizable Store Provider             |
-| `FadeWrapper`                | fade animation wrapper for views               |
+| Component             | Description                        |
+| --------------------- | ---------------------------------- |
+| `ShopRewards`         | Main component to display rewards. |
+| `ShopRewardsProvider` | Highly Customizable Store Provider |
+| `FadeWrapper`         | fade animation wrapper for views   |
 
 ## Hooks
 
