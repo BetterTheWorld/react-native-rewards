@@ -11,7 +11,7 @@ import { UIStateType } from '../../types/context';
 import { ForgotPasswordScreen } from '../../screens/forgotPassword';
 
 export function HostCommander() {
-  const { rewardsToken, uiState, envKeys, customComponents } = useHost();
+  const { uiState, envKeys, customComponents } = useHost();
   useInitializers();
 
   const currentStep = () => {
@@ -56,11 +56,7 @@ export function HostCommander() {
       default:
         const WebViewComponent =
           customComponents?.CustomWebViewShop || WebViewShop;
-        return (
-          <WebViewComponent
-            baseURL={`${envKeys.REWARDS_PROPS_BASE_URL}/?token=${rewardsToken}`}
-          />
-        );
+        return <WebViewComponent baseURL={envKeys.REWARDS_PROPS_BASE_URL} />;
     }
   };
 

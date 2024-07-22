@@ -14,9 +14,9 @@ import { UIStateType } from '../../types/context';
 import { MessageTypes } from '../../types/messages';
 
 export function useWebView() {
-  const { rewardsToken, webViewRef, setUIState, envKeys } = useHost();
-  const customToken = '';
-  const utmParams = '';
+  const { rewardsToken, webViewRef, setUIState, envKeys, utmParameters } =
+    useHost();
+  const customToken = rewardsToken;
   const siteConfig = {
     base: envKeys.REWARDS_PROPS_BASE_URL,
     defaultToken: rewardsToken,
@@ -127,24 +127,14 @@ export function useWebView() {
         );
       }
 
-      if (utmParams) {
-        url = new URL(`${url.href}&${utmParams}`);
+      if (utmParameters) {
+        url = new URL(`${url.href}&${utmParameters}`);
       }
 
       return url;
     },
-    [siteConfig.base, siteConfig.defaultToken]
+    [customToken, siteConfig.base, siteConfig.defaultToken, utmParameters]
   );
-
-  const resetWebViewHistory = useCallback(() => {
-    // reset props if deeplinkUrl is present
-
-    webViewRef.current?.clearCache?.(true);
-    webViewRef.current?.clearHistory?.();
-    setTimeout(() => {
-      webViewRef.current?.reload?.();
-    }, 200);
-  }, [webViewRef]);
 
   return {
     onNavigationStateChange,
@@ -159,7 +149,6 @@ export function useWebView() {
     animatedHeight,
     animatedOpacity,
     animatedTranslateY,
-    resetWebViewHistory,
     handleMessage,
     goBackHandler,
     handleCloseModal,

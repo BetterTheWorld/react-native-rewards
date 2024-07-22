@@ -35,6 +35,7 @@ export interface HostContextType {
   envKeys: RewardsTypes['keys'];
   theme: RewardsTypes['theme'];
   customComponents: RewardsTypes['customComponents'];
+  utmParameters?: string;
 }
 
 const HostContext = createContext<HostContextType | undefined>(undefined);
@@ -44,6 +45,7 @@ interface HostProviderProps {
   envKeys: RewardsTypes['keys'];
   customTheme: RewardsTypes['theme'];
   customComponents: RewardsTypes['customComponents'];
+  utmParameters?: string;
 }
 
 export const HostProvider = ({
@@ -51,6 +53,7 @@ export const HostProvider = ({
   envKeys,
   customTheme,
   customComponents,
+  utmParameters,
 }: HostProviderProps) => {
   const [rewardsToken, setRewardsToken] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
@@ -145,6 +148,7 @@ export const HostProvider = ({
         envKeys,
         theme,
         customComponents,
+        utmParameters,
       }}
     >
       {children}
