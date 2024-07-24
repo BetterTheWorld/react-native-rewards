@@ -7,3 +7,4 @@ export { useCityAutocomplete } from '../../host/hooks/network/useCityAutocomplet
 export { useHost } from '../../host/context/HostContext';
 export { useLoadKeysToEnv } from '../../host/hooks/config/useLoadEnvKeys';
 export { useResetPassword } from '../../host/hooks/network/useResetPassword';
+export { useUpdateDeviceInfo } from '../../host/hooks/network/updateDeviceInfo';
