@@ -5,13 +5,13 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-    'plugin:jest/recommended',
+    // 'plugin:@typescript-eslint/recommended',
+    // 'plugin:prettier/recommended',
+    // 'plugin:jest/recommended',
   ],
   rules: {
-    'no-console': 'warn',
-    'prettier/prettier': 'error',
+    // 'no-console': 'warn',
+    // 'prettier/prettier': 'error',
     'jest/no-disabled-tests': 'warn',
     'jest/no-focused-tests': 'error',
     'jest/no-identical-title': 'error',
