@@ -129,17 +129,18 @@ This package is compatible with expo go - expo snacks
 
 ## Hooks
 
-| Hook                  | Description                                                   |
-| --------------------- | ------------------------------------------------------------- |
-| `useSignUpForm`       | Hook for managing sign-up form.                               |
-| `useSignInForm`       | Hook for managing sign-in form.                               |
-| `useCountrySelect`    | Hook for selecting countries.                                 |
-| `useCreateTeamForm`   | Hook for managing team creation form.                         |
-| `useGetCategories`    | Hook for fetching categories.                                 |
-| `useCityAutocomplete` | Hook for city autocomplete feature - google api.              |
-| `useHost`             | Hook for context usage                                        |
-| `useLoadKeysToEnv`    | Hook for Resetting Environment and Local Storage on New Props |
-| `useResetPassword`    | Hook for resetting password                                   |
+| Hook                  | Description                                                                                                  |
+| --------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `useSignUpForm`       | Hook for managing sign-up form.                                                                              |
+| `useSignInForm`       | Hook for managing sign-in form.                                                                              |
+| `useCountrySelect`    | Hook for selecting countries.                                                                                |
+| `useCreateTeamForm`   | Hook for managing team creation form.                                                                        |
+| `useGetCategories`    | Hook for fetching categories.                                                                                |
+| `useCityAutocomplete` | Hook for city autocomplete feature - google api.                                                             |
+| `useHost`             | Hook for context usage                                                                                       |
+| `useLoadKeysToEnv`    | Hook for Resetting Environment and Local Storage on New Props                                                |
+| `useResetPassword`    | Hook for resetting password                                                                                  |
+| `useUpdateDeviceInfo` | Hook for register push token into our cloud solution, ` updateDeviceInfo({ device: { fcm_token: '1234' } })` |
 
 ## Context
 
