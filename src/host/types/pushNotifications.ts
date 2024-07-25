@@ -12,10 +12,6 @@ export interface DeviceUpdateInputPayload {
     fcm_token: string;
     device_id: string;
   };
-  // TODO: remove after endpoint fix
-  user: {
-    first_name: string;
-  };
 }
 
 export interface UpdateDeviceInfoResponseData {
