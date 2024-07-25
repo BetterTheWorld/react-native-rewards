@@ -61,9 +61,6 @@ export const useUpdateDeviceInfo = () => {
         ...input.device,
         device_id: storedDeviceId,
       },
-      user: {
-        first_name: 'John', // TODO: remove after endpoint fix
-      },
     };
 
     const options = {
