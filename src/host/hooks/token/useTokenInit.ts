@@ -8,6 +8,7 @@ import {
 import { useHost } from '../../context/HostContext';
 import { type TokenInput, UIStateType, TokenStage } from '../../types/context';
 import { getItemSecurely } from '../../utils/secureStore';
+import { useCountryField } from '../forms/useContrySelect';
 
 export const useTokenInit = ({ automatic = true }: { automatic: boolean }) => {
   const {
@@ -21,6 +22,7 @@ export const useTokenInit = ({ automatic = true }: { automatic: boolean }) => {
     customComponents,
   } = useHost();
   const { fetchUser } = useGetMe();
+  useCountryField(); // initialize country field
 
   const initializeRewardsToken = async () => {
     const storedRewardsToken = (await getItemSecurely(
