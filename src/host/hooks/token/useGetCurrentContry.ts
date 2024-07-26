@@ -45,7 +45,7 @@ export const useGetCurrentCountry = () => {
 
     saveItemSecurely(
       STORAGE_SELECTED_COUNTRY_KEY,
-      REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN ? 'us' : 'ca'
+      REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN ? Country.USA : Country.CAN
     );
 
     return [

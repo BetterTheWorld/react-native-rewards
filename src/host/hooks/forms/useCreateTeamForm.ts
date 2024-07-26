@@ -98,8 +98,6 @@ export const useCreateTeamForm = () => {
 
       const response = await createTeam(teamCreateInput);
 
-      console.info('createTeam response', response);
-
       if (response?.ok) {
         setUIState(UIStateType.ShowStore);
       }

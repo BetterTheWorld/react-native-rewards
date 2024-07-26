@@ -82,8 +82,6 @@ export const useSignUpForm = () => {
       state: null,
     });
 
-    console.info('Create user success:', success);
-
     if (success && success.authHeader) {
       saveAuthToken({
         token: success.authHeader,
