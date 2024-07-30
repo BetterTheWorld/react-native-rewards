@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Text } from 'react-native';
 import { ModalLoader } from '../../host/components/ModalLoader';
 import { HostCommander } from '../../host/components/hostCommander';
@@ -12,7 +12,8 @@ export function ShopRewards({
   customComponents,
   utmParameters,
 }: RewardsTypes) {
-  const { loadedKeys } = useLoadKeysToEnv(keys);
+  const memoizedKeys = useMemo(() => keys, [keys]);
+  const { loadedKeys } = useLoadKeysToEnv(memoizedKeys);
 
   if (!keys) {
     return <Text>Error: Please add keys props</Text>;
