@@ -149,7 +149,7 @@ export const SignUpScreen: React.FC = () => {
                 styles.signupButton,
                 { backgroundColor: colors.primaryColor },
               ]}
-              onPress={handleSubmit(onSubmit)}
+              onPress={handleSubmit((data) => onSubmit(data))}
               disabled={isLoadingForm || newtworkIsLoading}
             >
               <Text style={styles.signupButtonText}>

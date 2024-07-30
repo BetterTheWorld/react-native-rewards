@@ -68,7 +68,10 @@ export const useSignUpForm = () => {
     setUIState(UIStateType.ShowStore);
   };
 
-  const onSubmit = async (data: SignUpFormValues) => {
+  const onSubmit = async (
+    data: SignUpFormValues,
+    onSuccess?: () => Promise<void>
+  ) => {
     const selectedCountry =
       (await getItemSecurely<string>(STORAGE_SELECTED_COUNTRY_KEY)) || '';
 
@@ -87,6 +90,10 @@ export const useSignUpForm = () => {
         token: success.authHeader,
         stage: TokenStage.loginAuth,
       });
+    }
+
+    if (success && onSuccess) {
+      await onSuccess();
     }
 
     if (success && success.data.rewards_token) {

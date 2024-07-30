@@ -13,7 +13,10 @@ export const useSignInForm = () => {
   const { isLoading, response, error, status, signIn } = useSignIn();
   const { setUIState, saveAuthToken, saveRewardsToken } = useHost();
 
-  const onSubmit = async (data: SignInFormValues) => {
+  const onSubmit = async (
+    data: SignInFormValues,
+    onSuccess?: () => Promise<void>
+  ) => {
     const result = await signIn(data);
     if (result) {
       const user = result.status.data?.user;
@@ -30,6 +33,10 @@ export const useSignInForm = () => {
           token: result.authHeader,
           stage: TokenStage.loginAuth,
         });
+      }
+
+      if (onSuccess) {
+        await onSuccess();
       }
 
       if (!user?.active_campaign?.id) {
