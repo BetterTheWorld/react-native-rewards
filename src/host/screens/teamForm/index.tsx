@@ -45,7 +45,7 @@ export const CreateTeamScreen: React.FC = () => {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoidingView}
-        keyboardVerticalOffset={100}
+        keyboardVerticalOffset={10}
       >
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           <View style={[styles.card, { shadowColor: colors.black }]}>
