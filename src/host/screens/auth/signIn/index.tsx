@@ -115,7 +115,7 @@ export const SignInScreen: React.FC = () => {
                 styles.loginButton,
                 { backgroundColor: colors.primaryColor },
               ]}
-              onPress={handleSubmit(onSubmit)}
+              onPress={handleSubmit((data) => onSubmit(data))}
               disabled={isLoading}
             >
               <Text style={styles.loginButtonText}>

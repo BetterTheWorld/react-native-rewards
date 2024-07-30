@@ -16,7 +16,9 @@ export function CustomSignInScreen() {
   const [password, setPassword] = useState('');
 
   const handleSubmit = () => {
-    onSubmit({ email, password });
+    onSubmit({ email, password }, async () => {
+      console.log('Logged in successfully! :D');
+    });
   };
 
   return (
