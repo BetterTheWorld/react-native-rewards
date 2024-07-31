@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { HostCommander } from '../../host/components/hostCommander';
 import { HostProvider } from '../../host/context/HostContext';
 import { useLoadKeysToEnv } from '../../host/hooks/config/useLoadEnvKeys';
@@ -19,7 +19,11 @@ export function ShopRewards({
   }
 
   if (!loadedKeys) {
-    return customComponents?.CustomModalLoader || null;
+    return customComponents?.CustomModalLoader ? (
+      <customComponents.CustomModalLoader />
+    ) : (
+      <View />
+    );
   }
 
   return (
