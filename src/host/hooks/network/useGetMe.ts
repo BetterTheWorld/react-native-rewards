@@ -30,6 +30,7 @@ export const useGetMe = () => {
         }
 
         const { data }: UserResponse = await response.json();
+        console.info('[useGetMe]', data);
         setUserData(data.user);
         return data;
       } catch (error) {

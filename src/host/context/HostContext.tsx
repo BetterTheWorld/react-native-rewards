@@ -78,23 +78,18 @@ export const HostProvider = ({
   };
 
   const saveAuthToken = async ({ token, stage }: TokenInput) => {
-    setIsLoading(true);
     const tokenInfo = JSON.stringify({ token, stage });
     setAuthToken(token);
     saveItemSecurely(STORAGE_AUTH_TOKEN_KEY, tokenInfo);
-    setIsLoading(false);
   };
 
   const saveRewardsToken = async ({ token, stage }: TokenInput) => {
-    setIsLoading(true);
     const tokenInfo = JSON.stringify({ token, stage });
     saveItemSecurely(STORAGE_REWARDS_TOKEN_KEY, tokenInfo);
     setRewardsToken(token);
-    setIsLoading(false);
   };
 
   const resetToken = async (tokenType: TokenTypes) => {
-    setIsLoading(true);
     deleteItemSecurely(
       tokenType === TokenTypes.REWARDS
         ? STORAGE_REWARDS_TOKEN_KEY
@@ -106,8 +101,6 @@ export const HostProvider = ({
     } else {
       setAuthToken(null);
     }
-
-    setIsLoading(false);
   };
 
   const refreshWebView = () => {

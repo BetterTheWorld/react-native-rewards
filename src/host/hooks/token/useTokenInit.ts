@@ -94,9 +94,8 @@ export const useTokenInit = ({ automatic = true }: { automatic: boolean }) => {
     setIsLoading(true);
 
     try {
-      initializeRewardsToken();
+      await initializeRewardsToken();
       const storedAuthToken = await initializeAuthToken();
-
       if (storedAuthToken) {
         const result = await fetchUser({ localToken: storedAuthToken });
         const campaignId = result?.user?.active_campaign?.id;
