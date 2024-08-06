@@ -49,6 +49,7 @@ export const useCreateUser = () => {
           message: `HTTP error! status: ${fetchResponse.status || fetchResponse.statusText}`,
           code: fetchResponse.status,
         });
+        setResponse(data);
       } else {
         setResponse({ ...data, authHeader });
         setStatus({ message: 'Success', code: 200 });
