@@ -25,7 +25,6 @@ export function useResetEnv() {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     const previousKeys = previousKeysRef.current;
     let keysChanged = false;
     let keysThatChanged: ChangedKeys = {};
@@ -36,12 +35,13 @@ export function useResetEnv() {
     }
 
     if (keysChanged && previousKeys) {
+      setIsLoading(true);
       reset(keysThatChanged);
       setChangedKeys(keysThatChanged);
+      setIsLoading(false);
     }
 
     previousKeysRef.current = keys;
-    setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keys]);
 
