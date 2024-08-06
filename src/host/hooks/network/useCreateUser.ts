@@ -17,6 +17,7 @@ export const useCreateUser = () => {
     userData: UserCreateInput
   ): Promise<CreateUserResponse | void> => {
     setIsLoading(true);
+    setError(null);
 
     const url = envKeys.REWARDS_PROPS_API_URL + '/users';
     const headers = {
