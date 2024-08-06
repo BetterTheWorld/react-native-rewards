@@ -2480,6 +2480,7 @@ __metadata:
     "@types/jest": ^29.5.5
     "@types/react": ^18.2.44
     "@types/uuid": ^10.0.0
+    "@xstate/react": ^4.1.1
     babel-plugin-transform-remove-console: ^6.9.4
     commitlint: ^17.0.2
     del-cli: ^5.1.0
@@ -2498,6 +2499,7 @@ __metadata:
     release-it: ^15.0.0
     typescript: ^5.2.2
     uuid: ^10.0.0
+    xstate: ^5.17.1
   peerDependencies:
     expo-secure-store: "*"
     react: "*"
@@ -4457,6 +4459,22 @@ __metadata:
   version: 0.7.13
   resolution: "@xmldom/xmldom@npm:0.7.13"
   checksum: b4054078530e5fa8ede9677425deff0fce6d965f4c477ca73f8490d8a089e60b8498a15560425a1335f5ff99ecb851ed2c734b0a9a879299a5694302f212f37a
+  languageName: node
+  linkType: hard
+
+"@xstate/react@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "@xstate/react@npm:4.1.1"
+  dependencies:
+    use-isomorphic-layout-effect: ^1.1.2
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    xstate: ^5.11.0
+  peerDependenciesMeta:
+    xstate:
+      optional: true
+  checksum: c590140c9319daa6ea277a5e153b584e2212dcac69e65a7e8df21b13005bc6b7b5ea4895f6e1b8800fb66d488ca67674e864b05f73d8cf46c252db26591b8c95
   languageName: node
   linkType: hard
 
@@ -17356,6 +17374,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"use-isomorphic-layout-effect@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "use-isomorphic-layout-effect@npm:1.1.2"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: a6532f7fc9ae222c3725ff0308aaf1f1ddbd3c00d685ef9eee6714fd0684de5cb9741b432fbf51e61a784e2955424864f7ea9f99734a02f237b17ad3e18ea5cb
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.2.0":
+  version: 1.2.2
+  resolution: "use-sync-external-store@npm:1.2.2"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: fe07c071c4da3645f112c38c0e57beb479a8838616ff4e92598256ecce527f2888c08febc7f9b2f0ce2f0e18540ba3cde41eb2035e4fafcb4f52955037098a81
+  languageName: node
+  linkType: hard
+
 "util-deprecate@npm:^1.0.1, util-deprecate@npm:^1.0.2, util-deprecate@npm:~1.0.1":
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
@@ -18014,6 +18053,13 @@ __metadata:
   version: 11.0.1
   resolution: "xmlbuilder@npm:11.0.1"
   checksum: 7152695e16f1a9976658215abab27e55d08b1b97bca901d58b048d2b6e106b5af31efccbdecf9b07af37c8377d8e7e821b494af10b3a68b0ff4ae60331b415b0
+  languageName: node
+  linkType: hard
+
+"xstate@npm:^5.17.1":
+  version: 5.17.1
+  resolution: "xstate@npm:5.17.1"
+  checksum: 113a609ef96c426af8ddb626172cd6415bfd78e3bd9022c501b16fe29402b169dc96912e006dcfa0bc0073b208d7edc2dcb1745283bd58bfacaf228d7d89e91b
   languageName: node
   linkType: hard
 

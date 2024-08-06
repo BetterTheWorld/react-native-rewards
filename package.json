@@ -80,9 +80,11 @@
     "@types/react": "^18.2.44"
   },
   "dependencies": {
+    "@xstate/react": "^4.1.1",
     "react-hook-form": "^7.52.0",
     "react-native-get-random-values": "^1.11.0",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "xstate": "^5.17.1"
   },
   "peerDependencies": {
     "expo-secure-store": "*",

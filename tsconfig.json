@@ -10,6 +10,7 @@
       "@flipgive/react-native-rewards/constants": ["./src/index/constants"],
       "@flipgive/react-native-rewards/context": ["./src/index/context"]
     },
+    "strictNullChecks": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "esModuleInterop": true,
