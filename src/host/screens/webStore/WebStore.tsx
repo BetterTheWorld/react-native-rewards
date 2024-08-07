@@ -19,6 +19,7 @@ export function WebViewShop({
     onWebViewScroll,
     getURL,
     handleMessage,
+    onError,
   } = useWebView();
   const webViewURL = getURL(baseURL);
 
@@ -52,6 +53,7 @@ export function WebViewShop({
         onTouchEnd={onTouchEvent('end')}
         webviewDebuggingEnabled={__DEV__}
         onMessage={handleMessage}
+        onError={onError}
         {...webviewProps}
       />
     </FadeWrapper>
