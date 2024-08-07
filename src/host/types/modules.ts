@@ -25,4 +25,5 @@ export interface RewardsTypes {
     CustomForgotPasswordScreen?: ComponentType;
   };
   utmParameters?: string;
+  children?: React.ReactNode;
 }

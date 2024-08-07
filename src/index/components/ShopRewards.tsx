@@ -10,6 +10,7 @@ export function ShopRewards({
   theme,
   customComponents,
   utmParameters,
+  children,
 }: RewardsTypes) {
   const memoizedKeys = useMemo(() => keys, [keys]);
   const { loadedKeys } = useLoadKeysToEnv(memoizedKeys);
@@ -34,6 +35,7 @@ export function ShopRewards({
       utmParameters={utmParameters}
     >
       <HostCommander />
+      {children}
     </HostProvider>
   );
 }
