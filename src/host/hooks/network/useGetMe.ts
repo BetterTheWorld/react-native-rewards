@@ -3,7 +3,7 @@ import { useHost } from '../../context/HostContext';
 import type { User, UserResponse } from '../../types/forms';
 
 export const useGetMe = () => {
-  const { authToken, envKeys } = useHost();
+  const { authToken, envKeys, setUser } = useHost();
   const [userData, setUserData] = useState<User>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -32,6 +32,7 @@ export const useGetMe = () => {
         const { data }: UserResponse = await response.json();
         console.info('[useGetMe]', data);
         setUserData(data.user);
+        setUser(data.user);
         return data;
       } catch (error) {
         console.error('Failed to fetch user:', error);
@@ -40,7 +41,7 @@ export const useGetMe = () => {
         setIsLoading(false);
       }
     },
-    [authToken, envKeys.REWARDS_PROPS_API_URL]
+    [authToken, envKeys.REWARDS_PROPS_API_URL, setUser]
   );
 
   useEffect(() => {
