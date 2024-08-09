@@ -13,6 +13,7 @@ import { UIStateType, type TokenInput, TokenStage } from '../types/context';
 import { saveItemSecurely, deleteItemSecurely } from '../utils/secureStore';
 import type { RewardsTypes } from '../types/modules';
 import { useThemeChange } from '../hooks/config/useThemeChanged';
+import type { User } from '../types/forms';
 
 export interface HostContextType {
   authToken: string | null;
@@ -36,6 +37,8 @@ export interface HostContextType {
   theme: RewardsTypes['theme'];
   customComponents: RewardsTypes['customComponents'];
   utmParameters?: string;
+  user?: User;
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
 }
 
 const HostContext = createContext<HostContextType | undefined>(undefined);
@@ -67,6 +70,7 @@ export const HostProvider = ({
     UIStateType.ShowCountryPicker
   );
   const { theme } = useThemeChange(customTheme);
+  const [user, setUser] = useState<User | undefined>(undefined);
 
   const setUIState = (newState: UIStateType) => {
     updateUIstate(newState);
@@ -142,6 +146,8 @@ export const HostProvider = ({
         theme,
         customComponents,
         utmParameters,
+        user,
+        setUser,
       }}
     >
       {children}

@@ -2,7 +2,6 @@ import { useCallback, useRef, useState } from 'react';
 import { Linking, Platform } from 'react-native';
 import { type WebViewNavigation } from 'react-native-webview';
 import {
-  type WebViewErrorEvent,
   type WebViewMessageEvent,
   type WebViewNativeProgressEvent,
   type WebViewProgressEvent,
@@ -137,34 +136,6 @@ export function useWebView() {
     [customToken, siteConfig.base, siteConfig.defaultToken, utmParameters]
   );
 
-  const onError = useCallback(
-    (syntheticEvent: WebViewErrorEvent) => {
-      const { nativeEvent } = syntheticEvent;
-
-      console.warn('WebView error:', nativeEvent);
-
-      if (
-        nativeEvent.code === -1 &&
-        nativeEvent.description === 'ERR_CACHE_MISS'
-      ) {
-        console.warn(
-          'WebView encountered ERR_CACHE_MISS. Attempting to clear cache and reload.'
-        );
-
-        if (webViewRef.current) {
-          // Clear cache
-          webViewRef?.current?.clearCache?.(true);
-
-          // Reload the WebView
-          webViewRef.current.reload();
-        }
-      } else {
-        console.error('WebView error:', nativeEvent);
-      }
-    },
-    [webViewRef]
-  );
-
   return {
     onNavigationStateChange,
     onLoadProgress,
@@ -183,6 +154,5 @@ export function useWebView() {
     handleCloseModal,
     isModalVisible,
     handlePromptSubmit,
-    onError,
   };
 }
