@@ -19,7 +19,7 @@ export const useKeychainCleanup = ({
   shouldResetKeychain: boolean;
   keys: RewardsKeys | undefined;
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const cleanupSecureStore = async () => {
     try {
