@@ -4,8 +4,27 @@ import { HostCommander } from '../../host/components/hostCommander';
 import { HostProvider } from '../../host/context/HostContext';
 import { useLoadKeysToEnv } from '../../host/hooks/config/useLoadEnvKeys';
 import type { RewardsTypes } from '../../host/types/modules';
+import { useKeychainCleanup } from '../../host/hooks/config/useCleanKeyChain';
 
-export function ShopRewards({
+export function ShopRewards({ ...props }: RewardsTypes) {
+  const { customComponents, options } = props;
+  const { isLoading: isCleaningStorage } = useKeychainCleanup({
+    shouldResetKeychain: options?.shouldResetKeychain ?? false,
+    keys: props.keys,
+  });
+
+  if (isCleaningStorage) {
+    return customComponents?.CustomModalLoader ? (
+      <customComponents.CustomModalLoader />
+    ) : (
+      <View />
+    );
+  }
+
+  return <ShopRewardsRender {...props} />;
+}
+
+function ShopRewardsRender({
   keys,
   theme,
   customComponents,

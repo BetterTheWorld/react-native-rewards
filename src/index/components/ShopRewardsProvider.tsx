@@ -1,26 +1,48 @@
-import React, { type PropsWithChildren } from 'react';
-import { Text } from 'react-native';
-import { ModalLoader } from '../../host/components/ModalLoader';
+import React, { useMemo } from 'react';
+import { Text, View } from 'react-native';
 import { HostProvider } from '../../host/context/HostContext';
 import { useLoadKeysToEnv } from '../../host/hooks/config/useLoadEnvKeys';
 import type { RewardsTypes } from '../../host/types/modules';
+import { useKeychainCleanup } from '../../host/hooks/config/useCleanKeyChain';
 
-type ShopProviderProps = PropsWithChildren<RewardsTypes>;
+export function ShopRewardsProvider({ ...props }: RewardsTypes) {
+  const { customComponents, options } = props;
+  const { isLoading: isCleaningStorage } = useKeychainCleanup({
+    shouldResetKeychain: options?.shouldResetKeychain ?? false,
+    keys: props.keys,
+  });
 
-export function ShopRewardsProvider({
+  if (isCleaningStorage) {
+    return customComponents?.CustomModalLoader ? (
+      <customComponents.CustomModalLoader />
+    ) : (
+      <View />
+    );
+  }
+
+  return <ShopRewardsRenderProvider {...props} />;
+}
+
+function ShopRewardsRenderProvider({
   keys,
   theme,
   customComponents,
+  utmParameters,
   children,
-}: ShopProviderProps) {
-  const { loadedKeys } = useLoadKeysToEnv(keys);
+}: RewardsTypes) {
+  const memoizedKeys = useMemo(() => keys, [keys]);
+  const { loadedKeys } = useLoadKeysToEnv(memoizedKeys);
 
   if (!keys) {
     return <Text>Error: Please add keys props</Text>;
   }
 
   if (!loadedKeys) {
-    return <ModalLoader visible />;
+    return customComponents?.CustomModalLoader ? (
+      <customComponents.CustomModalLoader />
+    ) : (
+      <View />
+    );
   }
 
   return (
@@ -28,6 +50,7 @@ export function ShopRewardsProvider({
       envKeys={loadedKeys}
       customTheme={theme}
       customComponents={customComponents}
+      utmParameters={utmParameters}
     >
       {children}
     </HostProvider>

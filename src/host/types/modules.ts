@@ -26,4 +26,7 @@ export interface RewardsTypes {
   };
   utmParameters?: string;
   children?: React.ReactNode;
+  options?: {
+    shouldResetKeychain?: boolean;
+  };
 }
