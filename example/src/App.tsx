@@ -39,6 +39,9 @@ export default function App() {
         //   // CustomInitialScreen,
         //   // CustomForgotPasswordScreen,
         // }}
+        // options={{
+        //   shouldResetKeychain: true,
+        // }}
       />
     </SafeAreaView>
   );

@@ -117,6 +117,12 @@ This package is compatible with expo go - expo snacks
 | ------------- | ------ | -------- |
 | utmParameters | string | No       |
 
+## Options
+
+| Property            | Type    | Required |
+| ------------------- | ------- | -------- |
+| shouldResetKeychain | boolean | No       |
+
 # 📚 API Reference
 
 ## Components
