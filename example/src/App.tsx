@@ -1,5 +1,6 @@
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { ShopRewards } from '@flipgive/react-native-rewards/components';
+import { useFirstRun } from './useFirstRun';
 // import { CustomForgotPasswordScreen } from './custom/CustomForgotPasswordScreen';
 // import { CustomInitialScreen } from './custom/CustomInitialScreen';
 // import { CustomCountryPicker } from './custom/CustomCountryPicker';
@@ -9,6 +10,12 @@ import { ShopRewards } from '@flipgive/react-native-rewards/components';
 // import { CustomModalLoader } from './custom/CustomModalLoader';
 
 export default function App() {
+  const { isFirstRun, isLoading } = useFirstRun();
+
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ShopRewards
@@ -39,9 +46,9 @@ export default function App() {
         //   // CustomInitialScreen,
         //   // CustomForgotPasswordScreen,
         // }}
-        // options={{
-        //   shouldResetKeychain: true,
-        // }}
+        options={{
+          shouldResetKeychain: isFirstRun,
+        }}
       />
     </SafeAreaView>
   );
