@@ -84,7 +84,7 @@ export const useSignUpForm = () => {
       postal_code: '',
       city: '',
       state: null,
-      utm_data: data.utmData,
+      utm_data: data.utmData ?? null,
     });
 
     if (success && success.authHeader) {
