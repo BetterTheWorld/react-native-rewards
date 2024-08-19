@@ -14,8 +14,7 @@ import { UIStateType } from '../../types/context';
 import { MessageTypes } from '../../types/messages';
 
 export function useWebView() {
-  const { rewardsToken, webViewRef, setUIState, envKeys, utmParameters } =
-    useHost();
+  const { rewardsToken, webViewRef, setUIState, envKeys } = useHost();
   const customToken = rewardsToken;
   const siteConfig = {
     base: envKeys.REWARDS_PROPS_BASE_URL,
@@ -127,13 +126,9 @@ export function useWebView() {
         );
       }
 
-      if (utmParameters) {
-        url = new URL(`${url.href}&${utmParameters}`);
-      }
-
       return url;
     },
-    [customToken, siteConfig.base, siteConfig.defaultToken, utmParameters]
+    [customToken, siteConfig.base, siteConfig.defaultToken]
   );
 
   return {

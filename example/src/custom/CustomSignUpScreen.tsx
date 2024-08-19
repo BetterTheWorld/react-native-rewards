@@ -54,7 +54,14 @@ export function CustomSignUpScreen() {
     }
 
     if (isValid) {
-      onSubmit({ fullName, email, password });
+      onSubmit({
+        fullName,
+        email,
+        password,
+        utmData: {
+          source: 'test',
+        },
+      });
     }
   };
 

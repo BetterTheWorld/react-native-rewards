@@ -111,12 +111,6 @@ This package is compatible with expo go - expo snacks
 | CustomInitialScreen        | ComponentType                      | No       |
 | CustomForgotPasswordScreen | ComponentType                      | No       |
 
-## Additional Properties
-
-| Property      | Type   | Required |
-| ------------- | ------ | -------- |
-| utmParameters | string | No       |
-
 ## Options
 
 | Property            | Type    | Required |
