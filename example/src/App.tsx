@@ -5,7 +5,7 @@ import { useFirstRun } from './useFirstRun';
 // import { CustomInitialScreen } from './custom/CustomInitialScreen';
 // import { CustomCountryPicker } from './custom/CustomCountryPicker';
 // import { CustomSignInScreen } from './custom/CustomSignInScreen';
-import { CustomSignUpScreen } from './custom/CustomSignUpScreen';
+// import { CustomSignUpScreen } from './custom/CustomSignUpScreen';
 // import { CustomCreateTeamScreen } from './custom/CustomCreateTeamScreen';
 // import { CustomModalLoader } from './custom/CustomModalLoader';
 
@@ -36,15 +36,15 @@ export default function App() {
         //     primaryColor: 'peru',
         //   },
         // }}
-        customComponents={{
-          // CustomCountryPicker,
-          // CustomSignInScreen,
-          CustomSignUpScreen,
-          // CustomCreateTeamScreen,
-          // CustomModalLoader,
-          // CustomInitialScreen,
-          // CustomForgotPasswordScreen,
-        }}
+        // customComponents={{
+        //   // CustomCountryPicker,
+        //   // CustomSignInScreen,
+        //   // CustomSignUpScreen,
+        //   // CustomCreateTeamScreen,
+        //   // CustomModalLoader,
+        //   // CustomInitialScreen,
+        //   // CustomForgotPasswordScreen,
+        // }}
         options={{
           shouldResetKeychain: isFirstRun,
         }}
