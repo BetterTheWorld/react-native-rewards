@@ -53,6 +53,7 @@ export const useSignUpForm = () => {
       fullName: '',
       email: '',
       password: '',
+      utmData: undefined,
     },
   });
 
@@ -83,6 +84,7 @@ export const useSignUpForm = () => {
       postal_code: '',
       city: '',
       state: null,
+      utm_data: data.utmData,
     });
 
     if (success && success.authHeader) {

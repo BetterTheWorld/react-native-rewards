@@ -24,7 +24,6 @@ export interface RewardsTypes {
     CustomInitialScreen?: ComponentType;
     CustomForgotPasswordScreen?: ComponentType;
   };
-  utmParameters?: string;
   children?: React.ReactNode;
   options?: {
     shouldResetKeychain?: boolean;

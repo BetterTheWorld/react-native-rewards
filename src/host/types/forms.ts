@@ -39,6 +39,11 @@ export interface SignUpFormValues {
   fullName: string;
   email: string;
   password: string;
+  utmData?: UTMData;
+}
+
+interface UTMData {
+  [key: string]: string;
 }
 
 export interface UserCreateInput {
@@ -49,6 +54,7 @@ export interface UserCreateInput {
   postal_code: string;
   city: string;
   state: string | null;
+  utm_data?: UTMData;
 }
 
 export interface ActiveCampaign {
