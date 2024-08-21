@@ -29,6 +29,7 @@ function ShopRewardsRender({
   theme,
   customComponents,
   children,
+  customMethods,
 }: RewardsTypes) {
   const memoizedKeys = useMemo(() => keys, [keys]);
   const { loadedKeys } = useLoadKeysToEnv(memoizedKeys);
@@ -50,6 +51,7 @@ function ShopRewardsRender({
       envKeys={loadedKeys}
       customTheme={theme}
       customComponents={customComponents}
+      customMethods={customMethods}
     >
       <HostCommander />
       {children}

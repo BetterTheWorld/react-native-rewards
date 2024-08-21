@@ -48,6 +48,11 @@ export default function App() {
         options={{
           shouldResetKeychain: isFirstRun,
         }}
+        // customMethods={{
+        //   onNavigationStateChange: (navState) => {
+        //     console.log('navState', navState);
+        //   },
+        // }}
       />
     </SafeAreaView>
   );
