@@ -1,6 +1,6 @@
 // HostContext.tsx
 import React, { createContext, useContext, useState, useRef } from 'react';
-import WebView from 'react-native-webview';
+import WebView, { type WebViewNavigation } from 'react-native-webview';
 import { type ReactNode } from 'react';
 import { ModalLoader } from '../components/ModalLoader';
 import {
@@ -39,6 +39,7 @@ export interface HostContextType {
   user?: User;
   setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
   customMethods: RewardsTypes['customMethods'];
+  navChangeRef: React.MutableRefObject<WebViewNavigation | undefined>;
 }
 
 const HostContext = createContext<HostContextType | undefined>(undefined);
@@ -66,6 +67,8 @@ export const HostProvider = ({
     rewardsToken === envKeys.REWARDS_PROPS_US_DEFAULT_REWARDS_TOKEN ||
     rewardsToken === envKeys.REWARDS_PROPS_CA_DEFAULT_REWARDS_TOKEN;
   const webViewRef = useRef<WebView>(null);
+  const navChangeRef = useRef<WebViewNavigation>();
+
   const [uiState, updateUIstate] = useState<UIStateType>(
     UIStateType.ShowCountryPicker
   );
@@ -148,6 +151,7 @@ export const HostProvider = ({
         customMethods,
         user,
         setUser,
+        navChangeRef,
       }}
     >
       {children}
