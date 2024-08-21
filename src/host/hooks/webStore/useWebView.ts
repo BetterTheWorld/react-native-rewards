@@ -14,15 +14,20 @@ import { UIStateType } from '../../types/context';
 import { MessageTypes } from '../../types/messages';
 
 export function useWebView() {
-  const { rewardsToken, webViewRef, setUIState, envKeys, customMethods } =
-    useHost();
+  const {
+    rewardsToken,
+    webViewRef,
+    setUIState,
+    envKeys,
+    customMethods,
+    navChangeRef,
+  } = useHost();
   const customToken = rewardsToken;
   const siteConfig = {
     base: envKeys.REWARDS_PROPS_BASE_URL,
     defaultToken: rewardsToken,
   };
   const eventRef = useRef<WebViewNativeProgressEvent>();
-  const navChangeRef = useRef<WebViewNavigation>();
   const {
     offset,
     onWebViewScroll,
@@ -75,7 +80,7 @@ export function useWebView() {
 
       return;
     },
-    [customMethods]
+    [customMethods, navChangeRef]
   );
 
   const dispatchNewWindow = (url: string) => {
