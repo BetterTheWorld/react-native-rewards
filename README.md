@@ -117,6 +117,14 @@ This package is compatible with expo go - expo snacks
 | ------------------- | ------- | -------- |
 | shouldResetKeychain | boolean | No       |
 
+## Custom Methods
+
+`customMethods`
+
+| Property                | Type                                   | Required |
+| ----------------------- | -------------------------------------- | -------- |
+| onNavigationStateChange | (navState: WebViewNavigation) => void; | No       |
+
 # 📚 API Reference
 
 ## Components

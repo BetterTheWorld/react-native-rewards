@@ -14,7 +14,8 @@ import { UIStateType } from '../../types/context';
 import { MessageTypes } from '../../types/messages';
 
 export function useWebView() {
-  const { rewardsToken, webViewRef, setUIState, envKeys } = useHost();
+  const { rewardsToken, webViewRef, setUIState, envKeys, customMethods } =
+    useHost();
   const customToken = rewardsToken;
   const siteConfig = {
     base: envKeys.REWARDS_PROPS_BASE_URL,
@@ -70,9 +71,11 @@ export function useWebView() {
     async (event: WebViewNavigation) => {
       navChangeRef.current = event;
 
+      customMethods?.onNavigationStateChange?.(event);
+
       return;
     },
-    []
+    [customMethods]
   );
 
   const dispatchNewWindow = (url: string) => {

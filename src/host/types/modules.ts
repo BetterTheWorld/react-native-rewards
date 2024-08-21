@@ -1,3 +1,4 @@
+import type { WebViewNavigation } from 'react-native-webview';
 import type { hostColors } from '../styles/colors';
 import type { ComponentType } from 'react';
 
@@ -27,5 +28,8 @@ export interface RewardsTypes {
   children?: React.ReactNode;
   options?: {
     shouldResetKeychain?: boolean;
+  };
+  customMethods?: {
+    onNavigationStateChange?: (navState: WebViewNavigation) => void;
   };
 }
