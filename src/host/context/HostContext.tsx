@@ -38,6 +38,7 @@ export interface HostContextType {
   customComponents: RewardsTypes['customComponents'];
   user?: User;
   setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+  customMethods: RewardsTypes['customMethods'];
 }
 
 const HostContext = createContext<HostContextType | undefined>(undefined);
@@ -47,6 +48,7 @@ interface HostProviderProps {
   envKeys: RewardsTypes['keys'];
   customTheme: RewardsTypes['theme'];
   customComponents: RewardsTypes['customComponents'];
+  customMethods?: RewardsTypes['customMethods'];
 }
 
 export const HostProvider = ({
@@ -54,6 +56,7 @@ export const HostProvider = ({
   envKeys,
   customTheme,
   customComponents,
+  customMethods,
 }: HostProviderProps) => {
   const [rewardsToken, setRewardsToken] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
@@ -142,6 +145,7 @@ export const HostProvider = ({
         envKeys,
         theme,
         customComponents,
+        customMethods,
         user,
         setUser,
       }}
