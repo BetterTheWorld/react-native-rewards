@@ -64,7 +64,7 @@ export const useKeychainCleanup = ({
 
     performCleanup();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shouldResetKeychain, keys]);
+  }, [shouldResetKeychain]);
 
   return { isLoading };
 };
