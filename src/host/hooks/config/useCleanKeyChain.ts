@@ -56,7 +56,7 @@ export const useKeychainCleanup = ({
           setIsLoading(false);
         }
       } catch (error) {
-        throw new Error('Error cleaning up SecureStore');
+        // error
       } finally {
         setIsLoading(false);
       }
