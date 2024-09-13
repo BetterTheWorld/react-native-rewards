@@ -4,6 +4,7 @@ import { HostProvider } from '../../host/context/HostContext';
 import { useLoadKeysToEnv } from '../../host/hooks/config/useLoadEnvKeys';
 import type { RewardsTypes } from '../../host/types/modules';
 import { useKeychainCleanup } from '../../host/hooks/config/useCleanKeyChain';
+import { WebViewDebugBtns } from '../../host/screens/debug/WebViewDebugBtns';
 
 export function ShopRewardsProvider({ ...props }: RewardsTypes) {
   const { customComponents, options } = props;
@@ -29,6 +30,7 @@ function ShopRewardsRenderProvider({
   customComponents,
   children,
   customMethods,
+  options,
 }: RewardsTypes) {
   const memoizedKeys = useMemo(() => keys, [keys]);
   const { loadedKeys } = useLoadKeysToEnv(memoizedKeys);
@@ -53,6 +55,7 @@ function ShopRewardsRenderProvider({
       customMethods={customMethods}
     >
       {children}
+      {options?.showWebDebugOptions ? <WebViewDebugBtns /> : null}
     </HostProvider>
   );
 }
