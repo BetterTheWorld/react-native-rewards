@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, View, StyleSheet } from 'react-native';
 import { useHost } from '../../context/HostContext';
 
