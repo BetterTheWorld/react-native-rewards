@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, View, StyleSheet } from 'react-native';
 import { useHost } from '../../context/HostContext';
 
-export function WebViewDebugBtns() {
+export const WebViewDebugBtns: React.FC = () => {
   const { webViewRef } = useHost();
 
   const injectJavaScript = (code: string) => {
@@ -46,7 +46,7 @@ export function WebViewDebugBtns() {
       <Button title="Opt In" onPress={handleOptIn} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
