@@ -28,6 +28,7 @@ export interface RewardsTypes {
   children?: React.ReactNode;
   options?: {
     shouldResetKeychain?: boolean;
+    showWebDebugOptions?: boolean;
   };
   customMethods?: {
     onNavigationStateChange?: (navState: WebViewNavigation) => void;

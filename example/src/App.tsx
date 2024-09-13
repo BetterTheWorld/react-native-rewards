@@ -47,6 +47,7 @@ export default function App() {
         // }}
         options={{
           shouldResetKeychain: isFirstRun,
+          // showWebDebugOptions: true,
         }}
         // customMethods={{
         //   onNavigationStateChange: (navState) => {

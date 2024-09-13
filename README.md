@@ -113,9 +113,10 @@ This package is compatible with expo go - expo snacks
 
 ## Options
 
-| Property            | Type    | Required |
-| ------------------- | ------- | -------- |
-| shouldResetKeychain | boolean | No       |
+| Property | Type | Required | Description |
+| ------------------- | ------- | -------- ||
+| shouldResetKeychain | boolean | No ||
+| showWebDebugOptions | boolean | No |Enables debug buttons for webview messages: login/logout/optIn|
 
 ## Custom Methods
 
