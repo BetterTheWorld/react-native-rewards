@@ -52,6 +52,7 @@ export function WebViewShop({
         onTouchEnd={onTouchEvent('end')}
         webviewDebuggingEnabled={__DEV__}
         onMessage={handleMessage}
+        decelerationRate="normal"
         {...webviewProps}
       />
     </FadeWrapper>
