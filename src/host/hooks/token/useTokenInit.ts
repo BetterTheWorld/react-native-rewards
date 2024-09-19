@@ -99,11 +99,17 @@ export const useTokenInit = ({ automatic = true }: { automatic: boolean }) => {
       if (storedAuthToken) {
         const result = await fetchUser({ localToken: storedAuthToken });
         const campaignId = result?.user?.active_campaign?.id;
-        if (!campaignId) {
+        if (result && !campaignId) {
           setUIState(UIStateType.ShowTeamForm);
-        } else {
-          setUIState(UIStateType.ShowStore);
+          return;
         }
+
+        if (campaignId) {
+          setUIState(UIStateType.ShowStore);
+          return;
+        }
+
+        setUIState(UIStateType.ShowLoginForm);
       }
     } catch (error) {
     } finally {
