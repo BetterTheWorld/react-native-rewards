@@ -25,6 +25,9 @@ export function useResetEnv() {
   };
 
   useEffect(() => {
+    // prevent swaping keys on prod
+    if (!__DEV__) return;
+
     const previousKeys = previousKeysRef.current;
     let keysChanged = false;
     let keysThatChanged: ChangedKeys = {};
