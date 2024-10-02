@@ -40,6 +40,7 @@ export interface SignUpFormValues {
   email: string;
   password: string;
   utmData?: UTMData;
+  country?: string;
 }
 
 interface UTMData {
