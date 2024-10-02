@@ -6,6 +6,14 @@ A React Native module for rewards partners, providing seamless integration of re
 ![license](https://img.shields.io/npm/l/@flipgive/react-native-rewards)
 ![downloads](https://img.shields.io/npm/dm/@flipgive/react-native-rewards)
 
+## Architecture Diagram
+
+![Arch](architecture.jpg)
+
+## Tokens
+
+Only `EXPO_PUBLIC_US_DEFAULT_REWARDS_TOKEN` is needed for single country configuration.
+
 ## 🚀 Installation
 
 ```sh
