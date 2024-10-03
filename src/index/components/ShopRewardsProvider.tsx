@@ -31,6 +31,7 @@ function ShopRewardsRenderProvider({
   children,
   customMethods,
   options,
+  deeplink,
 }: RewardsTypes) {
   const memoizedKeys = useMemo(() => keys, [keys]);
   const { loadedKeys } = useLoadKeysToEnv(memoizedKeys);
@@ -53,6 +54,7 @@ function ShopRewardsRenderProvider({
       customTheme={theme}
       customComponents={customComponents}
       customMethods={customMethods}
+      deeplink={deeplink}
     >
       {children}
       {options?.showWebDebugOptions ? <WebViewDebugBtns /> : null}

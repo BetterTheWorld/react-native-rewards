@@ -1,6 +1,8 @@
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { Button, SafeAreaView, StyleSheet, View } from 'react-native';
 import { ShopRewards } from '@flipgive/react-native-rewards/components';
 import { useFirstRun } from './useFirstRun';
+import { OptionsModal } from './OptionsModal';
+import { useState } from 'react';
 // import { CustomForgotPasswordScreen } from './custom/CustomForgotPasswordScreen';
 // import { CustomInitialScreen } from './custom/CustomInitialScreen';
 // import { CustomCountryPicker } from './custom/CustomCountryPicker';
@@ -11,6 +13,12 @@ import { useFirstRun } from './useFirstRun';
 
 export default function App() {
   const { isFirstRun, isLoading } = useFirstRun();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [deeplink, setDeeplink] = useState('');
+
+  const handleDeeplinkSubmit = (newDeeplink: string) => {
+    setDeeplink(newDeeplink);
+  };
 
   if (isLoading) {
     return null;
@@ -54,6 +62,15 @@ export default function App() {
         //     console.log('navState', navState);
         //   },
         // }}
+        deeplink={deeplink}
+      />
+      <View style={styles.buttonContainer}>
+        <Button title="Options" onPress={() => setIsModalVisible(true)} />
+      </View>
+      <OptionsModal
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        onDeeplinkSubmit={handleDeeplinkSubmit}
       />
     </SafeAreaView>
   );
@@ -62,6 +79,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    alignItems: 'center',
   },
   box: {
     width: 60,
