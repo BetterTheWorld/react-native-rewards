@@ -157,5 +157,6 @@ export function useWebView() {
     handleCloseModal,
     isModalVisible,
     handlePromptSubmit,
+    siteConfig,
   };
 }

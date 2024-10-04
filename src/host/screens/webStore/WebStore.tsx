@@ -5,6 +5,7 @@ import { FadeWrapper } from '../../components/animation/FadeWrapper';
 import { useWebView } from '../../hooks/webStore/useWebView';
 import type { WebViewComponent } from '../../types/webView';
 import { webViewStyles } from './styles';
+import { useWebviewLink } from '../../hooks/webStore/useWebviewLink';
 
 export function WebViewShop({
   baseURL,
@@ -19,8 +20,10 @@ export function WebViewShop({
     onWebViewScroll,
     getURL,
     handleMessage,
+    siteConfig,
   } = useWebView();
   const webViewURL = getURL(baseURL);
+  useWebviewLink({ getURL, siteConfig });
 
   const renderLoading = useCallback(
     () => (

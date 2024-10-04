@@ -134,6 +134,10 @@ This package is compatible with expo go - expo snacks
 | ----------------------- | -------------------------------------- | -------- |
 | onNavigationStateChange | (navState: WebViewNavigation) => void; | No       |
 
+## Deeplink
+
+plain url without token
+
 # 📚 API Reference
 
 ## Components

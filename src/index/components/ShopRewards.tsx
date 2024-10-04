@@ -32,6 +32,7 @@ function ShopRewardsRender({
   children,
   customMethods,
   options,
+  deeplink,
 }: RewardsTypes) {
   const memoizedKeys = useMemo(() => keys, [keys]);
   const { loadedKeys } = useLoadKeysToEnv(memoizedKeys);
@@ -54,6 +55,7 @@ function ShopRewardsRender({
       customTheme={theme}
       customComponents={customComponents}
       customMethods={customMethods}
+      deeplink={deeplink}
     >
       <HostCommander />
       {children}
