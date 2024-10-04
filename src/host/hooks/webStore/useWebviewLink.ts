@@ -1,4 +1,4 @@
-import { useHost } from '@flipgive/react-native-rewards/hooks';
+import { useHost } from '../../context/HostContext';
 import { useEffect, useRef } from 'react';
 
 export function useWebviewLink({
