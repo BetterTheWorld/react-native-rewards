@@ -55,6 +55,7 @@ function ShopRewardsRenderProvider({
       customComponents={customComponents}
       customMethods={customMethods}
       deeplink={deeplink}
+      options={options}
     >
       {children}
       {options?.showWebDebugOptions ? <WebViewDebugBtns /> : null}

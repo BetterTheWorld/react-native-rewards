@@ -41,6 +41,7 @@ export interface HostContextType {
   customMethods: RewardsTypes['customMethods'];
   navChangeRef: React.MutableRefObject<WebViewNavigation | undefined>;
   deeplink: RewardsTypes['deeplink'];
+  options?: RewardsTypes['options'];
 }
 
 const HostContext = createContext<HostContextType | undefined>(undefined);
@@ -52,6 +53,7 @@ interface HostProviderProps {
   customComponents: RewardsTypes['customComponents'];
   customMethods?: RewardsTypes['customMethods'];
   deeplink: RewardsTypes['deeplink'];
+  options?: RewardsTypes['options'];
 }
 
 export const HostProvider = ({
@@ -61,6 +63,7 @@ export const HostProvider = ({
   customComponents,
   customMethods,
   deeplink,
+  options,
 }: HostProviderProps) => {
   const [rewardsToken, setRewardsToken] = useState<string | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
@@ -156,6 +159,7 @@ export const HostProvider = ({
         setUser,
         navChangeRef,
         deeplink,
+        options,
       }}
     >
       {children}

@@ -56,6 +56,7 @@ function ShopRewardsRender({
       customComponents={customComponents}
       customMethods={customMethods}
       deeplink={deeplink}
+      options={options}
     >
       <HostCommander />
       {children}
