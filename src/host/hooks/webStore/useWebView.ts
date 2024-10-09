@@ -12,6 +12,7 @@ import { useAppState } from '../utils/useAppState';
 import { useHost } from '../../context/HostContext';
 import { UIStateType } from '../../types/context';
 import { MessageTypes } from '../../types/messages';
+import { useDeleteUser } from '../network/useDeleteUser';
 
 export function useWebView() {
   const {
@@ -21,6 +22,7 @@ export function useWebView() {
     envKeys,
     customMethods,
     navChangeRef,
+    setIsLoading,
   } = useHost();
   const customToken = rewardsToken;
   const siteConfig = {
@@ -28,6 +30,7 @@ export function useWebView() {
     defaultToken: rewardsToken,
   };
   const eventRef = useRef<WebViewNativeProgressEvent>();
+  const { deleteUser } = useDeleteUser();
   const {
     offset,
     onWebViewScroll,
@@ -101,7 +104,7 @@ export function useWebView() {
     );
   };
 
-  const handleMessage = (event: WebViewMessageEvent) => {
+  const handleMessage = async (event: WebViewMessageEvent) => {
     const message = event.nativeEvent.data;
 
     if (message.includes(MessageTypes.newWindow)) {
@@ -114,6 +117,15 @@ export function useWebView() {
 
     if (message.includes(MessageTypes.logout)) {
       setUIState(UIStateType.ShowLogout);
+    }
+
+    if (message.includes(MessageTypes.delete)) {
+      setIsLoading(true);
+      const response = await deleteUser({});
+      setIsLoading(false);
+      if (response) {
+        setUIState(UIStateType.ShowLogout);
+      }
     }
   };
 

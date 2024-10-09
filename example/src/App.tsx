@@ -18,6 +18,9 @@ export default function App() {
 
   const handleDeeplinkSubmit = (newDeeplink: string) => {
     setDeeplink(newDeeplink);
+    setTimeout(() => {
+      setDeeplink('');
+    }, 1000);
   };
 
   if (isLoading) {
