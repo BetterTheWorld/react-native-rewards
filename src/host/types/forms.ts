@@ -58,7 +58,7 @@ export interface UserCreateInput {
   postal_code: string;
   city: string;
   state: string | null;
-  utm_data: UTMData | null;
+  utmData: UTMData | null;
 }
 
 export interface ActiveCampaign {
