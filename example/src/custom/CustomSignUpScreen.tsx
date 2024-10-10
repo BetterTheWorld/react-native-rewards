@@ -58,7 +58,7 @@ export function CustomSignUpScreen() {
         fullName,
         email,
         password,
-        utmData: {
+        utm_data: {
           source: 'test',
         },
       });
