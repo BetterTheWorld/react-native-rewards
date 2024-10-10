@@ -15,6 +15,7 @@ export const useGetMe = () => {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localToken || authToken}`,
+          'X-REWARDS-PARTNER-ID': envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID,
         },
       };
 
@@ -41,7 +42,12 @@ export const useGetMe = () => {
         setIsLoading(false);
       }
     },
-    [authToken, envKeys.REWARDS_PROPS_API_URL, setUser]
+    [
+      authToken,
+      envKeys.REWARDS_PROPS_API_URL,
+      envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID,
+      setUser,
+    ]
   );
 
   useEffect(() => {
