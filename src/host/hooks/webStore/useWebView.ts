@@ -13,6 +13,7 @@ import { useHost } from '../../context/HostContext';
 import { UIStateType } from '../../types/context';
 import { MessageTypes } from '../../types/messages';
 import { useDeleteUser } from '../network/useDeleteUser';
+import { TokenTypes } from '../../constants';
 
 export function useWebView() {
   const {
@@ -23,6 +24,7 @@ export function useWebView() {
     customMethods,
     navChangeRef,
     setIsLoading,
+    resetToken,
   } = useHost();
   const customToken = rewardsToken;
   const siteConfig = {
@@ -109,13 +111,19 @@ export function useWebView() {
     try {
       const response = await deleteUser({});
       if (response) {
-        setUIState(UIStateType.ShowLogout);
         customMethods?.onDeleteUserAccount?.({ response });
+        await resetToken(TokenTypes.AUTH);
+        await resetToken(TokenTypes.REWARDS);
+        setUIState(UIStateType.ShowLogout);
+      } else {
+        customMethods?.onDeleteUserAccount?.({
+          error: Error('Failed to delete user'),
+        });
       }
     } catch (error) {
       customMethods?.onDeleteUserAccount?.({ error });
     } finally {
-      setModalVisible(false);
+      setIsLoading(false);
     }
   };
 
