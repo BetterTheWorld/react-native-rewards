@@ -19,8 +19,6 @@ export const useGetMe = () => {
         },
       };
 
-      console.info('[useGetMe] Fetching user...', options);
-
       try {
         const response = await fetch(url || '', options);
 

@@ -30,9 +30,6 @@ export const useDeleteUser = () => {
         headers,
       });
 
-      console.info('[useDeleteUser] Fetching headers...', headers);
-      console.info('[useDeleteUser] Fetching user...', fetchResponse);
-
       if (!fetchResponse.ok) {
         const errorData = await fetchResponse.json();
         setError(errorData.error || 'Failed to delete user');
