@@ -130,9 +130,10 @@ This package is compatible with expo go - expo snacks
 
 `customMethods`
 
-| Property                | Type                                   | Required |
-| ----------------------- | -------------------------------------- | -------- |
-| onNavigationStateChange | (navState: WebViewNavigation) => void; | No       |
+| Property                | Type                                                               | Required |
+| ----------------------- | ------------------------------------------------------------------ | -------- |
+| onNavigationStateChange | (navState: WebViewNavigation) => void;                             | No       |
+| onDeleteUserAccount     | (error?: unknown; response?: DeleteUserResponse or null;) => void; | No       |
 
 ## Deeplink
 
