@@ -1,6 +1,7 @@
 import type { WebViewNavigation } from 'react-native-webview';
 import type { hostColors } from '../styles/colors';
 import type { ComponentType } from 'react';
+import type { DeleteUserResponse } from './misc';
 
 export interface RewardsTypes {
   keys: {
@@ -34,5 +35,12 @@ export interface RewardsTypes {
   deeplink?: string;
   customMethods?: {
     onNavigationStateChange?: (navState: WebViewNavigation) => void;
+    onDeleteUserAccount?: ({
+      error,
+      response,
+    }: {
+      error?: unknown;
+      response?: DeleteUserResponse | null;
+    }) => void;
   };
 }

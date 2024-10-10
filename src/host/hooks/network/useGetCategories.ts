@@ -20,6 +20,7 @@ export const useGetCategories = () => {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${authToken}`,
+          'X-REWARDS-PARTNER-ID': envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID,
         },
       };
 
@@ -48,7 +49,11 @@ export const useGetCategories = () => {
     };
 
     fetchCategories();
-  }, [authToken, envKeys.REWARDS_PROPS_API_URL]);
+  }, [
+    authToken,
+    envKeys.REWARDS_PROPS_API_URL,
+    envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID,
+  ]);
 
   return { sections, isLoading, categories };
 };

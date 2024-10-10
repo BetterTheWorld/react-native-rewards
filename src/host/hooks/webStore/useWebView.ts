@@ -104,6 +104,21 @@ export function useWebView() {
     );
   };
 
+  const onDeleteMessage = async () => {
+    setIsLoading(true);
+    try {
+      const response = await deleteUser({});
+      if (response) {
+        setUIState(UIStateType.ShowLogout);
+        customMethods?.onDeleteUserAccount?.({ response });
+      }
+    } catch (error) {
+      customMethods?.onDeleteUserAccount?.({ error });
+    } finally {
+      setModalVisible(false);
+    }
+  };
+
   const handleMessage = async (event: WebViewMessageEvent) => {
     const message = event.nativeEvent.data;
 
@@ -120,12 +135,7 @@ export function useWebView() {
     }
 
     if (message.includes(MessageTypes.delete)) {
-      setIsLoading(true);
-      const response = await deleteUser({});
-      setIsLoading(false);
-      if (response) {
-        setUIState(UIStateType.ShowLogout);
-      }
+      onDeleteMessage();
     }
   };
 

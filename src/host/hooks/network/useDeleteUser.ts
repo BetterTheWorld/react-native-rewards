@@ -1,16 +1,6 @@
 import { useState } from 'react';
 import { useHost } from '../../context/HostContext';
-
-type DeleteUserResponse = {
-  data: {
-    message: string;
-  };
-};
-
-type DeleteUserStatus = {
-  error?: string;
-  message?: string;
-};
+import type { DeleteUserResponse, DeleteUserStatus } from '../../types/misc';
 
 export const useDeleteUser = () => {
   const { envKeys, authToken } = useHost();
