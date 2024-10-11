@@ -1,12 +1,22 @@
 import { useEffect } from 'react';
 import { BackHandler } from 'react-native';
 
-export function useBackButton({ handler }: { handler: () => boolean }) {
+export function useBackButton({
+  handler,
+  disabled,
+}: {
+  handler: () => boolean;
+  disabled?: boolean;
+}) {
   useEffect(() => {
     const backAction = () => {
       const shouldHandleBackButton = handler();
       return shouldHandleBackButton;
     };
+
+    if (disabled) {
+      return;
+    }
 
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -16,6 +26,6 @@ export function useBackButton({ handler }: { handler: () => boolean }) {
     return () => {
       backHandler.remove();
     };
-  }, [handler]);
+  }, [handler, disabled]);
   return null;
 }
