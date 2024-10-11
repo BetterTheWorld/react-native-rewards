@@ -1,12 +1,16 @@
-import { useEffect, useCallback } from 'react';
-import { BackHandler, Platform } from 'react-native';
-import { UIStateType } from '../../types/context';
+import { useCallback } from 'react';
 import { useHost } from '../../context/HostContext';
+import { useBackButton } from '../utils/useBackButton';
+import { Platform } from 'react-native';
 
 export function useWebViewBackButton() {
-  const { webViewRef, navChangeRef, uiState, options } = useHost();
+  const { webViewRef, navChangeRef } = useHost();
 
   const handleBackPress = useCallback(() => {
+    if (Platform.OS === 'ios') {
+      return false;
+    }
+
     const canGoBack = navChangeRef.current?.canGoBack;
 
     if (canGoBack && webViewRef.current) {
@@ -16,20 +20,7 @@ export function useWebViewBackButton() {
     return false;
   }, [webViewRef, navChangeRef]);
 
-  useEffect(() => {
-    if (!options?.useAndroidHardwareBack) return;
-
-    if (Platform.OS === 'ios') return;
-
-    if (uiState !== UIStateType.ShowStore) return;
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      handleBackPress
-    );
-
-    return () => {
-      backHandler.remove();
-    };
-  }, [handleBackPress, options?.useAndroidHardwareBack, uiState]);
+  useBackButton({
+    handler: handleBackPress,
+  });
 }

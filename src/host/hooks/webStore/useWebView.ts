@@ -6,7 +6,6 @@ import {
   type WebViewNativeProgressEvent,
   type WebViewProgressEvent,
 } from 'react-native-webview/lib/WebViewTypes';
-import { useBackButton } from '../utils/useBackButton';
 import { useWebViewAnimate } from './useWebViewAnimate';
 import { useAppState } from '../utils/useAppState';
 import { useHost } from '../../context/HostContext';
@@ -43,20 +42,6 @@ export function useWebView() {
   } = useWebViewAnimate({ fixedValue: 0.1 });
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const goBackHandler = ({ onRootBack }: { onRootBack: () => void }) => {
-    if (navChangeRef.current?.canGoBack) {
-      webViewRef.current?.goBack();
-    } else {
-      onRootBack();
-    }
-  };
-
-  useBackButton({
-    handler: () => {
-      // goBackHandler({ onRootBack: navigation.goBack });
-      return true;
-    },
-  });
   // Fix bug coming back from browser, webview is not refreshed making the user stuck on shop intent brand page
   useAppState({
     executeAfterForeground: () => {
@@ -183,7 +168,6 @@ export function useWebView() {
     animatedOpacity,
     animatedTranslateY,
     handleMessage,
-    goBackHandler,
     handleCloseModal,
     isModalVisible,
     handlePromptSubmit,
