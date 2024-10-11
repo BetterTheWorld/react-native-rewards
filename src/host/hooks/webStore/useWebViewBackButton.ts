@@ -7,10 +7,6 @@ export function useWebViewBackButton() {
   const { webViewRef, navChangeRef } = useHost();
 
   const handleBackPress = useCallback(() => {
-    if (Platform.OS === 'ios') {
-      return false;
-    }
-
     const canGoBack = navChangeRef.current?.canGoBack;
 
     if (canGoBack && webViewRef.current) {
@@ -22,5 +18,6 @@ export function useWebViewBackButton() {
 
   useBackButton({
     handler: handleBackPress,
+    disabled: Platform.OS === 'ios',
   });
 }
