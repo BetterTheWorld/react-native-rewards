@@ -59,7 +59,12 @@ export function CustomSignUpScreen() {
         email,
         password,
         utm_data: {
-          source: 'test',
+          utm_source: 'rewards',
+          utm_term: 'test',
+          utm_medium: 'app',
+          utm_content: 'app_signup',
+          utm_campaign: 'whitelabel_example_mobile_acq',
+          utm_channel: 'whitelabel',
         },
       });
     }
