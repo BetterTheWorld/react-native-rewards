@@ -59,7 +59,6 @@ export default function App() {
         options={{
           shouldResetKeychain: isFirstRun,
           // showWebDebugOptions: true,
-          useAndroidHardwareBack: false,
         }}
         // customMethods={{
         //   onNavigationStateChange: (navState) => {

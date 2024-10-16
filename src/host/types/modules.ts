@@ -30,7 +30,6 @@ export interface RewardsTypes {
   options?: {
     shouldResetKeychain?: boolean;
     showWebDebugOptions?: boolean;
-    useAndroidHardwareBack?: boolean;
   };
   deeplink?: string;
   customMethods?: {

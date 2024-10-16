@@ -6,7 +6,6 @@ import { useWebView } from '../../hooks/webStore/useWebView';
 import type { WebViewComponent } from '../../types/webView';
 import { webViewStyles } from './styles';
 import { useWebviewLink } from '../../hooks/webStore/useWebviewLink';
-import { useWebViewBackButton } from '../../hooks/webStore/useWebViewBackButton';
 
 export function WebViewShop({
   baseURL,
@@ -25,7 +24,6 @@ export function WebViewShop({
   } = useWebView();
   const webViewURL = getURL(baseURL);
   useWebviewLink({ getURL, siteConfig });
-  useWebViewBackButton();
 
   const renderLoading = useCallback(
     () => (
