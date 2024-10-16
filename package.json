@@ -1,6 +1,6 @@
 {
   "name": "@flipgive/react-native-rewards",
-  "version": "0.20.2",
+  "version": "0.20.3",
   "description": "React native module for rewards partners",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
