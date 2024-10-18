@@ -40,7 +40,6 @@ export interface HostContextType {
   setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
   customMethods: RewardsTypes['customMethods'];
   navChangeRef: React.MutableRefObject<WebViewNavigation | undefined>;
-  deeplink: RewardsTypes['deeplink'];
   options?: RewardsTypes['options'];
 }
 
@@ -52,7 +51,6 @@ interface HostProviderProps {
   customTheme: RewardsTypes['theme'];
   customComponents: RewardsTypes['customComponents'];
   customMethods?: RewardsTypes['customMethods'];
-  deeplink: RewardsTypes['deeplink'];
   options?: RewardsTypes['options'];
 }
 
@@ -62,7 +60,6 @@ export const HostProvider = ({
   customTheme,
   customComponents,
   customMethods,
-  deeplink,
   options,
 }: HostProviderProps) => {
   const [rewardsToken, setRewardsToken] = useState<string | null>(null);
@@ -158,7 +155,6 @@ export const HostProvider = ({
         user,
         setUser,
         navChangeRef,
-        deeplink,
         options,
       }}
     >

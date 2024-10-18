@@ -135,10 +135,6 @@ This package is compatible with expo go - expo snacks
 | onNavigationStateChange | (navState: WebViewNavigation) => void;                             | No       |
 | onDeleteUserAccount     | (error?: unknown; response?: DeleteUserResponse or null;) => void; | No       |
 
-## Deeplink
-
-plain url without token
-
 # 📚 API Reference
 
 ## Components

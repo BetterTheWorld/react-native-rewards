@@ -1,11 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import { WebView as RNWebView } from 'react-native-webview';
 import { FadeWrapper } from '../../components/animation/FadeWrapper';
 import { useWebView } from '../../hooks/webStore/useWebView';
 import type { WebViewComponent } from '../../types/webView';
 import { webViewStyles } from './styles';
-import { useWebviewLink } from '../../hooks/webStore/useWebviewLink';
 
 export function WebViewShop({
   baseURL,
@@ -20,10 +19,13 @@ export function WebViewShop({
     onWebViewScroll,
     getURL,
     handleMessage,
-    siteConfig,
+    restorePreviousSesion,
   } = useWebView();
   const webViewURL = getURL(baseURL);
-  useWebviewLink({ getURL, siteConfig });
+  // https://github.com/react-native-webview/react-native-webview/issues/3062
+  // https://github.com/tiddly-gittly/TidGi-Mobile/commit/6de1fdf3cad6b8556ebb827345a3bdfacaca12ac
+  // webview termination after x minutes
+  const [autoIncrementingNumber, setAutoIncrementingNumber] = useState(0);
 
   const renderLoading = useCallback(
     () => (
@@ -41,6 +43,7 @@ export function WebViewShop({
   return (
     <FadeWrapper style={styles.container}>
       <RNWebView
+        key={autoIncrementingNumber}
         ref={webViewRef}
         source={{
           uri: webViewURL.href,
@@ -55,7 +58,19 @@ export function WebViewShop({
         onTouchEnd={onTouchEvent('end')}
         webviewDebuggingEnabled={__DEV__}
         onMessage={handleMessage}
+        javaScriptEnabled
+        domStorageEnabled
         decelerationRate="normal"
+        onContentProcessDidTerminate={(_) => {
+          // IOS
+          setAutoIncrementingNumber(autoIncrementingNumber + 1);
+          restorePreviousSesion();
+        }}
+        onRenderProcessGone={(_) => {
+          // Android
+          setAutoIncrementingNumber(autoIncrementingNumber + 1);
+          restorePreviousSesion();
+        }}
         {...webviewProps}
       />
     </FadeWrapper>

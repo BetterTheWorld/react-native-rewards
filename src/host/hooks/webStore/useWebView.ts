@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { Linking, Platform } from 'react-native';
+import { Linking } from 'react-native';
 import { type WebViewNavigation } from 'react-native-webview';
 import {
   type WebViewMessageEvent,
@@ -7,7 +7,6 @@ import {
   type WebViewProgressEvent,
 } from 'react-native-webview/lib/WebViewTypes';
 import { useWebViewAnimate } from './useWebViewAnimate';
-import { useAppState } from '../utils/useAppState';
 import { useHost } from '../../context/HostContext';
 import { UIStateType } from '../../types/context';
 import { MessageTypes } from '../../types/messages';
@@ -41,26 +40,6 @@ export function useWebView() {
     animatedTranslateY,
   } = useWebViewAnimate({ fixedValue: 0.1 });
   const [isModalVisible, setModalVisible] = useState(false);
-
-  // Fix bug coming back from browser, webview is not refreshed making the user stuck on shop intent brand page
-  useAppState({
-    executeAfterForeground: () => {
-      if (Platform.OS === 'android') {
-        return;
-      }
-      /*
-        If the loaded url is a shop intent url, we don't want to go forward.
-      */
-      if (
-        !eventRef.current?.url ||
-        eventRef.current?.url.includes(siteConfig.base || '')
-      ) {
-        return;
-      }
-      // webViewRef.current?.stopLoading();
-      // webViewRef.current?.goBack();
-    },
-  });
 
   const onNavigationStateChange = useCallback(
     async (event: WebViewNavigation) => {
@@ -154,6 +133,23 @@ export function useWebView() {
     [customToken, siteConfig.base, siteConfig.defaultToken]
   );
 
+  //  https://github.com/react-native-webview/react-native-webview/issues/3062
+  const restorePreviousSesion = () => {
+    const currentUrl = navChangeRef.current?.url;
+
+    if (currentUrl) {
+      setTimeout(() => {
+        webViewRef.current?.injectJavaScript(
+          `
+          (function() {
+            window.location.href = "${getURL(currentUrl).href}";
+          })();
+          `
+        );
+      }, 1500);
+    }
+  };
+
   return {
     onNavigationStateChange,
     onLoadProgress,
@@ -172,5 +168,6 @@ export function useWebView() {
     isModalVisible,
     handlePromptSubmit,
     siteConfig,
+    restorePreviousSesion,
   };
 }
