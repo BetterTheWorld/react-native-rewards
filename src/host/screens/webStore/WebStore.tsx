@@ -82,10 +82,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-/* 
-
-(function() {
-                  window.location.href = "${prevUrl}";
-              })();
-*/
