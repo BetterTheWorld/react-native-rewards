@@ -31,7 +31,6 @@ export interface RewardsTypes {
     shouldResetKeychain?: boolean;
     showWebDebugOptions?: boolean;
   };
-  deeplink?: string;
   customMethods?: {
     onNavigationStateChange?: (navState: WebViewNavigation) => void;
     onDeleteUserAccount?: ({

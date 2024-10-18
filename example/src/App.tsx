@@ -1,8 +1,6 @@
-import { Button, SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { ShopRewards } from '@flipgive/react-native-rewards/components';
 import { useFirstRun } from './useFirstRun';
-import { OptionsModal } from './OptionsModal';
-import { useState } from 'react';
 // import { CustomForgotPasswordScreen } from './custom/CustomForgotPasswordScreen';
 // import { CustomInitialScreen } from './custom/CustomInitialScreen';
 // import { CustomCountryPicker } from './custom/CustomCountryPicker';
@@ -13,15 +11,6 @@ import { useState } from 'react';
 
 export default function App() {
   const { isFirstRun, isLoading } = useFirstRun();
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [deeplink, setDeeplink] = useState('');
-
-  const handleDeeplinkSubmit = (newDeeplink: string) => {
-    setDeeplink(newDeeplink);
-    setTimeout(() => {
-      setDeeplink('');
-    }, 1000);
-  };
 
   if (isLoading) {
     return null;
@@ -65,15 +54,6 @@ export default function App() {
         //     console.log('navState', navState);
         //   },
         // }}
-        deeplink={deeplink}
-      />
-      <View style={styles.buttonContainer}>
-        <Button title="Options" onPress={() => setIsModalVisible(true)} />
-      </View>
-      <OptionsModal
-        isVisible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}
-        onDeeplinkSubmit={handleDeeplinkSubmit}
       />
     </SafeAreaView>
   );
