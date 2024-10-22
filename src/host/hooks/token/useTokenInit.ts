@@ -10,10 +10,12 @@ import { type TokenInput, UIStateType, TokenStage } from '../../types/context';
 import { getItemSecurely } from '../../utils/secureStore';
 import { useCountryField } from '../forms/useContrySelect';
 import { NetworkError } from '../../utils/networkErrors';
+import NetInfo from '@react-native-community/netinfo';
 
 export const useTokenInit = ({ automatic = true }: { automatic: boolean }) => {
   const {
     setIsLoading,
+    uiState,
     setUIState,
     saveRewardsToken,
     resetToken,
@@ -127,6 +129,24 @@ export const useTokenInit = ({ automatic = true }: { automatic: boolean }) => {
     initCall();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [envKeys]);
+
+  useEffect(() => {
+    let unsubscribe: (() => void) | undefined;
+
+    if (uiState === UIStateType.ShowNoInternet) {
+      unsubscribe = NetInfo.addEventListener((state) => {
+        if (state.isConnected) {
+          initCall();
+        }
+      });
+    }
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, [uiState, initCall]);
 
   return { initializeRewardsToken };
 };
