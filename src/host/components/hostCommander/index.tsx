@@ -9,6 +9,7 @@ import { CreateTeamScreen } from '../../screens/teamForm';
 import { WebViewShop } from '../../screens/webStore/WebStore';
 import { UIStateType } from '../../types/context';
 import { ForgotPasswordScreen } from '../../screens/forgotPassword';
+import { NoInternetScreen } from '../../screens/nointernet';
 
 export function HostCommander() {
   const { uiState, envKeys, customComponents } = useHost();
@@ -52,6 +53,12 @@ export function HostCommander() {
         );
       case UIStateType.ShowLogout:
         return <LogoutScreen />;
+      case UIStateType.ShowNoInternet:
+        return customComponents?.CustomNoInternetScreen ? (
+          <customComponents.CustomNoInternetScreen />
+        ) : (
+          <NoInternetScreen />
+        );
       case UIStateType.ShowStore:
       default:
         const WebViewComponent =

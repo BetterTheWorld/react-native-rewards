@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useHost } from '../../context/HostContext';
 import type { User, UserResponse } from '../../types/forms';
+import { NetworkError } from '../../utils/networkErrors';
 
 export const useGetMe = () => {
   const { authToken, envKeys, setUser } = useHost();
@@ -35,9 +36,15 @@ export const useGetMe = () => {
         setUserData(data.user);
         setUser(data.user);
         return data;
-      } catch (error) {
+      } catch (error: any) {
+        if (
+          error instanceof TypeError &&
+          error.message === 'Network request failed'
+        ) {
+          throw new NetworkError('No internet connection');
+        }
         console.error('Failed to fetch user:', error);
-        return;
+        throw error;
       } finally {
         setIsLoading(false);
       }
@@ -52,7 +59,14 @@ export const useGetMe = () => {
 
   useEffect(() => {
     if (authToken) {
-      fetchUser({ localToken: authToken });
+      const fetchData = async () => {
+        try {
+          await fetchUser({ localToken: authToken });
+        } catch (error) {
+          console.error('Error fetching user data in useEffect:', error);
+        }
+      };
+      fetchData();
     }
   }, [authToken, fetchUser]);
 

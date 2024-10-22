@@ -9,6 +9,7 @@ import { useHost } from '../../context/HostContext';
 import { type TokenInput, UIStateType, TokenStage } from '../../types/context';
 import { getItemSecurely } from '../../utils/secureStore';
 import { useCountryField } from '../forms/useContrySelect';
+import { NetworkError } from '../../utils/networkErrors';
 
 export const useTokenInit = ({ automatic = true }: { automatic: boolean }) => {
   const {
@@ -112,6 +113,9 @@ export const useTokenInit = ({ automatic = true }: { automatic: boolean }) => {
         setUIState(UIStateType.ShowLoginForm);
       }
     } catch (error) {
+      if (error instanceof NetworkError) {
+        setUIState(UIStateType.ShowNoInternet);
+      }
     } finally {
       setIsLoading(false);
     }

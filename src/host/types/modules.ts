@@ -25,6 +25,7 @@ export interface RewardsTypes {
     CustomModalLoader?: ComponentType;
     CustomInitialScreen?: ComponentType;
     CustomForgotPasswordScreen?: ComponentType;
+    CustomNoInternetScreen?: ComponentType;
   };
   children?: React.ReactNode;
   options?: {
