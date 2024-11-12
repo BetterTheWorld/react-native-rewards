@@ -134,6 +134,7 @@ This package is compatible with expo go - expo snacks
 | ----------------------- | ------------------------------------------------------------------ | -------- |
 | onNavigationStateChange | (navState: WebViewNavigation) => void;                             | No       |
 | onDeleteUserAccount     | (error?: unknown; response?: DeleteUserResponse or null;) => void; | No       |
+| onWindowOpen            | (url: string) => void;                                             | No       |
 
 # 📚 API Reference
 

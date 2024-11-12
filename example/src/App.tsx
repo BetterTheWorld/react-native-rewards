@@ -53,6 +53,9 @@ export default function App() {
         //   onNavigationStateChange: (navState) => {
         //     console.log('navState', navState);
         //   },
+        //   onWindowOpen(url) {
+        //     console.log('window opened', url);
+        //   },
         // }}
       />
     </SafeAreaView>

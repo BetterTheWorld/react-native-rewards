@@ -95,7 +95,12 @@ export function useWebView() {
     const message = event.nativeEvent.data;
 
     if (message.includes(MessageTypes.newWindow)) {
-      dispatchNewWindow(message.replace(MessageTypes.newWindow, ''));
+      const url = message.replace(MessageTypes.newWindow, '');
+      if (customMethods?.onWindowOpen) {
+        customMethods?.onWindowOpen?.(url);
+      } else {
+        dispatchNewWindow(message.replace(MessageTypes.newWindow, ''));
+      }
     }
 
     if (message.includes(MessageTypes.authForm)) {
