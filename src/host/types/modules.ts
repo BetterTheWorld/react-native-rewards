@@ -40,5 +40,6 @@ export interface RewardsTypes {
       error?: unknown;
       response?: DeleteUserResponse | null;
     }) => void;
+    onWindowOpen?: (url: string) => void;
   };
 }
