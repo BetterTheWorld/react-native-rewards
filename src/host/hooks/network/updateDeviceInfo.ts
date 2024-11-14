@@ -9,6 +9,7 @@ import type {
   DeviceUpdateProps,
   UpdateDeviceInfoResponseData,
 } from '../../types/pushNotifications';
+import axios from 'axios';
 
 export interface DeviceUpdateSuccessResponse {
   data: {
@@ -76,10 +77,10 @@ export const useUpdateDeviceInfo = () => {
     };
 
     try {
-      const response = await fetch(url, options);
-      const result: DeviceUpdateResponse = await response.json();
+      const response = await axios(url, options);
+      const result: DeviceUpdateResponse = response?.data;
 
-      if (response.ok && 'data' in result) {
+      if ('data' in result) {
         setData(result);
         setError(null);
         return result;

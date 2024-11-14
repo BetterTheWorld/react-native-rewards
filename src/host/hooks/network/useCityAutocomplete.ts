@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { GOOGLE_API_AUTOCOMPLETE_URL } from '../../constants/network';
 import type { GoogleCityPrediction, CityPrediction } from '../../types/fields';
+import axios from 'axios';
 
 export interface UseCityAutocompleteProps {
   apiKey: string;
@@ -27,15 +28,15 @@ export const useCityAutocomplete = ({
     const fetchCities = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(
+        const response = await axios(
           `${GOOGLE_API_AUTOCOMPLETE_URL}/json?input=${query}&types=(cities)&components=country:${country}&key=${apiKey}`
         );
 
-        if (!response.ok) {
+        if ('data' in response.data) {
           throw new Error('Error fetching city predictions');
         }
 
-        const data = await response.json();
+        const data = response.data();
         setPredictions(
           data.predictions.map((prediction: any) => ({
             description: prediction.description,

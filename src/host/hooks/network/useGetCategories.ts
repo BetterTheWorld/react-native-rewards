@@ -5,6 +5,7 @@ import type {
   CategorySection,
   CategoryResponse,
 } from '../../types/fields';
+import axios, { AxiosError } from 'axios';
 
 export const useGetCategories = () => {
   const { authToken, envKeys } = useHost();
@@ -15,8 +16,9 @@ export const useGetCategories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       const url = envKeys.REWARDS_PROPS_API_URL + '/campaigns/categories';
-      const options = {
+      const config = {
         method: 'GET',
+        url,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${authToken}`,
@@ -25,24 +27,24 @@ export const useGetCategories = () => {
       };
 
       try {
-        const response = await fetch(url || '', options);
+        const response = await axios(config);
 
-        if (!response || !response.ok) {
-          console.error(
-            'Failed to fetch categories:',
-            response.statusText || response.status
-          );
-          return;
-        }
-
-        const { data }: CategoryResponse = await response.json();
+        const { data }: CategoryResponse = response.data;
         setCategories(data.categories);
         const formattedSections = transformCategoriesToSections(
           data?.categories || []
         );
         setSections(formattedSections);
       } catch (error) {
-        console.error('Failed to fetch categories:', error);
+        if (axios.isAxiosError(error)) {
+          const axiosError = error as AxiosError;
+          console.error(
+            'Failed to fetch categories:',
+            axiosError.response?.statusText || axiosError.response?.status
+          );
+        } else {
+          console.error('Failed to fetch categories:', error);
+        }
       } finally {
         setIsLoading(false);
       }

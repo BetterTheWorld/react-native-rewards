@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useHost } from '../../context/HostContext';
 import type { TeamCreatePayload, TeamCreateInput } from '../../types/forms';
+import axios from 'axios';
 
 export const useCreateTeam = () => {
   const { authToken, envKeys } = useHost();
@@ -37,10 +38,10 @@ export const useCreateTeam = () => {
     };
 
     try {
-      const response = await fetch(url, options);
-      const result = await response.json();
+      const response = await axios(url, options);
+      const result = response.data;
 
-      if (response.ok) {
+      if ('data' in result) {
         setData(result);
         return response;
       } else {

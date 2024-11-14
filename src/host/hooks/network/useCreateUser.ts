@@ -5,6 +5,7 @@ import type {
   UserCreateInput,
 } from '../../types/forms';
 import { useHost } from '../../context/HostContext';
+import axios from 'axios';
 
 export const useCreateUser = () => {
   const { envKeys } = useHost();
@@ -20,34 +21,35 @@ export const useCreateUser = () => {
     setError(null);
 
     const url = envKeys.REWARDS_PROPS_API_URL + '/users';
-    const headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-REWARDS-PARTNER-ID': envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
+    const config = {
+      method: 'POST',
+      url,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-REWARDS-PARTNER-ID':
+          envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
+      },
+      data: { user: userData },
     };
 
-    const body = JSON.stringify({ user: userData });
-
     try {
-      const fetchResponse = await fetch(url, {
-        method: 'POST',
-        headers,
-        body: body,
-      });
+      const axiosResponse = await axios(config);
 
-      const authHeader = (
-        fetchResponse.headers.get('Authorization') || ''
-      ).replace('Bearer ', '');
+      const authHeader = (axiosResponse.headers.authorization || '').replace(
+        'Bearer ',
+        ''
+      );
 
-      const data: CreateUserResponse = await fetchResponse.json();
+      const data: CreateUserResponse = axiosResponse.data;
 
-      if (fetchResponse.status !== 200) {
+      if (axiosResponse.status !== 200) {
         setError(
-          `HTTP error! status: ${fetchResponse.status || fetchResponse.statusText}`
+          `HTTP error! status: ${axiosResponse.status || axiosResponse.statusText}`
         );
         setStatus({
-          message: `HTTP error! status: ${fetchResponse.status || fetchResponse.statusText}`,
-          code: fetchResponse.status,
+          message: `HTTP error! status: ${axiosResponse.status || axiosResponse.statusText}`,
+          code: axiosResponse.status,
         });
         setResponse(data);
       } else {
@@ -58,9 +60,11 @@ export const useCreateUser = () => {
       }
     } catch (err) {
       console.error('Failed to create user:', err);
+
       setError((err as Error).message);
-      setResponse(null);
       setStatus({ message: (err as Error).message, code: 500 });
+
+      setResponse(null);
     } finally {
       setIsLoading(false);
     }
