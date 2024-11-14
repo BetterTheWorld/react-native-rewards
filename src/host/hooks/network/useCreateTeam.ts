@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { useHost } from '../../context/HostContext';
 import type { TeamCreatePayload, TeamCreateInput } from '../../types/forms';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+
+interface ErrorResponse {
+  errors?: Array<{
+    message: string;
+  }>;
+}
 
 export const useCreateTeam = () => {
   const { authToken, envKeys } = useHost();
@@ -12,21 +18,10 @@ export const useCreateTeam = () => {
   const createTeam = async (input: TeamCreateInput) => {
     setIsLoading(true);
 
-    const body = {
-      campaign: {
-        name: input.campaign.name,
-        sport_category: input.campaign.sport_category,
-        country: input.campaign.country,
-        state: input.campaign.state,
-        postal_code: input.campaign.postal_code,
-        city: input.campaign.city,
-      },
-    };
-
     const url = envKeys.REWARDS_PROPS_API_URL + '/campaigns';
-
-    const options = {
+    const config = {
       method: 'POST',
+      url,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -34,11 +29,20 @@ export const useCreateTeam = () => {
           envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
         'Authorization': `Bearer ${authToken}`,
       },
-      body: JSON.stringify(body),
+      data: {
+        campaign: {
+          name: input.campaign.name,
+          sport_category: input.campaign.sport_category,
+          country: input.campaign.country,
+          state: input.campaign.state,
+          postal_code: input.campaign.postal_code,
+          city: input.campaign.city,
+        },
+      },
     };
 
     try {
-      const response = await axios(url, options);
+      const response = await axios(config);
       const result = response.data;
 
       if ('data' in result) {
@@ -49,7 +53,14 @@ export const useCreateTeam = () => {
         return undefined;
       }
     } catch (err) {
-      setError((err as Error).message);
+      if (axios.isAxiosError(err)) {
+        const axiosError = err as AxiosError<ErrorResponse>;
+        setError(
+          axiosError.response?.data?.errors?.[0]?.message || axiosError.message
+        );
+      } else {
+        setError((err as Error).message);
+      }
       return undefined;
     } finally {
       setIsLoading(false);

@@ -5,7 +5,12 @@ import type {
   UserCreateInput,
 } from '../../types/forms';
 import { useHost } from '../../context/HostContext';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+
+interface ErrorResponse {
+  error?: string;
+  message?: string;
+}
 
 export const useCreateUser = () => {
   const { envKeys } = useHost();
@@ -43,27 +48,27 @@ export const useCreateUser = () => {
 
       const data: CreateUserResponse = axiosResponse.data;
 
-      if (axiosResponse.status !== 200) {
-        setError(
-          `HTTP error! status: ${axiosResponse.status || axiosResponse.statusText}`
-        );
-        setStatus({
-          message: `HTTP error! status: ${axiosResponse.status || axiosResponse.statusText}`,
-          code: axiosResponse.status,
-        });
-        setResponse(data);
-      } else {
-        setResponse({ ...data, authHeader });
-        setStatus({ message: 'Success', code: 200 });
-        setError(null);
-        return { ...data, authHeader };
-      }
+      setResponse({ ...data, authHeader });
+      setStatus({ message: 'Success', code: 200 });
+      setError(null);
+      return { ...data, authHeader };
     } catch (err) {
       console.error('Failed to create user:', err);
-
-      setError((err as Error).message);
-      setStatus({ message: (err as Error).message, code: 500 });
-
+      if (axios.isAxiosError(err)) {
+        const axiosError = err as AxiosError<ErrorResponse>;
+        const errorMessage =
+          axiosError.response?.data?.error ||
+          axiosError.response?.data?.message ||
+          axiosError.message;
+        setError(errorMessage);
+        setStatus({
+          message: errorMessage,
+          code: axiosError.response?.status || 500,
+        });
+      } else {
+        setError((err as Error).message);
+        setStatus({ message: (err as Error).message, code: 500 });
+      }
       setResponse(null);
     } finally {
       setIsLoading(false);

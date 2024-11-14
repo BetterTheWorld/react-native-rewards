@@ -9,6 +9,14 @@ export interface UseCityAutocompleteProps {
   triggerLength: number;
 }
 
+interface GoogleAutocompleteResponse {
+  predictions: Array<{
+    description: string;
+    place_id: string;
+  }>;
+  status: string;
+}
+
 export const useCityAutocomplete = ({
   apiKey,
   country,
@@ -28,17 +36,12 @@ export const useCityAutocomplete = ({
     const fetchCities = async () => {
       setIsLoading(true);
       try {
-        const response = await axios(
+        const response = await axios.get<GoogleAutocompleteResponse>(
           `${GOOGLE_API_AUTOCOMPLETE_URL}/json?input=${query}&types=(cities)&components=country:${country}&key=${apiKey}`
         );
 
-        if ('data' in response.data) {
-          throw new Error('Error fetching city predictions');
-        }
-
-        const data = response.data();
         setPredictions(
-          data.predictions.map((prediction: any) => ({
+          response.data.predictions.map((prediction) => ({
             description: prediction.description,
             place_id: prediction.place_id,
           }))
