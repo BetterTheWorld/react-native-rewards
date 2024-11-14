@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useHost } from '../../context/HostContext';
+import axios, { AxiosError } from 'axios';
 
 type ResetPasswordInput = {
   email: string;
@@ -31,42 +32,41 @@ export const useResetPassword = () => {
     setIsLoading(true);
 
     const url = `${envKeys.REWARDS_PROPS_API_URL}/users/send_reset_password_instructions`;
-    const headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-REWARDS-PARTNER-ID': envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
+    const config = {
+      method: 'PUT',
+      url,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-REWARDS-PARTNER-ID':
+          envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
+      },
+      data: { user: userData },
     };
 
-    const body = JSON.stringify({ user: userData });
-
     try {
-      const fetchResponse = await fetch(url, {
-        method: 'PUT',
-        headers,
-        body,
-      });
+      const axiosResponse = await axios(config);
+      const data: ResetPasswordResponse = axiosResponse.data;
 
-      const data: ResetPasswordResponse = await fetchResponse.json();
-
-      if (!fetchResponse.ok) {
-        setError(
-          `HTTP error! status: ${fetchResponse.status || fetchResponse.statusText}`
-        );
-        setStatus({
-          message: `HTTP error! status: ${fetchResponse.status || fetchResponse.statusText}`,
-          code: fetchResponse.status,
-        });
-      } else {
-        setResponse(data);
-        setStatus({ message: 'Success', code: fetchResponse.status });
-        setError(null);
-        return data;
-      }
+      setResponse(data);
+      setStatus({ message: 'Success', code: axiosResponse.status });
+      setError(null);
+      return data;
     } catch (err) {
       console.error('Failed to send reset password instructions:', err);
-      setError((err as Error).message);
+      if (axios.isAxiosError(err)) {
+        const axiosError = err as AxiosError;
+        const errorMessage = `HTTP error! status: ${axiosError.response?.status || axiosError.response?.statusText}`;
+        setError(errorMessage);
+        setStatus({
+          message: errorMessage,
+          code: axiosError.response?.status || 500,
+        });
+      } else {
+        setError((err as Error).message);
+        setStatus({ message: (err as Error).message, code: 500 });
+      }
       setResponse(null);
-      setStatus({ message: (err as Error).message, code: 500 });
     } finally {
       setIsLoading(false);
     }

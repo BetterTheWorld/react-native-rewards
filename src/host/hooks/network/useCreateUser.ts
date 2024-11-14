@@ -5,6 +5,12 @@ import type {
   UserCreateInput,
 } from '../../types/forms';
 import { useHost } from '../../context/HostContext';
+import axios, { AxiosError } from 'axios';
+
+interface ErrorResponse {
+  error?: string;
+  message?: string;
+}
 
 export const useCreateUser = () => {
   const { envKeys } = useHost();
@@ -20,47 +26,50 @@ export const useCreateUser = () => {
     setError(null);
 
     const url = envKeys.REWARDS_PROPS_API_URL + '/users';
-    const headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-REWARDS-PARTNER-ID': envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
+    const config = {
+      method: 'POST',
+      url,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-REWARDS-PARTNER-ID':
+          envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
+      },
+      data: { user: userData },
     };
 
-    const body = JSON.stringify({ user: userData });
-
     try {
-      const fetchResponse = await fetch(url, {
-        method: 'POST',
-        headers,
-        body: body,
-      });
+      const axiosResponse = await axios(config);
 
-      const authHeader = (
-        fetchResponse.headers.get('Authorization') || ''
-      ).replace('Bearer ', '');
+      const authHeader = (axiosResponse.headers.authorization || '').replace(
+        'Bearer ',
+        ''
+      );
 
-      const data: CreateUserResponse = await fetchResponse.json();
+      const data: CreateUserResponse = axiosResponse.data;
 
-      if (fetchResponse.status !== 200) {
-        setError(
-          `HTTP error! status: ${fetchResponse.status || fetchResponse.statusText}`
-        );
-        setStatus({
-          message: `HTTP error! status: ${fetchResponse.status || fetchResponse.statusText}`,
-          code: fetchResponse.status,
-        });
-        setResponse(data);
-      } else {
-        setResponse({ ...data, authHeader });
-        setStatus({ message: 'Success', code: 200 });
-        setError(null);
-        return { ...data, authHeader };
-      }
+      setResponse({ ...data, authHeader });
+      setStatus({ message: 'Success', code: 200 });
+      setError(null);
+      return { ...data, authHeader };
     } catch (err) {
       console.error('Failed to create user:', err);
-      setError((err as Error).message);
+      if (axios.isAxiosError(err)) {
+        const axiosError = err as AxiosError<ErrorResponse>;
+        const errorMessage =
+          axiosError.response?.data?.error ||
+          axiosError.response?.data?.message ||
+          axiosError.message;
+        setError(errorMessage);
+        setStatus({
+          message: errorMessage,
+          code: axiosError.response?.status || 500,
+        });
+      } else {
+        setError((err as Error).message);
+        setStatus({ message: (err as Error).message, code: 500 });
+      }
       setResponse(null);
-      setStatus({ message: (err as Error).message, code: 500 });
     } finally {
       setIsLoading(false);
     }

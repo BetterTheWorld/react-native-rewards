@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { useHost } from '../../context/HostContext';
 import type { DeleteUserResponse, DeleteUserStatus } from '../../types/misc';
+import axios, { AxiosError } from 'axios';
+
+interface ErrorResponse {
+  error: string;
+}
 
 export const useDeleteUser = () => {
   const { envKeys, authToken } = useHost();
@@ -17,38 +22,41 @@ export const useDeleteUser = () => {
     setIsLoading(true);
 
     const url = envKeys.REWARDS_PROPS_API_URL + '/users/delete';
-    const headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localToken || authToken}`,
-      'X-REWARDS-PARTNER-ID': envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID,
+    const config = {
+      method: 'DELETE',
+      url,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localToken || authToken}`,
+        'X-REWARDS-PARTNER-ID': envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID,
+      },
     };
 
     try {
-      const fetchResponse = await fetch(url, {
-        method: 'DELETE',
-        headers,
-      });
+      const axiosResponse = await axios(config);
+      const data: DeleteUserResponse = axiosResponse.data;
 
-      if (!fetchResponse.ok) {
-        const errorData = await fetchResponse.json();
-        setError(errorData.error || 'Failed to delete user');
-        setStatus({ error: errorData.error || 'Failed to delete user' });
-      } else {
-        const data: DeleteUserResponse = await fetchResponse.json();
-        setResponse(data);
-        setStatus({
-          error: '',
-          message: data.data.message,
-        });
-        setError(null);
-        return data;
-      }
+      setResponse(data);
+      setStatus({
+        error: '',
+        message: data.data.message,
+      });
+      setError(null);
+      return data;
     } catch (err) {
       console.error('Failed to delete user:', err);
-      setError((err as Error).message);
+      if (axios.isAxiosError(err)) {
+        const axiosError = err as AxiosError<ErrorResponse>;
+        const errorMessage =
+          axiosError.response?.data?.error || 'Failed to delete user';
+        setError(errorMessage);
+        setStatus({ error: errorMessage });
+      } else {
+        setError((err as Error).message);
+        setStatus({ error: (err as Error).message });
+      }
       setResponse(null);
-      setStatus({ error: (err as Error).message });
     } finally {
       setIsLoading(false);
     }

@@ -9,6 +9,7 @@ import type {
   DeviceUpdateProps,
   UpdateDeviceInfoResponseData,
 } from '../../types/pushNotifications';
+import axios from 'axios';
 
 export interface DeviceUpdateSuccessResponse {
   data: {
@@ -63,8 +64,9 @@ export const useUpdateDeviceInfo = () => {
       },
     };
 
-    const options = {
+    const config = {
       method: 'PUT',
+      url,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -72,14 +74,14 @@ export const useUpdateDeviceInfo = () => {
           envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
         'Authorization': `Bearer ${authToken}`,
       },
-      body: JSON.stringify(fullInput),
+      data: fullInput,
     };
 
     try {
-      const response = await fetch(url, options);
-      const result: DeviceUpdateResponse = await response.json();
+      const response = await axios(config);
+      const result: DeviceUpdateResponse = response?.data;
 
-      if (response.ok && 'data' in result) {
+      if ('data' in result) {
         setData(result);
         setError(null);
         return result;

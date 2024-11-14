@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useHost } from '../../context/HostContext';
 import type { User, UserResponse } from '../../types/forms';
+import axios, { AxiosError } from 'axios';
 
 export const useGetMe = () => {
   const { authToken, envKeys, setUser } = useHost();
@@ -10,8 +11,9 @@ export const useGetMe = () => {
   const fetchUser = useCallback(
     async ({ localToken }: { localToken: string }) => {
       const url = envKeys.REWARDS_PROPS_API_URL + '/users/me';
-      const options = {
+      const config = {
         method: 'GET',
+        url,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localToken || authToken}`,
@@ -20,23 +22,23 @@ export const useGetMe = () => {
       };
 
       try {
-        const response = await fetch(url || '', options);
+        const response = await axios(config);
+        const { data }: UserResponse = response.data;
 
-        if (!response || !response.ok) {
-          console.error(
-            'Failed to fetch user:',
-            response.statusText || response.status
-          );
-          return;
-        }
-
-        const { data }: UserResponse = await response.json();
         console.info('[useGetMe]', data);
         setUserData(data.user);
         setUser(data.user);
         return data;
       } catch (error) {
-        console.error('Failed to fetch user:', error);
+        if (axios.isAxiosError(error)) {
+          const axiosError = error as AxiosError;
+          console.error(
+            'Failed to fetch user:',
+            axiosError.response?.statusText || axiosError.response?.status
+          );
+        } else {
+          console.error('Failed to fetch user:', error);
+        }
         return;
       } finally {
         setIsLoading(false);

@@ -98,7 +98,7 @@ export const useCreateTeamForm = () => {
 
       const response = await createTeam(teamCreateInput);
 
-      if (response?.ok) {
+      if (response && 'data' in response) {
         setUIState(UIStateType.ShowStore);
       }
     } catch (error) {

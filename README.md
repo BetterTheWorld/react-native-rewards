@@ -42,6 +42,7 @@ These dependencies need to be manually installed in your project:
 
 - expo-secure-store
 - react-native-webview
+- axios
 
 ### Usage
 

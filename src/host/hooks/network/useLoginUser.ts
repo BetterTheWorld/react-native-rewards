@@ -6,6 +6,7 @@ import type {
   SignInStatus,
   UserLoginInput,
 } from '../../types/forms';
+import axios, { AxiosError } from 'axios';
 
 export const useSignIn = () => {
   const { envKeys } = useHost();
@@ -20,44 +21,47 @@ export const useSignIn = () => {
     setIsLoading(true);
 
     const url = envKeys.REWARDS_PROPS_API_URL + '/users/sign_in';
-    const headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-REWARDS-PARTNER-ID': envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
+    const config = {
+      method: 'POST',
+      url,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-REWARDS-PARTNER-ID':
+          envKeys.REWARDS_PROPS_X_REWARDS_PARTNER_ID || '',
+      },
+      data: { user: userData },
     };
 
-    const body = JSON.stringify({ user: userData });
-
     try {
-      const fetchResponse = await fetch(url, {
-        method: 'POST',
-        headers,
-        body: body,
-      });
+      const axiosResponse = await axios(config);
 
-      const authHeader = (
-        fetchResponse.headers.get('Authorization') || ''
-      ).replace('Bearer ', '');
+      const authHeader = (axiosResponse.headers.authorization || '').replace(
+        'Bearer ',
+        ''
+      );
 
-      if (!fetchResponse.ok) {
-        const errorData: SignInError = await fetchResponse.json();
-        setError(errorData.error);
-        setStatus({
-          code: fetchResponse.status,
-          message: errorData.error,
-        });
-      } else {
-        const data: SignInResponse = await fetchResponse.json();
-        setResponse({ ...data, authHeader });
-        setStatus(data.status);
-        setError(null);
-        return { ...data, authHeader };
-      }
+      const data: SignInResponse = axiosResponse.data;
+      setResponse({ ...data, authHeader });
+      setStatus(data.status);
+      setError(null);
+      return { ...data, authHeader };
     } catch (err) {
       console.error('Failed to sign in:', err);
-      setError((err as Error).message);
+      if (axios.isAxiosError(err)) {
+        const axiosError = err as AxiosError<SignInError>;
+        const errorMessage =
+          axiosError.response?.data?.error || axiosError.message;
+        setError(errorMessage);
+        setStatus({
+          code: axiosError.response?.status || 500,
+          message: errorMessage,
+        });
+      } else {
+        setError((err as Error).message);
+        setStatus({ code: 500, message: (err as Error).message });
+      }
       setResponse(null);
-      setStatus({ code: 500, message: (err as Error).message });
     } finally {
       setIsLoading(false);
     }
