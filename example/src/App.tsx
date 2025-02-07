@@ -49,14 +49,15 @@ export default function App() {
           shouldResetKeychain: isFirstRun,
           // showWebDebugOptions: true,
         }}
-        // customMethods={{
-        //   onNavigationStateChange: (navState) => {
-        //     console.log('navState', navState);
-        //   },
-        //   onWindowOpen(url) {
-        //     console.log('window opened', url);
-        //   },
-        // }}
+        customMethods={{
+          // onNavigationStateChange: (navState) => {
+          //   console.log('navState', navState);
+          // },
+          handleMessage(event) {
+            console.info('event', event.nativeEvent.data);
+            return false;
+          },
+        }}
       />
     </SafeAreaView>
   );
