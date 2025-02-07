@@ -94,13 +94,19 @@ export function useWebView() {
   const handleMessage = async (event: WebViewMessageEvent) => {
     const message = event.nativeEvent.data;
 
-    if (message.includes(MessageTypes.newWindow)) {
-      const url = message.replace(MessageTypes.newWindow, '');
-      if (customMethods?.onWindowOpen) {
-        customMethods?.onWindowOpen?.(url);
-      } else {
-        dispatchNewWindow(message.replace(MessageTypes.newWindow, ''));
+    // return true if custom method is handled
+    if (customMethods?.handleMessage) {
+      const response = customMethods.handleMessage(event);
+
+      if (response) {
+        return;
       }
+    }
+
+    // Default message handling
+
+    if (message.includes(MessageTypes.newWindow)) {
+      dispatchNewWindow(message.replace(MessageTypes.newWindow, ''));
     }
 
     if (message.includes(MessageTypes.authForm)) {

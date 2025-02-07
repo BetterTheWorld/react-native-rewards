@@ -1,4 +1,7 @@
-import type { WebViewNavigation } from 'react-native-webview';
+import type {
+  WebViewMessageEvent,
+  WebViewNavigation,
+} from 'react-native-webview';
 import type { hostColors } from '../styles/colors';
 import type { ComponentType } from 'react';
 import type { DeleteUserResponse } from './misc';
@@ -40,6 +43,6 @@ export interface RewardsTypes {
       error?: unknown;
       response?: DeleteUserResponse | null;
     }) => void;
-    onWindowOpen?: (url: string) => void;
+    handleMessage?: (event: WebViewMessageEvent) => boolean;
   };
 }
